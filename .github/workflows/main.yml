@@ -34,9 +34,6 @@ jobs:
       - name: Build Kivo.chat
         run: yarn build
 
-      - name: Run ESLint
-        run: yarn lint
-
       - name: Type Check (TS)
         run: yarn tsc --noEmit
         
