@@ -2,25 +2,40 @@
   "name": "chatapp",
   "version": "0.1.0",
   "private": true,
+  "type": "",
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "clean": "rimraf .next .turbo *.tsbuildinfo node_modules",
+    "dev": "next dev -p 3003 --turbo",
+    "lint:next": "next lint",
+    "lint": "tsc --noEmit && eslint \"./**/*.{ts,tsx,js,jsx}\"",
+    "lint:fix": "tsc --noEmit && eslint --fix \"./**/*.{ts,tsx,js,jsx}\"",
+    "ts": "tsc --noEmit"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "mongoose": "^8.19.1",
     "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.37.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "@next/eslint-plugin-next": "^15.5.4",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^9.37.0",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4",
-    "typescript": "^5"
-  }
+    "typescript": "^5",
+    "typescript-eslint": "^8.46.0"
+  },
+  "main": "index.js",
+  "repository": "https://github.com/Ali-Hassan2/kivo.chat.git",
+  "author": "Ali Hassan <alihassan26032004@gmail.com>",
+  "license": "MIT"
 }
