@@ -12,7 +12,7 @@ const coverImageGuard = fileUploadGuard
 const profileGuard = z.object({
   bio: bioGuard,
   pfp: pfpGuard.optional(),
-  coverImage: coverImageGuard,
+  coverImage: coverImageGuard.optional(),
 })
 
 export { profileGuard }
