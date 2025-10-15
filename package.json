@@ -10,7 +10,8 @@
     "lint:next": "next lint",
     "lint": "tsc --noEmit && eslint \"./**/*.{ts,tsx,js,jsx}\"",
     "lint:fix": "tsc --noEmit && eslint --fix \"./**/*.{ts,tsx,js,jsx}\"",
-    "ts": "tsc --noEmit"
+    "ts": "tsc --noEmit",
+    "test": "jest --coverage"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -27,13 +28,16 @@
     "@next/eslint-plugin-next": "^15.5.4",
     "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^6.0.0",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9.37.0",
+    "jest": "^30.2.0",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4",
+    "ts-jest": "^29.4.5",
     "typescript": "^5",
     "typescript-eslint": "^8.46.0"
   },

@@ -1,4 +1,4 @@
-name: Build Kivo.chat
+name: Build Kivo.chat 18
 
 on:
   pull_request:
