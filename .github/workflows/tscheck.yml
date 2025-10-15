@@ -1,4 +1,4 @@
-name: 🧠 TypeScript Check
+name: TypeScript Check
 
 on:
   pull_request:

@@ -1,5 +1,3 @@
-name: Formatting Check For Kivo.chat
-
 on:
   pull_request:
     branches: [dev]
@@ -9,24 +7,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'yarn'
+          cache: yarn
 
-      - name: Restore Build Cache
-        uses: actions/cache@4
+      - uses: actions/cache@v4
         with:
           path: .next/
-          key: build-${{github.sha}}
+          key: build-${{ github.sha }}
           restore-keys: build-
 
-      - name: Install Depencdencies
-        run: yarn install --frozen-lockfile
-
-      - name: Formatting Check
-        run: yarn prettier --check .
+      - run: yarn install --frozen-lockfile
+      - run: yarn prettier --check .
