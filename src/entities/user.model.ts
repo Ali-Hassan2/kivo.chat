@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt'
 import mongoose, { Document, Schema, Types } from 'mongoose'
 
 export interface IUser extends Document {
@@ -23,6 +24,7 @@ export interface IUser extends Document {
   }
   createdAt?: Date
   updatedAt?: Date
+  comparePassword(candidatePassword: string): Promise<boolean>
 }
 
 const UserSchema: Schema<IUser> = new Schema(
@@ -112,4 +114,18 @@ const UserModel =
   (mongoose.models.User as mongoose.Model<IUser>) ||
   mongoose.model<IUser>('User', UserSchema)
 
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next()
+  }
+  const salt = await bcrypt.genSalt(10)
+  this.password = await bcrypt.hash(this.password, salt)
+  next()
+})
+
+UserSchema.methods.comparePassword = async function (
+  candidatePassword: string,
+) {
+  return bcrypt.compare(candidatePassword, this.password)
+}
 export { UserModel, UserSchema }
