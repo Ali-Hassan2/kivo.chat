@@ -1,115 +1,37 @@
-# .github/workflows/build-complex.yml
+name: Build Kivo.chat
 
 on:
   pull_request:
     branches: [dev]
-    types: [opened, synchronize, reopened, ready_for_review]
-
-permissions:
-  contents: read
-  actions: write
-  checks: write
-
-env:
-  NODE_ENV: production
-  BUILD_PATH: .next
-  ARTIFACT_NAME: nextjs-build
-  CACHE_KEY_PREFIX: kivo-cache
-  TIMESTAMP: ${{ github.run_id }}-${{ github.run_number }}
 
 jobs:
-  build_matrix:
+  build:
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        node: [18, 20]
-        os: [ubuntu-latest]
-        include:
-          - node: 18
-            cache_folder: ~/.cache/yarn
-          - node: 20
-            cache_folder: ~/.yarn-cache
-
-    outputs:
-      build_path: ${{ steps.set-vars.outputs.BUILD_PATH }}
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
+          node-version: 18
+          cache: 'yarn'
 
-      - uses: actions/setup-node@v4
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Project
+        run: yarn build
+
+      - name: Cache Build Output
+        uses: actions/cache@v4
         with:
-          node-version: ${{ matrix.node }}
-          cache: yarn
+          path: .next/
+          key: build-${{ github.sha }}
 
-      - id: set-vars
-        run: |
-          echo "BUILD_PATH=${{ env.BUILD_PATH }}" >> $GITHUB_OUTPUT
-          echo "CACHE_KEY=${{ env.CACHE_KEY_PREFIX }}-${{ matrix.node }}-${{ github.sha }}" >> $GITHUB_ENV
-          echo "TIMESTAMP=${{ env.TIMESTAMP }}" >> $GITHUB_ENV
-          echo "Setting environment variables complete"
-
-      - uses: actions/cache@v4
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
         with:
-          path: |
-            node_modules
-            ${{ matrix.cache_folder }}
-          key: ${{ env.CACHE_KEY }}
-          restore-keys: |
-            ${{ env.CACHE_KEY_PREFIX }}-
-
-      - run: yarn install --immutable
-        continue-on-error: false
-
-      - run: |
-          echo "Starting Kivo.chat Build for Node ${{ matrix.node }}"
-          echo "Build initiated at $(date)"
-          yarn build || { echo "Build failed"; exit 1; }
-          echo "Build completed successfully at $(date)"
-
-      - run: |
-          echo "Validating build output"
-          if [ ! -d "${{ env.BUILD_PATH }}" ]; then
-            echo "Build output directory not found: ${{ env.BUILD_PATH }}"
-            exit 1
-          fi
-          du -sh ${{ env.BUILD_PATH }}
-          find ${{ env.BUILD_PATH }} -type f | wc -l
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.ARTIFACT_NAME }}-${{ matrix.node }}
-          path: ${{ env.BUILD_PATH }}
-
-      - run: |
-          echo "Generating summary report"
-          echo "Build Summary for Node.js v${{ matrix.node }}" >> build-summary.txt
-          echo "Run ID: ${{ github.run_id }}" >> build-summary.txt
-          echo "Commit: ${{ github.sha }}" >> build-summary.txt
-          echo "Actor: ${{ github.actor }}" >> build-summary.txt
-          echo "Timestamp: $(date)" >> build-summary.txt
-          echo "Files: $(find ${{ env.BUILD_PATH }} -type f | wc -l)" >> build-summary.txt
-          echo "Size: $(du -sh ${{ env.BUILD_PATH }} | cut -f1)" >> build-summary.txt
-          echo "Build completed for Node ${{ matrix.node }}" >> build-summary.txt
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: build-summary-${{ matrix.node }}
-          path: build-summary.txt
-
-  validate_artifacts:
-    runs-on: ubuntu-latest
-    needs: [build_matrix]
-
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: artifacts/
-
-      - run: |
-          echo "📁 Checking downloaded artifacts"
-          ls -R artifacts || echo "⚠️ No artifacts found"
-          echo "Artifact validation complete ✅"
+          name: nextjs-build
+          path: .next/
