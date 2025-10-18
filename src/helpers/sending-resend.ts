@@ -1,9 +1,9 @@
 import { VerificationLayout } from '@/email'
-import { resend } from '@/resend'
-import { ResendType } from './types/resend-type'
+import { getResendClient } from '@/resend'
+import type { ResendType } from './types/resend-type'
 
 interface SendEmailProps {
-  email: string
+  email?: string
   username: string
   verifyCode: string
 }
@@ -14,40 +14,33 @@ const sendEmail = async ({
   verifyCode,
 }: SendEmailProps): Promise<ResendType> => {
   try {
+    const resend = getResendClient()
     const { data, error } = await resend.emails.send({
       from: 'Acme <onboarding@resend.dev>',
-      to: email,
+      to: email ?? 'alihassan26032004@gmail.com',
       subject: 'Your Verification Code',
       react: VerificationLayout({ username, otp: verifyCode }),
     })
     if (error) {
-      console.error('[SendEmail] Error sending email:', error)
       return {
         statusCode: 400,
         success: false,
-        message: 'Failed to send verification code.',
+        message: error?.message || 'Failed to send email',
         timestamps: new Date().toISOString(),
-        error: {
-          name: error?.name,
-          message: error?.message,
-        },
       }
     }
-    console.log('[SendEmail] Email sent:', data)
-    console.log('[SendEmail] Verification code:', verifyCode)
     return {
       statusCode: 200,
       success: true,
-      message: 'Verification code sent successfully.',
+      message: 'Verification code sent successfully',
       timestamps: new Date().toISOString(),
       data,
     }
   } catch (err: any) {
-    console.error('[SendEmail] Exception:', err)
     return {
       statusCode: 500,
       success: false,
-      message: 'Unexpected error while sending verification code.',
+      message: 'Unexpected error while sending verification code',
       timestamps: new Date().toISOString(),
       error: {
         name: err?.name,

@@ -14,7 +14,7 @@ const connect_db = async (): Promise<void> => {
   }
 
   try {
-    const uri = process.env.MONGODB_URI
+    const uri = process.env.MONGO_STRING
     if (!uri) {
       console.log(colors.red('MONGODB_URI not found in environment variables.'))
       process.exit(1)

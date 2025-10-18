@@ -37,10 +37,11 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     email: {
       type: String,
-      unique: true,
-      trim: true,
+      // unique: true,
+      // trim: true,
       required: [true, 'Email is required.'],
-      match: [/^\\S+@\\S+\\.\\S+$/, 'Please use a valid email address.'],
+      lowercase: true,
+      // match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.'],
     },
     password: {
       type: String,
@@ -110,6 +111,7 @@ const UserSchema: Schema<IUser> = new Schema(
   { timestamps: true },
 )
 
+delete mongoose.models.User
 const UserModel =
   (mongoose.models.User as mongoose.Model<IUser>) ||
   mongoose.model<IUser>('User', UserSchema)
