@@ -3,7 +3,7 @@ import { resend } from '@/resend'
 import { ResendType } from './types/resend-type'
 
 interface SendEmailProps {
-  email: string
+  email?: string
   username: string
   verifyCode: string
 }
@@ -16,7 +16,7 @@ const sendEmail = async ({
   try {
     const { data, error } = await resend.emails.send({
       from: 'Acme <onboarding@resend.dev>',
-      to: email,
+      to: 'alihassan26032004@gmail.com',
       subject: 'Your Verification Code',
       react: VerificationLayout({ username, otp: verifyCode }),
     })
