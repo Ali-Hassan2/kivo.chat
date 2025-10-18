@@ -67,6 +67,7 @@ async function POST(request: Request) {
         { status: 400 },
       )
     }
+    
     if (isAlreadyRequested) {
       return NextResponse.json(
         { success: false, message: 'Friend request already sent and pending.' },
