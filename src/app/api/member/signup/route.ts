@@ -23,7 +23,7 @@ async function POST(request: Request) {
         return NextResponse.json(
           {
             success: false,
-            message: 'Username already taken.',
+            message: 'User Already Exist.',
             user: userByUsername,
           },
           { status: 400 },
