@@ -1,1 +1,1 @@
-Checkour dev.
+Checkout dev.
