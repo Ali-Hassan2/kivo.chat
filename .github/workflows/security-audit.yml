@@ -1,0 +1,29 @@
+name: Security
+
+on:
+  pull_request:
+    branches: [dev]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - uses: actions/cache@v4
+        with:
+          path: .next/
+          key: build-${{ github.sha }}
+          restore-keys: build-
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn audit --level=moderate
+
+      - run: echo "yeah, now it’s shining."
