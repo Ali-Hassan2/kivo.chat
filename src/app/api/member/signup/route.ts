@@ -21,7 +21,11 @@ async function POST(request: Request) {
     if (userByUsername) {
       if (userByUsername.isVerifiedUser) {
         return NextResponse.json(
-          { success: false, message: 'Username already taken.', user: null },
+          {
+            success: false,
+            message: 'Username already taken.',
+            user: userByUsername,
+          },
           { status: 400 },
         )
       } else {
@@ -31,7 +35,6 @@ async function POST(request: Request) {
         userByUsername.verficationCode = verifyCode
         userByUsername.verficationExpiry = new Date(Date.now() + 10 * 60 * 1000)
         await userByUsername.save()
-
         const resendResponse = await sendEmail({
           email: userByUsername.email,
           username,
@@ -56,7 +59,6 @@ async function POST(request: Request) {
             )
       }
     }
-
     const userByEmail = await UserModel.findOne({ email })
     if (userByEmail) {
       if (userByEmail.isVerifiedUser) {
@@ -95,7 +97,6 @@ async function POST(request: Request) {
             )
       }
     }
-
     const verifyCode = Math.floor(100000 + Math.random() * 900000).toString()
     const newUser = await UserModel.create({
       username,
