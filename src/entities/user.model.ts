@@ -111,7 +111,7 @@ const UserSchema: Schema<IUser> = new Schema(
   { timestamps: true },
 )
 
-delete mongoose.models.User
+// delete mongoose.models.User
 const UserModel =
   (mongoose.models.User as mongoose.Model<IUser>) ||
   mongoose.model<IUser>('User', UserSchema)

@@ -32,4 +32,4 @@ const signUpGuard = z.object({
   fullname: fullNameGuard,
 })
 
-export { signUpGuard }
+export { signUpGuard, usernameGuard }
