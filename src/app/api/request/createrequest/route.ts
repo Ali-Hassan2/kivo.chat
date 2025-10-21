@@ -5,11 +5,9 @@ import { z } from 'zod'
 import { REQUEST_STATUS } from '@/constants'
 import { RequestModel, UserModel } from '@/entities'
 import { connect_db } from '@/settings'
-import { authOptions } from '../../member/auth/[...nextauth]/options'
+import { authOptions } from '../../auth/[...nextauth]/options'
 
-const usernameQuerySchema = z.object({
-  username: z.string().min(3).max(30),
-})
+const usernameQuerySchema = z.string().min(3).max(30)
 
 async function POST(request: Request) {
   try {
@@ -42,7 +40,10 @@ async function POST(request: Request) {
         { status: 400 },
       )
     }
-    const targetUsername = parseResult.data.username
+    console.log('Logged in user:', session.user.username)
+    const targetUsername = parseResult.data
+    console.log('Target username:', targetUsername)
+
     const [sender, receiver] = await Promise.all([
       UserModel.findOne({ username: session.user.username }),
       UserModel.findOne({ username: targetUsername }),

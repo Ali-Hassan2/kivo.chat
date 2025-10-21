@@ -24,7 +24,6 @@ jobs:
       - name: Restore Next.js cache
         uses: actions/cache@v4
         with:
-          # cache only Next.js cache (avoid caching generated types/artifacts)
           path: .next/cache
           key: next-cache-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
           restore-keys: next-cache-

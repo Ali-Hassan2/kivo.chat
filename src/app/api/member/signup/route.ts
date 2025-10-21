@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import bcrypt from 'bcrypt'
 import { UserModel } from '@/entities'
 import { sendEmail } from '@/helpers'
 import { connect_db } from '@/settings'
@@ -17,6 +18,7 @@ async function POST(request: Request) {
   await connect_db()
   try {
     const { username, email, password } = await request.json()
+    const hashedPassword = await bcrypt.hash(password, 10)
     const userByUsername = await UserModel.findOne({ username })
     if (userByUsername) {
       if (userByUsername.isVerifiedUser) {
@@ -100,7 +102,7 @@ async function POST(request: Request) {
     const verifyCode = Math.floor(100000 + Math.random() * 900000).toString()
     const newUser = await UserModel.create({
       username,
-      password,
+      password: hashedPassword,
       email,
       verficationCode: verifyCode,
       verficationExpiry: new Date(Date.now() + 10 * 60 * 1000),
@@ -110,9 +112,7 @@ async function POST(request: Request) {
       requests: [],
       blocks: [],
     })
-
     const resendResponse = await sendEmail({ email, username, verifyCode })
-
     return !resendResponse.success
       ? NextResponse.json(
           {
