@@ -1,10 +1,6 @@
 import { z } from 'zod'
 import { ObjectIdGuard } from './common.guard'
-
-const attachmentGuard = z.object({
-  url: z.url({ message: 'Invalid attachment URL' }),
-  publicId: z.string().min(1, { message: 'Public Id is required.' }),
-})
+import { fileUploadGuard } from './file-upload.guard'
 
 const senderGuard = ObjectIdGuard
 const receiverGuard = ObjectIdGuard
@@ -15,7 +11,7 @@ const contentGuard = z
 const conversationGuard = ObjectIdGuard
 const isAnonGuard = z.boolean().optional()
 const readByGuard = z.array(ObjectIdGuard).optional().default([])
-const attachmentsArrayGuard = z.array(attachmentGuard).optional().default([])
+const attachmentsArrayGuard = z.array(fileUploadGuard).optional().default([])
 
 const messageGuard = z.object({
   sender: senderGuard,
