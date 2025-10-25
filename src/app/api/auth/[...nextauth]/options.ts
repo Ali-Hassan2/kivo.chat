@@ -5,6 +5,8 @@ import TwitterProvider from 'next-auth/providers/twitter'
 import { UserModel } from '@/entities'
 import { connect_db } from '@/settings'
 
+const MAX_AGE = 30 * 24 * 60 * 60
+
 const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -23,7 +25,8 @@ const authOptions: NextAuthOptions = {
             { username: credentials.identifier },
           ],
         })
-        if (!user || !user.isVerifiedUser) return null
+        if (!user) return null
+        if (!user.isVerifiedUser) return null
         const isPasswordMatch = await bcrypt.compare(
           credentials.password,
           user.password,
@@ -46,26 +49,25 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = (user as any).id
-        token.username = (user as any).username
+        token.id = user.id
+        token.username = user.username
         token.isVerified = (user as any).isVerifiedUser ?? true
       }
       return token
     },
     async session({ session, token }) {
-      if (session.user) {
-        session.user._id = token.id as string
-        session.user.username = token.username as string
-        session.user.isVerified = token.isVerified as boolean
+      session.user = {
+        _id: token.id as string,
+        username: token.username as string,
+        isVerified: token.isVerified as boolean,
       }
       return session
     },
   },
-  session: { strategy: 'jwt' },
-  pages: {
-    signIn: '/signin',
-  },
-  secret: process.env.AUTH_SECRET,
+
+  session: { strategy: 'jwt', maxAge: MAX_AGE },
+  pages: { signIn: '/signin' },
+  secret: process.env.NEXTAUTH_SECRET,
 }
 
 export { authOptions }

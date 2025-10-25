@@ -16,12 +16,17 @@ jobs:
           node-version: 20
           cache: 'yarn'
 
-      - name: Restore Build Cache
+      - name: Ensure clean build directory
+        run: |
+          echo "Removing any leftover .next from previous runs"
+          rm -rf .next || true
+
+      - name: Restore Next.js cache
         uses: actions/cache@v4
         with:
-          path: .next/
-          key: build-${{ github.sha }}
-          restore-keys: build-
+          path: .next/cache
+          key: next-cache-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: next-cache-
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
