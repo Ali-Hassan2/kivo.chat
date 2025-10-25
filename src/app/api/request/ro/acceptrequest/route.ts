@@ -5,9 +5,9 @@ import { REQUEST_STATUS } from '@/constants'
 import { RequestModel, UserModel } from '@/entities'
 import { requestIdSchema } from '@/guards'
 import { connect_db } from '@/settings'
-import { authOptions } from '../../auth/[...nextauth]/options'
+import { authOptions } from '../../../auth/[...nextauth]/options'
 
-async function PUT(request: Request) {
+async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     const requestId = searchParams.get('requestId') || ''
@@ -51,6 +51,23 @@ async function PUT(request: Request) {
         { status: 404 },
       )
     }
+    const receiverId =
+      receiver._id instanceof Types.ObjectId
+        ? receiver._id.toString()
+        : String(receiver._id)
+    const acceptorId = session?.user?._id?.toString()
+    const isReceiverIsAcceptor = receiverId === acceptorId
+    if (!isReceiverIsAcceptor) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Only receiver can accept the connection request.',
+        },
+        {
+          status: 400,
+        },
+      )
+    }
     const isAlreadyFriends =
       sender.friends.some(
         (id) => id.toString() === (receiver._id as Types.ObjectId).toString(),
@@ -88,4 +105,4 @@ async function PUT(request: Request) {
   }
 }
 
-export { PUT }
+export { POST }
