@@ -29,7 +29,6 @@ async function POST(request: Request) {
     const rawUsername = searchParams.get('username') || ''
     const decodedUsername = decodeURIComponent(rawUsername)
     const parseResult = usernameQuerySchema.safeParse(decodedUsername)
-
     if (!parseResult.success) {
       return NextResponse.json(
         {
@@ -54,6 +53,25 @@ async function POST(request: Request) {
         { status: 404 },
       )
     }
+    // production
+    // const senderId = session?.user?._id
+    // const receiverId =
+    //   receiver._id instanceof Types.ObjectId
+    //     ? receiver._id.toString()
+    //     : String(receiver._id)
+
+    // const isSamePersonRequesting = senderId === receiverId
+    // if (isSamePersonRequesting) {
+    //   return NextResponse.json(
+    //     {
+    //       success: false,
+    //       message: 'You can not send request to yourself.',
+    //     },
+    //     {
+    //       status: 400,
+    //     },
+    //   )
+    // }
     const isAlreadyFriend = receiver.friends.some(
       (f) => f._id.toString() === (sender._id as Types.ObjectId).toString(),
     )
@@ -68,7 +86,6 @@ async function POST(request: Request) {
         { status: 400 },
       )
     }
-
     if (isAlreadyRequested) {
       return NextResponse.json(
         { success: false, message: 'Friend request already sent and pending.' },
