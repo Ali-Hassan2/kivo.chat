@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth'
 import { RequestModel, UserModel } from '@/entities'
 import { requestIdSchema } from '@/guards'
 import { connect_db } from '@/settings'
-import { authOptions } from '../../auth/[...nextauth]/options'
+import { authOptions } from '../../../auth/[...nextauth]/options'
 
 async function POST(request: Request) {
   try {
@@ -45,21 +45,21 @@ async function POST(request: Request) {
         { status: 404 },
       )
     }
-    const receiverId =
-      receiver._id instanceof Types.ObjectId
-        ? receiver._id.toString()
-        : String(receiver._id)
-    const sessionUserId = String(session?.user?._id || '')
-    const isThatUser = receiverId === sessionUserId
-    if (!isThatUser) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Only receiver can deny a request',
-        },
-        { status: 400 },
-      )
-    }
+    // const receiverId =
+    //   receiver._id instanceof Types.ObjectId
+    //     ? receiver._id.toString()
+    //     : String(receiver._id)
+    // const sessionUserId = String(session?.user?._id || '')
+    // const isThatUser = receiverId === sessionUserId
+    // if (!isThatUser) {
+    //   return NextResponse.json(
+    //     {
+    //       success: false,
+    //       message: 'Only receiver can deny a request',
+    //     },
+    //     { status: 400 },
+    //   )
+    // }
     sender.requests = sender.requests.filter(
       (rId) => rId.toString() !== requestId.toString(),
     )

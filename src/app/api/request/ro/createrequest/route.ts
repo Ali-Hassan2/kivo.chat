@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { REQUEST_STATUS } from '@/constants'
 import { RequestModel, UserModel } from '@/entities'
 import { connect_db } from '@/settings'
-import { authOptions } from '../../auth/[...nextauth]/options'
+import { authOptions } from '../../../auth/[...nextauth]/options'
 
 const usernameQuerySchema = z.string().min(3).max(30)
 
@@ -88,7 +88,11 @@ async function POST(request: Request) {
     }
     if (isAlreadyRequested) {
       return NextResponse.json(
-        { success: false, message: 'Friend request already sent and pending.' },
+        {
+          success: false,
+          message: 'Friend request already sent and pending.',
+          isAlreadyRequested,
+        },
         { status: 400 },
       )
     }
