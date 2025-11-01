@@ -3,6 +3,7 @@ import { Types } from 'mongoose'
 import { getServerSession } from 'next-auth'
 import { UserModel } from '@/entities'
 import { requestIdSchema } from '@/guards'
+import { connect_db } from '@/settings'
 import { authOptions } from '../../auth/[...nextauth]/options'
 
 async function POST(request: Request) {
@@ -36,6 +37,7 @@ async function POST(request: Request) {
         error: parsedId.error.issues.map((err) => err.message),
       })
     }
+    await connect_db()
     const userToUnfriend = await UserModel.findById(parsedId.data)
     if (!userToUnfriend) {
       return NextResponse.json(
