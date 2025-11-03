@@ -70,11 +70,11 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     isAnon: {
       type: Boolean,
-      default:false
+      default: false,
     },
-    isAcceptingMessages:{
-      type:Boolean,
-      default:true
+    isAcceptingMessages: {
+      type: Boolean,
+      default: true,
     },
     friends: [
       {
