@@ -35,6 +35,25 @@ const memes = [
     updatedAt: new Date().toISOString(),
     __v: 0,
   },
+  {
+    _id: '68f74a56962880f2c850e153',
+    username: 'daud',
+    email: 'daud.test@example.com',
+    password: bcrypt.hashSync('Daud.1234', 10),
+    verficationCode: '111111',
+    verficationExpiry: new Date(
+      Date.now() + 1000 * 60 * 60 * 24 * 7,
+    ).toISOString(),
+    isVerifiedUser: true,
+    isAnon: false,
+    isAcceptingMessages: true,
+    friends: [],
+    requests: [],
+    blocks: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    __v: 0,
+  },
 ]
 
 export { memes }
