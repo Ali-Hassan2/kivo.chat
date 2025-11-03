@@ -8,7 +8,6 @@ async function seedmemes() {
   try {
     await connect_db()
     console.log('Database connected')
-
     await UserModel.deleteMany({})
     console.log('Old users deleted.')
 
