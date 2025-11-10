@@ -52,7 +52,7 @@ async function GET(request: Request) {
     if (error instanceof Error) {
       errorMessage = error.message
     } else if (typeof error === 'string') {
-      errorMessage = error 
+      errorMessage = error
     }
     return NextResponse.json(
       {
