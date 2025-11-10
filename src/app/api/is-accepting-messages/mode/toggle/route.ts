@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import { UserModel } from '@/entities'
-import { authOptions } from '../../auth/[...nextauth]/options'
+import { connect_db } from '@/settings'
 
 async function POST(request: Request) {
   try {
@@ -11,6 +12,7 @@ async function POST(request: Request) {
         { status: 405 },
       )
     }
+
     const session = await getServerSession(authOptions)
     if (!session?.user?._id) {
       return NextResponse.json(
@@ -18,6 +20,7 @@ async function POST(request: Request) {
         { status: 401 },
       )
     }
+    await connect_db()
     const body = await request.json()
     if (typeof body.accm !== 'boolean') {
       return NextResponse.json(
