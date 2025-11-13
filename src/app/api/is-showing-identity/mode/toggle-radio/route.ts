@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
-import { connect_db } from '@/settings'
 import { UserModel } from '@/entities'
+import { connect_db } from '@/settings'
 
 async function POST(request: Request) {
   try {
@@ -46,13 +46,16 @@ async function POST(request: Request) {
     const uid = session.user._id
     const user = await UserModel.findById(uid)
 
-    if(!user){
-       return NextResponse.json({
-        success:false,
-        message:"User not found"
-       },{
-        status:400
-       })
+    if (!user) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        {
+          status: 400,
+        },
+      )
     }
   } catch (error: unknown) {
     // TODO:

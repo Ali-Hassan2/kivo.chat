@@ -12,4 +12,4 @@ async function GET(request: Request) {
   )
 }
 
-export {GET}
+export { GET }
