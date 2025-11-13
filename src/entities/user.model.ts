@@ -9,6 +9,7 @@ export interface IUser extends Document {
   verficationExpiry: Date
   isVerifiedUser: boolean
   isAcceptingMessages: boolean
+  isShowingIdentity: boolean
   fullName?: string
   bio?: string
   isAnon: boolean
@@ -73,6 +74,10 @@ const UserSchema: Schema<IUser> = new Schema(
       default: false,
     },
     isAcceptingMessages: {
+      type: Boolean,
+      default: true,
+    },
+    isShowingIdentity: {
       type: Boolean,
       default: true,
     },
