@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt'
 import mongoose, { Document, Schema, Types } from 'mongoose'
 
 export interface IUser extends Document {
@@ -7,6 +8,8 @@ export interface IUser extends Document {
   verficationCode: string
   verficationExpiry: Date
   isVerifiedUser: boolean
+  isAcceptingMessages: boolean
+  isShowingIdentity: boolean
   fullName?: string
   bio?: string
   isAnon: boolean
@@ -23,6 +26,7 @@ export interface IUser extends Document {
   }
   createdAt?: Date
   updatedAt?: Date
+  comparePassword(candidatePassword: string): Promise<boolean>
 }
 
 const UserSchema: Schema<IUser> = new Schema(
@@ -35,10 +39,11 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     email: {
       type: String,
-      unique: true,
-      trim: true,
+      // unique: true,
+      // trim: true,
       required: [true, 'Email is required.'],
-      match: [/^\\S+@\\S+\\.\\S+$/, 'Please use a valid email address.'],
+      lowercase: true,
+      // match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.'],
     },
     password: {
       type: String,
@@ -66,11 +71,20 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     isAnon: {
       type: Boolean,
+      default: false,
+    },
+    isAcceptingMessages: {
+      type: Boolean,
+      default: true,
+    },
+    isShowingIdentity: {
+      type: Boolean,
+      default: true,
     },
     friends: [
       {
         type: Types.ObjectId,
-        ref: 'UserModel',
+        ref: 'User',
         default: [],
       },
     ],
@@ -108,8 +122,23 @@ const UserSchema: Schema<IUser> = new Schema(
   { timestamps: true },
 )
 
+// delete mongoose.models.User
 const UserModel =
   (mongoose.models.User as mongoose.Model<IUser>) ||
   mongoose.model<IUser>('User', UserSchema)
 
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next()
+  }
+  const salt = await bcrypt.genSalt(10)
+  this.password = await bcrypt.hash(this.password, salt)
+  next()
+})
+
+UserSchema.methods.comparePassword = async function (
+  candidatePassword: string,
+) {
+  return bcrypt.compare(candidatePassword, this.password)
+}
 export { UserModel, UserSchema }
