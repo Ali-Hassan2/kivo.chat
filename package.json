@@ -2,7 +2,6 @@
   "name": "chatapp",
   "version": "0.1.0",
   "private": true,
-  "type": "",
   "scripts": {
     "build": "next build",
     "clean": "rimraf .next .turbo *.tsbuildinfo node_modules",
@@ -11,7 +10,8 @@
     "lint": "tsc --noEmit && eslint \"./**/*.{ts,tsx,js,jsx}\"",
     "lint:fix": "tsc --noEmit && eslint --fix \"./**/*.{ts,tsx,js,jsx}\"",
     "ts": "tsc --noEmit",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "seed": "node src/app/seed/dev-user-seed.js"
   },
   "dependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -46,8 +46,10 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4",
     "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.2",
+    "ts-node-esm": "^0.0.6",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5",
+    "typescript": "^5.2.2",
     "typescript-eslint": "^8.46.0"
   },
   "main": "index.js",
