@@ -14,7 +14,10 @@
     "test": "jest --coverage"
   },
   "dependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@jest/core": "^30.2.0",
     "@react-email/components": "^0.5.7",
+    "babel-jest": "^30.2.0",
     "bcrypt": "^6.0.0",
     "colors": "^1.4.0",
     "dotenv": "^17.2.3",
@@ -37,7 +40,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9.37.0",
+    "eslint": "^9.39.1",
     "jest": "^30.2.0",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
