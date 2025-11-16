@@ -13,4 +13,3 @@ const hiddenUserMock = {
 }
 
 export { hiddenUserMock }
-
