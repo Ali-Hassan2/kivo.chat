@@ -1,8 +1,7 @@
 import 'dotenv/config'
-import { Types } from 'mongoose'
-import { UserModel } from '@/entities'
-import { connect_db } from '@/settings'
+import { UserModel } from '../../entities/user.model'
 import { memes } from '../data'
+import { connect_db } from '../../settings/db-connection'
 
 async function seedmemes() {
   try {
@@ -14,7 +13,7 @@ async function seedmemes() {
     const createdUsers = await UserModel.create(memes)
     console.log(
       'Users seeded successfully:',
-      createdUsers.map((u) => (u._id as Types.ObjectId).toString()),
+      createdUsers.map((u: any) => u._id.toString()),
     )
   } catch (err) {
     console.error('Seeding error:', err)
