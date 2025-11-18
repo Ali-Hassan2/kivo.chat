@@ -63,7 +63,7 @@ async function POST(request: Request) {
       )
     }
     const isFriend = user.friends.some(
-      (frnd) => frnd.toString() === (blocked._id as Types.ObjectId).toStrign(),
+      (frnd) => frnd.toString() === (blocked._id as Types.ObjectId).toString(),
     )
     if (isFriend) {
       user.friends.filter(

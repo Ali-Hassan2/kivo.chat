@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { Types } from 'mongoose'
 import { getServerSession } from 'next-auth'
 import { z } from 'zod'
 import { UserModel } from '@/entities'
@@ -51,7 +52,19 @@ async function POST(request: Request) {
       UserModel.findById(uid),
       UserModel.findOne({ username: parseResult.data }),
     ])
-    if (!user || unblocked) {
+    const isSame = uid === unblocked?._id
+    if (isSame) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Cannot Unblock yourself',
+        },
+        {
+          status: 400,
+        },
+      )
+    }
+    if (!user || !unblocked) {
       return NextResponse.json(
         {
           success: false,
@@ -61,6 +74,31 @@ async function POST(request: Request) {
           status: 400,
         },
       )
+    }
+    const isBlocked = user.blocks.some(
+      (blk) =>
+        blk._id.toString() === (unblocked._id as Types.ObjectId).toString(),
+    )
+    if (!isBlocked) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not blocked',
+        },
+        {
+          status: 400,
+        },
+      )
+    }
+    const isFriend = user.friends.some(
+      (frnd) =>
+        frnd.toString() === (unblocked._id as Types.ObjectId).toString(),
+    )
+    if (isFriend) {
+      return NextResponse.json({
+        success: false,
+        message: 'Cannot unblock your friend',
+      })
     }
   } catch (error) {}
 }
