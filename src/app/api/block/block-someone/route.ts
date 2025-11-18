@@ -62,6 +62,15 @@ async function POST(request: Request) {
         },
       )
     }
+    const isFriend = user.friends.some(
+      (frnd) => frnd.toString() === (blocked._id as Types.ObjectId).toStrign(),
+    )
+    if (isFriend) {
+      user.friends.filter(
+        (frnd) =>
+          frnd._id.toString() !== (blocked._id as Types.ObjectId).toString(),
+      )
+    }
     const target_id = blocked._id
     if (target_id === uid) {
       return NextResponse.json(

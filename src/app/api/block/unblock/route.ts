@@ -49,7 +49,7 @@ async function POST(request: Request) {
     const uid = session?.user?._id
     const [user, unblocked] = await Promise.all([
       UserModel.findById(uid),
-      UserModel.findOne({ username: username }),
+      UserModel.findOne({ username: parseResult.data }),
     ])
     if (!user || unblocked) {
       return NextResponse.json(

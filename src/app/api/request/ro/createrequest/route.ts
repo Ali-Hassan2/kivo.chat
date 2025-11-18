@@ -72,6 +72,25 @@ async function POST(request: Request) {
     //     },
     //   )
     // }
+
+    const senderBlockReceiver = sender.blocks.some(
+      (id) => id.toString() === (receiver._id as Types.ObjectId).toString(),
+    )
+
+    const receiverBlockSender = receiver.blocks.some(
+      (id) => id.toString() === (sender._id as Types.ObjectId).toString(),
+    )
+    if (senderBlockReceiver || receiverBlockSender) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Cannot send requests to blocked users',
+        },
+        {
+          status: 400,
+        },
+      )
+    }
     const isAlreadyFriend = receiver.friends.some(
       (f) => f._id.toString() === (sender._id as Types.ObjectId).toString(),
     )
