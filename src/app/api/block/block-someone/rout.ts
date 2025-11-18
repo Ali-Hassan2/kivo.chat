@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { Types } from 'mongoose'
 import { getServerSession } from 'next-auth'
 import { z } from 'zod'
 import { UserModel } from '@/entities'
@@ -32,7 +33,6 @@ async function POST(request: Request) {
         },
       )
     }
-
     const uid = session?.user?._id
     const { searchParams } = new URL(request.url)
     const rawUsername = searchParams.get('username') || ''
@@ -45,7 +45,6 @@ async function POST(request: Request) {
         errors: parseResult.error.issues.map((err) => err?.message),
       })
     }
-
     const [user, blocked] = await Promise.all([
       UserModel.findById(uid),
       UserModel.findOne({ username: parseResult.data }),
@@ -61,5 +60,35 @@ async function POST(request: Request) {
         },
       )
     }
-  } catch (error) {}
+
+    // is already blocked
+    const target_id = blocked._id
+    const isAlreadyBlocked = user.blocks.some(
+      (blocking) =>
+        blocking._id &&
+        blocking._id.toString() === target_id &&
+        target_id.toString(),
+    )
+    if (isAlreadyBlocked) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Already Blocked',
+        },
+        {
+          status: 400,
+        },
+      )
+    }
+    user.blocks.push(blocked)
+    await user.save()
+
+    return NextResponse.json({
+      success: true,
+      message: 'Got Blocked',
+    },{
+        status:200
+    })
+  } catch (error:unknown) {
+  }
 }
