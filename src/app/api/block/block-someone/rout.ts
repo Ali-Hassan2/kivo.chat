@@ -83,12 +83,32 @@ async function POST(request: Request) {
     user.blocks.push(blocked)
     await user.save()
 
-    return NextResponse.json({
-      success: true,
-      message: 'Got Blocked',
-    },{
-        status:200
-    })
-  } catch (error:unknown) {
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Got Blocked',
+      },
+      {
+        status: 200,
+      },
+    )
+  } catch (error: unknown) {
+    let errorMessage = 'unknown Error'
+    if (error instanceof Error) {
+      errorMessage = error?.message
+    } else if (typeof error === 'string') {
+      errorMessage = error
+    }
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal Server Error',
+        error: errorMessage,
+      },
+      {
+        status: 500,
+      },
+    )
   }
 }
