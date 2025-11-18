@@ -66,13 +66,13 @@ async function POST(request: Request) {
       (frnd) => frnd.toString() === (blocked._id as Types.ObjectId).toString(),
     )
     if (isFriend) {
-      user.friends.filter(
+      user.friends = user.friends.filter(
         (frnd) =>
           frnd._id.toString() !== (blocked._id as Types.ObjectId).toString(),
       )
     }
-    const target_id = blocked._id
-    if (target_id === uid) {
+    const isSame = uid.toString() === (blocked._id as Types.ObjectId).toString()
+    if (isSame) {
       return NextResponse.json(
         {
           success: false,
@@ -85,7 +85,7 @@ async function POST(request: Request) {
     }
     const isAlreadyBlocked = user.blocks.some(
       (blocking) =>
-        blocking.toString() === (target_id as Types.ObjectId).toString(),
+        blocking.toString() === (blocked._id as Types.ObjectId).toString(),
     )
     if (isAlreadyBlocked) {
       return NextResponse.json(
@@ -96,7 +96,7 @@ async function POST(request: Request) {
         { status: 400 },
       )
     }
-    user.blocks.push(target_id as Types.ObjectId)
+    user.blocks.push(blocked._id as Types.ObjectId)
     await user.save()
 
     return NextResponse.json(

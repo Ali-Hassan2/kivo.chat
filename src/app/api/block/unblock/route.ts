@@ -46,13 +46,13 @@ async function POST(request: Request) {
         errors: parseResult.error?.issues.map((err) => err?.message),
       })
     }
-
     const uid = session?.user?._id
     const [user, unblocked] = await Promise.all([
       UserModel.findById(uid),
       UserModel.findOne({ username: parseResult.data }),
     ])
-    const isSame = uid === unblocked?._id
+    const isSame =
+      uid?.toString() === (unblocked?._id as Types.ObjectId).toString()
     if (isSame) {
       return NextResponse.json(
         {
@@ -100,5 +100,39 @@ async function POST(request: Request) {
         message: 'Cannot unblock your friend',
       })
     }
-  } catch (error) {}
+    user.blocks = user.blocks.filter(
+      (fb) =>
+        fb._id.toString() !== (unblocked._id as Types.ObjectId).toString(),
+    )
+    await user.save()
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'User unblocked',
+        username: unblocked.username,
+      },
+      {
+        status: 200,
+      },
+    )
+  } catch (error: unknown) {
+    let errorMessage = 'unknown error'
+    if (error instanceof Error) {
+      errorMessage = error?.message
+    } else if (typeof error === 'string') {
+      errorMessage = error
+    }
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Server Error',
+      },
+      {
+        status: 500,
+      },
+    )
+  }
 }
+
+export { POST }
