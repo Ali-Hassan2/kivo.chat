@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { z } from 'zod'
+import { UserModel } from '@/entities'
 import { connect_db } from '@/settings'
 import { authOptions } from '../../auth/[...nextauth]/options'
 
@@ -20,7 +21,6 @@ async function POST(request: Request) {
         },
       )
     }
-
     const session = await getServerSession(authOptions)
     if (!session?.user?.username) {
       return NextResponse.json(
@@ -45,6 +45,22 @@ async function POST(request: Request) {
         errors: parseResult.error?.issues.map((err) => err?.message),
       })
     }
-    
+
+    const uid = session?.user?._id
+    const [user, unblocked] = await Promise.all([
+      UserModel.findById(uid),
+      UserModel.findOne({ username: username }),
+    ])
+    if (!user || unblocked) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Instances not found',
+        },
+        {
+          status: 400,
+        },
+      )
+    }
   } catch (error) {}
 }
