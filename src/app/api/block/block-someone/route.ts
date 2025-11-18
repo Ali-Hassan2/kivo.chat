@@ -60,14 +60,10 @@ async function POST(request: Request) {
         },
       )
     }
-
-    // is already blocked
     const target_id = blocked._id
     const isAlreadyBlocked = user.blocks.some(
       (blocking) =>
-        blocking._id &&
-        blocking._id.toString() === target_id &&
-        target_id.toString(),
+        blocking.toString() === (target_id as Types.ObjectId).toString(),
     )
     if (isAlreadyBlocked) {
       return NextResponse.json(
@@ -75,12 +71,10 @@ async function POST(request: Request) {
           success: false,
           message: 'Already Blocked',
         },
-        {
-          status: 400,
-        },
+        { status: 400 },
       )
     }
-    user.blocks.push(blocked)
+    user.blocks.push(target_id as Types.ObjectId)
     await user.save()
 
     return NextResponse.json(
@@ -99,7 +93,6 @@ async function POST(request: Request) {
     } else if (typeof error === 'string') {
       errorMessage = error
     }
-
     return NextResponse.json(
       {
         success: false,
@@ -112,3 +105,5 @@ async function POST(request: Request) {
     )
   }
 }
+
+export { POST }
