@@ -3,6 +3,7 @@ import { Types } from 'mongoose'
 import { getServerSession } from 'next-auth'
 import { z } from 'zod'
 import { UserModel } from '@/entities'
+import { connect_db } from '@/settings'
 import { authOptions } from '../../auth/[...nextauth]/options'
 
 const usernameQuerySchema = z
@@ -33,6 +34,7 @@ async function POST(request: Request) {
         },
       )
     }
+    await connect_db()
     const uid = session?.user?._id
     const { searchParams } = new URL(request.url)
     const rawUsername = searchParams.get('username') || ''
@@ -61,6 +63,17 @@ async function POST(request: Request) {
       )
     }
     const target_id = blocked._id
+    if (target_id === uid) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'You cannot Block Yourself',
+        },
+        {
+          status: 400,
+        },
+      )
+    }
     const isAlreadyBlocked = user.blocks.some(
       (blocking) =>
         blocking.toString() === (target_id as Types.ObjectId).toString(),
