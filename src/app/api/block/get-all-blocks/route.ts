@@ -1,66 +1,66 @@
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { UserModel } from '@/entities'
+import { connect_db } from '@/settings'
 import { authOptions } from '../../auth/[...nextauth]/options'
 
-async function GET(request: Request) {
-  if (request.method !== 'GET') {
-    return NextResponse.json(
-      {
-        success: false,
-        message: 'Method Not Allowed.',
-      },
-      {
-        status: 405,
-      },
-    )
-  }
+export async function GET(request: Request) {
   try {
     const session = await getServerSession(authOptions)
+    console.log('Session:', session)
     if (!session?.user?._id) {
+      console.error('No session or user ID found')
       return NextResponse.json(
         {
           success: false,
           message: 'No Session Found.',
         },
         {
-          status: 400,
+          status: 401,
         },
       )
     }
+    await connect_db()
     const uid = session?.user._id
-    const user = await UserModel.findById(uid)
+    const user = await UserModel.findById(uid).populate({
+      path: 'blocks',
+      select: 'username',
+    })
+    console.log('User:', user)
     if (!user) {
+      console.error('User not found in database')
       return NextResponse.json(
         {
           success: false,
           message: 'No User Found.',
         },
         {
-          status: 400,
+          status: 404,
         },
       )
     }
     const blocks = user.blocks
-    if (blocks.length === 0) {
+    console.log('Blocks:', blocks)
+    if (!blocks || blocks.length === 0) {
       return NextResponse.json(
         {
-          success: false,
-          message: 'Blocked Users not found',
+          success: true,
+          message: 'No blocked users yet',
+          data: [],
         },
         {
-          status: 400,
+          status: 200,
         },
       )
     }
-    
     return NextResponse.json(
       {
-        success: false,
-        message: 'Endpoint not yet implemented.',
+        success: true,
+        message: 'Blocked Users fetched',
+        data: blocks,
       },
       {
-        status: 501,
+        status: 200,
       },
     )
   } catch (error: unknown) {
@@ -81,5 +81,3 @@ async function GET(request: Request) {
     )
   }
 }
-
-export { GET }
