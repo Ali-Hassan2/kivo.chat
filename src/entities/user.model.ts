@@ -91,14 +91,14 @@ const UserSchema: Schema<IUser> = new Schema(
     requests: [
       {
         type: Types.ObjectId,
-        ref: 'UserModel',
+        ref: 'User',
         default: [],
       },
     ],
     blocks: [
       {
         type: Types.ObjectId,
-        ref: 'UserModel',
+        ref: 'User',
         default: [],
       },
     ],
