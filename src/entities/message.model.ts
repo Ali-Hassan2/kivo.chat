@@ -7,7 +7,6 @@ export interface IMessages extends Document {
   receiver: Types.ObjectId | IUser
   content: string
   conversation: Types.ObjectId | IConversation
-  isAnon: boolean
   attachments?: {
     url: string
     publicId: string
@@ -25,7 +24,6 @@ const MessageSchema: Schema<IMessages> = new Schema({
     required: [true, 'Message body is required.'],
   },
   conversation: { type: Types.ObjectId, ref: 'Conversation' },
-  isAnon: { type: Boolean, default: false },
   attachments: [
     {
       url: String,
