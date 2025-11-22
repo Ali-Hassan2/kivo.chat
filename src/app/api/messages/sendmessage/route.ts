@@ -9,7 +9,6 @@ import { connect_db } from '@/settings'
 async function POST(request: Request) {
   try {
     await connect_db()
-
     const user = await getCurrentUser()
     if (!user) {
       return NextResponse.json(
@@ -17,12 +16,10 @@ async function POST(request: Request) {
         { status: 401 },
       )
     }
-
     const { searchParams } = new URL(request.url)
     const rawReceiverId = searchParams.get('receiverId') || ''
     const decodedReceiverId = decodeURIComponent(rawReceiverId)
     const parsedId = ObjectIdGuard.safeParse(decodedReceiverId)
-
     if (!parsedId.success) {
       return NextResponse.json(
         {
@@ -35,7 +32,6 @@ async function POST(request: Request) {
     }
     const receiverId = parsedId.data
     const { content } = await request.json()
-
     if (!content || content.trim() === '') {
       return NextResponse.json(
         { success: false, message: 'Message content is required' },
@@ -72,21 +68,15 @@ async function POST(request: Request) {
         participants: [user._id, receiverId],
       })
     }
-
-    // Create message
     const message = await MessageModel.create({
       sender: user._id,
       receiver: receiverId,
       content: content.trim(),
       conversation: conversation._id,
     })
-
-    // Update conversation last message
     await ConversationModel.findByIdAndUpdate(conversation._id, {
       lastMessage: message._id,
     })
-
-    // Notify chat engine asynchronously (best-effort)
     ;(async () => {
       try {
         const notifyBody = {
@@ -99,7 +89,6 @@ async function POST(request: Request) {
             conversation: conversation._id,
           },
         }
-
         await fetch(`${CHAT_ENGINE}/message`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -109,7 +98,6 @@ async function POST(request: Request) {
         console.error('Failed to notify chat engine:', notifyErr)
       }
     })()
-
     return NextResponse.json(
       { success: true, message: 'Message sent successfully', data: message },
       { status: 201 },
@@ -119,7 +107,6 @@ async function POST(request: Request) {
     let errorMessage = 'Unknown error'
     if (error instanceof Error) errorMessage = error.message
     else if (typeof error === 'string') errorMessage = error
-
     return NextResponse.json(
       { success: false, message: 'Server error', error: errorMessage },
       { status: 500 },
