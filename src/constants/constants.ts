@@ -4,4 +4,5 @@ const REQUEST_STATUS = Object.freeze({
   REJECTED: 'rejected',
 } as const)
 
-export { REQUEST_STATUS }
+const CHAT_ENGINE = process.env.CHAT_ENGINE || 'http://localhost:8001'
+export { REQUEST_STATUS, CHAT_ENGINE }

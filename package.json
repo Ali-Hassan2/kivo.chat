@@ -17,6 +17,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@jest/core": "^30.2.0",
     "@react-email/components": "^0.5.7",
+    "axios": "^1.13.2",
     "babel-jest": "^30.2.0",
     "bcrypt": "^6.0.0",
     "colors": "^1.4.0",
