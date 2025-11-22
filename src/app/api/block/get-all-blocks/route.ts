@@ -4,7 +4,7 @@ import { UserModel } from '@/entities'
 import { connect_db } from '@/settings'
 import { authOptions } from '../../auth/[...nextauth]/options'
 
- async function GET(request: Request) {
+async function GET(request: Request) {
   try {
     const session = await getServerSession(authOptions)
     console.log('Session:', session)
@@ -82,4 +82,4 @@ import { authOptions } from '../../auth/[...nextauth]/options'
   }
 }
 
-export {GET}
+export { GET }
