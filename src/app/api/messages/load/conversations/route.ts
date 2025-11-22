@@ -38,7 +38,6 @@ async function GET(request: Request) {
           sender: { $ne: user._id },
           readBy: { $ne: user._id },
         })
-
         return {
           _id: con._id,
           participants: con.participants,
