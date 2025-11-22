@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server'
 import { Types } from 'mongoose'
-import { CHAT_ENGINE } from '@/constants'
 import { ConversationModel, MessageModel, UserModel } from '@/entities'
 import { ObjectIdGuard } from '@/guards'
 import { getCurrentUser } from '@/helpers'
 import { connect_db } from '@/settings'
 
-async function POST(request: Request) {
+const CHAT_ENGINE_URL = process.env.CHAT_ENGINE || 'http://localhost:8000'
+
+export async function POST(request: Request) {
   try {
     await connect_db()
     const user = await getCurrentUser()
@@ -89,7 +90,7 @@ async function POST(request: Request) {
             conversation: conversation._id,
           },
         }
-        await fetch(`${CHAT_ENGINE}/message`, {
+        await fetch(`${CHAT_ENGINE_URL}/message`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(notifyBody),
@@ -102,7 +103,7 @@ async function POST(request: Request) {
       { success: true, message: 'Message sent successfully', data: message },
       { status: 201 },
     )
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error in sendmessage:', error)
     let errorMessage = 'Unknown error'
     if (error instanceof Error) errorMessage = error.message
@@ -113,5 +114,3 @@ async function POST(request: Request) {
     )
   }
 }
-
-export { POST }
