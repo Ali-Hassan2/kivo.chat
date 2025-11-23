@@ -120,9 +120,4 @@ class PINMESSAGES {
   }
 }
 
-async function PATCH(request: Request) {
-  const pinHandler = new PINMESSAGES()
-  return await pinHandler.handle(request)
-}
-
-export { PATCH }
+export { PINMESSAGES }
