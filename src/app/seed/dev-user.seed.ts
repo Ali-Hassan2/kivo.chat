@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { UserModel } from '../../entities/user.model'
 import { connect_db } from '../../settings/db-connection'
-import { memes } from '../data'
+import { memes } from '../mock-data'
 
 async function seedmemes() {
   try {
