@@ -1,3 +1,4 @@
+import { printTreeView } from 'next/dist/build/utils'
 import { NextResponse } from 'next/server'
 import { Types } from 'mongoose'
 import { PIN_ACTIONS } from '@/constants'
@@ -93,9 +94,18 @@ class PINMESSAGES {
         null,
         400,
       )
-    const isParticipant = conversation.participants.some(
-      (ptr) => ptr._id && ptr._id.toString() === user?._id,
-    )
+    // const isParticipant = conversation.participants.some(
+    //   (ptr) => ptr._id === user?._id,
+    // )
+    let isParticipant = false
+    for (const ptr of conversation.participants) {
+      if (ptr.toString() === (user?._id as Types.ObjectId).toString()) {
+        isParticipant = true
+        break
+      }
+    }
+    console.log('the flag value is:', isParticipant)
+    console.log('The sessioned-user id is:', user?._id)
     if (!isParticipant)
       return PINMESSAGES.respond(false, 'Not a participant', null, 400)
     const isAlreadyPinned = conversation.pinnedMessages.some(
