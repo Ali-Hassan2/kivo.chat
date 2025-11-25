@@ -62,6 +62,21 @@ const form = ({ form, onSubmit }: RegisterFormProps) => {
               )
             }}
           />
+          <FormField
+            name="email"
+            control={form.control}
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )
+            }}
+          />
         </form>
       </Form>
     </>
