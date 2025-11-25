@@ -2,10 +2,9 @@ import bcrypt from 'bcrypt'
 import { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import TwitterProvider from 'next-auth/providers/twitter'
+import { MAX_AGE } from '@/constants'
 import { UserModel } from '@/entities'
 import { connect_db } from '@/settings'
-
-const MAX_AGE = 30 * 24 * 60 * 60
 
 const authOptions: NextAuthOptions = {
   providers: [

@@ -38,7 +38,6 @@ async function GET(request: Request) {
         message: 'User not found',
       })
     }
-    console.log('The user is ,', user)
     const userFlag = user.isAcceptingMessages
     return NextResponse.json({
       success: true,

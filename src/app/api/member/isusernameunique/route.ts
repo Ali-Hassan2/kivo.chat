@@ -37,7 +37,6 @@ async function GET(request: Request) {
       )
     }
     const { username } = usernameFinalShape.data
-    console.log('The username is', username)
     const isUsernameExist = await UserModel.findOne({
       username,
       isVerifiedUser: true,

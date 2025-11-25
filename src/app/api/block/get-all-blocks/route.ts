@@ -7,7 +7,6 @@ import { authOptions } from '../../auth/[...nextauth]/options'
 async function GET(request: Request) {
   try {
     const session = await getServerSession(authOptions)
-    console.log('Session:', session)
     if (!session?.user?._id) {
       console.error('No session or user ID found')
       return NextResponse.json(
@@ -26,7 +25,6 @@ async function GET(request: Request) {
       path: 'blocks',
       select: 'username',
     })
-    console.log('User:', user)
     if (!user) {
       console.error('User not found in database')
       return NextResponse.json(
@@ -40,7 +38,6 @@ async function GET(request: Request) {
       )
     }
     const blocks = user.blocks
-    console.log('Blocks:', blocks)
     if (!blocks || blocks.length === 0) {
       return NextResponse.json(
         {

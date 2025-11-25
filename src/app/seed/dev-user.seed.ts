@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { UserModel } from '../../entities/user.model'
 import { connect_db } from '../../settings/db-connection'
-import { memes } from '../mock-data'
+import { mock_users } from '../mock-data'
 
 async function seedmemes() {
   try {
@@ -10,7 +10,7 @@ async function seedmemes() {
     await UserModel.deleteMany({})
     console.log('Old users deleted.')
 
-    const createdUsers = await UserModel.create(memes)
+    const createdUsers = await UserModel.create(mock_users)
     console.log(
       'Users seeded successfully:',
       createdUsers.map((u: any) => u._id.toString()),

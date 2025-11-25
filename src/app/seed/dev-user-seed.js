@@ -9,7 +9,7 @@ if (!MONGO_STRING) {
   process.exit(1)
 }
 
-const memes = [
+const mock_users = [
   {
     _id: '68f74a56962880f2c850e151',
     username: 'basit',
@@ -100,7 +100,7 @@ async function seedDatabase() {
     console.log(colors.green('Old users deleted.'))
 
     console.log(colors.blue('Seeding new users...'))
-    const createdUsers = await UserModel.insertMany(memes) // <-- changed from sampleUsers to memes
+    const createdUsers = await UserModel.insertMany(mock_users)
     console.log(
       colors.green(
         `Users seeded successfully: ${createdUsers.length} users created`,

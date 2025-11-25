@@ -39,10 +39,7 @@ async function POST(request: Request) {
         { status: 400 },
       )
     }
-    console.log('Logged in user:', session.user.username)
     const targetUsername = parseResult.data
-    console.log('Target username:', targetUsername)
-
     const [sender, receiver] = await Promise.all([
       UserModel.findOne({ username: session.user.username }),
       UserModel.findOne({ username: targetUsername }),
@@ -76,7 +73,6 @@ async function POST(request: Request) {
     const senderBlockReceiver = sender.blocks.some(
       (id) => id.toString() === (receiver._id as Types.ObjectId).toString(),
     )
-
     const receiverBlockSender = receiver.blocks.some(
       (id) => id.toString() === (sender._id as Types.ObjectId).toString(),
     )

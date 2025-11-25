@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 
-const memes = [
+const mock_users = [
   {
     _id: '68f74a56962880f2c850e151',
     username: 'basit',
@@ -59,4 +59,4 @@ const memes = [
   },
 ]
 
-export { memes }
+export { mock_users }
