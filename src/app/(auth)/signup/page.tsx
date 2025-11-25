@@ -34,10 +34,18 @@ const page = () => {
   })
 
   useEffect(() => {
-    isUserNameIsUnique()
+    if (username.trim().length > 0) {
+      isUserNameIsUnique()
+    }
   }, [username])
 
-  return <div></div>
+  return(
+    <>
+    <div>
+        
+    </div>
+    </>
+  )
 }
 
 export default page
