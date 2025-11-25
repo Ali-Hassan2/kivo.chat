@@ -28,7 +28,6 @@ async function GET(request: Request) {
     const user = await UserModel.findOne({
       username: parseResult.data,
     }).select('username fullName bio pfp isAnon')
-
     if (!user) {
       return NextResponse.json(
         {
