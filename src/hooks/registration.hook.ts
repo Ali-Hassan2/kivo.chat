@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react'
 import { useToggle } from 'react-use'
 import { getUserNameUniqueness } from '@/services'
+import * as z from 'zod'
+import { signUpGuard } from '@/guards'
 
 const useRegistration = () => {
   const [username, setUsername] = useState<string>('')
@@ -11,6 +13,7 @@ const useRegistration = () => {
   const [usernameMessage, setUsernameMessage] = useState<string>('')
   const [loading, setLoading] = useToggle(false)
   const [isCheckingUsername, setIsCheckingUsername] = useToggle(false)
+  const [submitting, setIsSubmitting] = useToggle(false)
   const controllerRef = useRef<AbortController | null>(null)
 
   const isUserNameIsUnique = async () => {
@@ -30,6 +33,14 @@ const useRegistration = () => {
       setError(result.message || result.error || 'Unknown Error')
     } else {
       setUsernameMessage(result.message)
+    }
+  }
+
+  const Register = aync(data: z.infer<typeof signUpGuard>)=>{
+    try {
+        
+    } catch (error) {
+        
     }
   }
 

@@ -1,1 +1,1 @@
-export * from './check-username-uniqueness'
+export * from './check-username-uniqueness.service'
