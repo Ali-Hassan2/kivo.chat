@@ -25,7 +25,7 @@ const form = ({ form, onSubmit }: RegisterFormProps) => {
     isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess,
   } = useRegistration()
   const debounced = useDebounceCallback(
-    userChosenUsernameForRegistrationPurpose,
+     as any,
     3000,
   )
   return (
