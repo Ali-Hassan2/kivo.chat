@@ -29,7 +29,7 @@ const signUpGuard = z.object({
   username: usernameGuard,
   email: emailGuard,
   password: passwordGuard,
-  fullname: fullNameGuard,
+  fullName: fullNameGuard,
 })
 
 export { signUpGuard, usernameGuard }
