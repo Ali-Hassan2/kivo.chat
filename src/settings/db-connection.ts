@@ -12,17 +12,14 @@ const connect_db = async (): Promise<void> => {
     console.log(colors.yellow('DB already connected.'))
     return
   }
-
   try {
     const uri = process.env.MONGO_STRING
     if (!uri) {
       console.log(colors.red('MONGODB_URI not found in environment variables.'))
       process.exit(1)
     }
-
     const db = await mongoose.connect(uri)
     connection.isConnected = db.connections[0].readyState
-
     console.log(colors.green('Database connected successfully.'))
   } catch (error: unknown) {
     console.error(colors.red(`DB connection error: ${error}`))

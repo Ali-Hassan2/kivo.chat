@@ -70,11 +70,8 @@ const mock_users = [
 
 async function seedDatabase() {
   try {
-    console.log(colors.blue('Connecting to MongoDB...'))
     await mongoose.connect(MONGO_STRING)
     console.log(colors.green('Database connected successfully.'))
-
-    // Define User schema inline if needed
     const userSchema = new mongoose.Schema({
       username: String,
       email: String,
@@ -94,21 +91,13 @@ async function seedDatabase() {
     })
 
     const UserModel = mongoose.model('users', userSchema)
-
-    console.log(colors.yellow('Deleting existing users...'))
     await UserModel.deleteMany({})
-    console.log(colors.green('Old users deleted.'))
-
-    console.log(colors.blue('Seeding new users...'))
     const createdUsers = await UserModel.insertMany(mock_users)
     console.log(
       colors.green(
         `Users seeded successfully: ${createdUsers.length} users created`,
       ),
     )
-    createdUsers.forEach((u) => {
-      console.log(colors.cyan(`  - ${u.username} (${u.email})`))
-    })
   } catch (err) {
     console.error(colors.red(`Seeding error: ${err}`))
   } finally {

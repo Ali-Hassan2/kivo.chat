@@ -9,7 +9,6 @@ async function seedmemes() {
     console.log('Database connected')
     await UserModel.deleteMany({})
     console.log('Old users deleted.')
-
     const createdUsers = await UserModel.create(mock_users)
     console.log(
       'Users seeded successfully:',
