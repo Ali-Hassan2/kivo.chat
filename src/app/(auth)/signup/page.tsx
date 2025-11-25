@@ -20,6 +20,7 @@ const page = () => {
     setEmail,
     setPassword,
     isUserNameIsUnique,
+    submitting,
   } = useRegistration()
 
   const form = useForm<z.infer<typeof signUpGuard>>({

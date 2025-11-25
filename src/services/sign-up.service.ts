@@ -19,30 +19,26 @@ const createNewUser = async ({
 }: SignUpProps): Promise<ApiResponse> => {
   try {
     const response = await axios.post(
-      `${API_ENDPOINTS.getUserRegister}`,
+      API_ENDPOINTS.getUserRegister,
       {
-        body: {
-          username,
-          email,
-          password,
-          fullName,
-        },
+        username,
+        email,
+        password,
+        fullName,
       },
-      {
-        signal,
-      },
+      { signal },
     )
     return response.data
-  } catch (error: unknown) {
-    const axiosError = error as AxiosError<ApiResponse>
-    if (axiosError.code === 'ERR_CANCELLED') {
+  } catch (err: unknown) {
+    const axiosErr = err as AxiosError<ApiResponse>
+    if (axiosErr.code === 'ERR_CANCELED') {
       return {
         success: false,
-        message: 'request cancelled',
+        message: 'Request cancelled',
       }
     }
-    if (axiosError.response) {
-      return axiosError.response.data
+    if (axiosErr.response) {
+      return axiosErr.response.data
     }
     return {
       success: false,
