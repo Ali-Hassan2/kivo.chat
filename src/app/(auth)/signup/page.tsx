@@ -9,18 +9,18 @@ import { useRegistration } from '@/hooks'
 
 const page = () => {
   const {
-    username,
-    email,
-    password,
-    error,
-    loading,
-    usernameMessage,
-    isCheckingUsername,
-    setUsername,
-    setEmail,
-    setPassword,
-    isUserNameIsUnique,
-    submitting,
+    // username,
+    // email,
+    // password,
+    // error,
+    // loading,
+    // usernameMessage,
+    // isCheckingUsername,
+    // setUsername,
+    // setEmail,
+    // setPassword,
+    // isUserNameIsUnique,
+    // submitting,
   } = useRegistration()
 
   const form = useForm<z.infer<typeof signUpGuard>>({
@@ -39,11 +39,9 @@ const page = () => {
     }
   }, [username])
 
-  return(
+  return (
     <>
-    <div>
-        
-    </div>
+      <div></div>
     </>
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Loader2 } from 'lucide-react'
+import { useDebounceCallback } from 'usehooks-ts'
 import * as z from 'zod'
 import {
   Form,
@@ -18,7 +19,15 @@ interface RegisterFormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 const form = ({ form, onSubmit }: RegisterFormProps) => {
-  const { debounced, isCheckingUsername, usernameMessage } = useRegistration()
+  const {
+    userChosenUsernameForRegistrationPurpose,
+    usernameAvailabilityMessageForRegistrationProcess,
+    isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess,
+  } = useRegistration()
+  const debounced = useDebounceCallback(
+    userChosenUsernameForRegistrationPurpose,
+    3000,
+  )
   return (
     <>
       <Form {...form}>
@@ -40,11 +49,13 @@ const form = ({ form, onSubmit }: RegisterFormProps) => {
                       }}
                     />
                   </FormControl>
-                  {isCheckingUsername && <Loader2 className="animate-spin" />}
+                  {isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess && (
+                    <Loader2 className="animate-spin" />
+                  )}
                   <p
                     className={`${usernameMessage === 'Username is available.' ? 'text-green-500' : 'text-red-500'}`}
                   >
-                    {usernameMessage}
+                    {usernameAvailabilityMessageForRegistrationProcess}
                   </p>
                   <FormMessage />
                 </FormItem>

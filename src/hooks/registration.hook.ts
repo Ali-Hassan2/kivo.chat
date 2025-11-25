@@ -6,46 +6,78 @@ import { getUserNameUniqueness } from '@/services'
 import { createNewUser } from '@/services/sign-up.service'
 
 export const useRegistration = () => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [fullName, setFullName] = useState('')
-  const [error, setError] = useState('')
-  const [usernameMessage, setUsernameMessage] = useState('')
-  const [loading, toggleLoading] = useToggle(false)
-  const [isCheckingUsername, toggleCheckingUsername] = useToggle(false)
-  const [submitting, toggleSubmitting] = useToggle(false)
-  const controllerRef = useRef<AbortController | null>(null)
-
-  const isUserNameIsUnique = async () => {
-    if (controllerRef.current) {
-      controllerRef.current.abort()
+  const [
+    userFullNameForRegistrationPurpose,
+    setUserFullNameForRegistrationPurpose,
+  ] = useState<string>('')
+  const [
+    userChosenUsernameForRegistrationPurpose,
+    setUserChosenUsernameForRegistrationPurpose,
+  ] = useState<string>('')
+  const [
+    userEmailAddressForRegistrationPurpose,
+    setUserEmailAddressForRegistrationPurpose,
+  ] = useState<string>('')
+  const [
+    userPasswordForRegistrationPurpose,
+    setUserPasswordForRegistrationPurpose,
+  ] = useState<string>('')
+  const [
+    registrationErrorMessageForUserInterface,
+    setRegistrationErrorMessageForUserInterface,
+  ] = useState<string>('')
+  const [
+    usernameAvailabilityMessageForRegistrationProcess,
+    setUsernameAvailabilityMessageForRegistrationProcess,
+  ] = useState<string>('')
+  const [
+    isFormLoadingDuringRegistrationProcess,
+    toggleFormLoadingDuringRegistrationProcess,
+  ] = useToggle(false)
+  const [
+    isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess,
+    toggleUsernameBeingCheckedForAvailabilityDuringRegistrationProcess,
+  ] = useToggle(false)
+  const [
+    isFormSubmissionInProgressDuringRegistrationProcess,
+    toggleFormSubmissionInProgressDuringRegistrationProcess,
+  ] = useToggle(false)
+  const registrationAbortControllerReferenceForCurrentApiRequest =
+    useRef<AbortController | null>(null)
+  const checkIfUserChosenUsernameIsUniqueForRegistration = async () => {
+    if (registrationAbortControllerReferenceForCurrentApiRequest.current) {
+      registrationAbortControllerReferenceForCurrentApiRequest.current.abort()
     }
     const controller = new AbortController()
-    controllerRef.current = controller
-    setError('')
-    toggleCheckingUsername(true)
-    setUsernameMessage('')
+    registrationAbortControllerReferenceForCurrentApiRequest.current =
+      controller
+    setRegistrationErrorMessageForUserInterface('')
+    toggleUsernameBeingCheckedForAvailabilityDuringRegistrationProcess(true)
+    setUsernameAvailabilityMessageForRegistrationProcess('')
     const result = await getUserNameUniqueness({
-      username,
+      username: userChosenUsernameForRegistrationPurpose,
       signal: controller.signal,
     })
-    toggleCheckingUsername(false)
+    toggleUsernameBeingCheckedForAvailabilityDuringRegistrationProcess(false)
     if (!result.success) {
-      setError(result.message || result.error || 'Unknown Error')
+      setRegistrationErrorMessageForUserInterface(
+        result.message || result.error || 'Unknown Error',
+      )
     } else {
-      setUsernameMessage(result.message)
+      setUsernameAvailabilityMessageForRegistrationProcess(result.message)
     }
   }
-
-  const Register = async (data: z.infer<typeof signUpGuard>) => {
-    if (controllerRef.current) {
-      controllerRef.current.abort()
+  const submitUserRegistrationFormWithFullData = async (
+    data: z.infer<typeof signUpGuard>,
+  ) => {
+    if (registrationAbortControllerReferenceForCurrentApiRequest.current) {
+      registrationAbortControllerReferenceForCurrentApiRequest.current.abort()
     }
     const controller = new AbortController()
-    controllerRef.current = controller
-    setError('')
-    toggleSubmitting(true)
+    registrationAbortControllerReferenceForCurrentApiRequest.current =
+      controller
+    setRegistrationErrorMessageForUserInterface('')
+    toggleFormSubmissionInProgressDuringRegistrationProcess(true)
     const result = await createNewUser({
       username: data.username,
       email: data.email,
@@ -53,28 +85,30 @@ export const useRegistration = () => {
       fullName: data.fullName,
       signal: controller.signal,
     })
-    toggleSubmitting(false)
+    toggleFormSubmissionInProgressDuringRegistrationProcess(false)
     if (!result.success) {
-      setError(result.message || result.error || 'Unknown Error')
+      setRegistrationErrorMessageForUserInterface(
+        result.message || result.error || 'Unknown Error',
+      )
     }
     return result
   }
 
   return {
-    username,
-    email,
-    password,
-    fullName,
-    error,
-    usernameMessage,
-    loading,
-    isCheckingUsername,
-    submitting,
-    setUsername,
-    setFullName,
-    setEmail,
-    setPassword,
-    isUserNameIsUnique,
-    Register,
+    userFullNameForRegistrationPurpose,
+    setUserFullNameForRegistrationPurpose,
+    userChosenUsernameForRegistrationPurpose,
+    setUserChosenUsernameForRegistrationPurpose,
+    userEmailAddressForRegistrationPurpose,
+    setUserEmailAddressForRegistrationPurpose,
+    userPasswordForRegistrationPurpose,
+    setUserPasswordForRegistrationPurpose,
+    registrationErrorMessageForUserInterface,
+    usernameAvailabilityMessageForRegistrationProcess,
+    isFormLoadingDuringRegistrationProcess,
+    isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess,
+    isFormSubmissionInProgressDuringRegistrationProcess,
+    checkIfUserChosenUsernameIsUniqueForRegistration,
+    submitUserRegistrationFormWithFullData,
   }
 }
