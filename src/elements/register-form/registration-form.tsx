@@ -17,17 +17,18 @@ import { useRegistration } from '@/hooks'
 interface RegisterFormProps {
   form: z.infer<typeof signUpGuard>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  onUsernameChange: (username: string) => void
 }
-const form = ({ form, onSubmit }: RegisterFormProps) => {
+const RegistrationFormForApp = ({
+  form,
+  onSubmit,
+  onUsernameChange,
+}: RegisterFormProps) => {
   const {
     userChosenUsernameForRegistrationPurpose,
     usernameAvailabilityMessageForRegistrationProcess,
     isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess,
   } = useRegistration()
-  const debounced = useDebounceCallback(
-    userChosenUsernameForRegistrationPurpose,
-    3000,
-  )
   return (
     <>
       <Form {...form}>
@@ -45,7 +46,7 @@ const form = ({ form, onSubmit }: RegisterFormProps) => {
                       {...field}
                       onChange={(e) => {
                         field.onChange(e)
-                        debounced(e.target.value)
+                        onUsernameChange(e.target.value)
                       }}
                     />
                   </FormControl>
@@ -113,4 +114,4 @@ const form = ({ form, onSubmit }: RegisterFormProps) => {
   )
 }
 
-export default form
+export { RegistrationFormForApp }
