@@ -44,6 +44,7 @@ export const useRegistration = () => {
   ] = useToggle(false)
   const registrationAbortControllerReferenceForCurrentApiRequest =
     useRef<AbortController | null>(null)
+
   const checkIfUserChosenUsernameIsUniqueForRegistration = async () => {
     if (registrationAbortControllerReferenceForCurrentApiRequest.current) {
       registrationAbortControllerReferenceForCurrentApiRequest.current.abort()
@@ -112,3 +113,5 @@ export const useRegistration = () => {
     submitUserRegistrationFormWithFullData,
   }
 }
+
+// --foreground: oklch(0.141 0.005 285.823);

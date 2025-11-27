@@ -9,18 +9,8 @@ import { useRegistration } from '@/hooks'
 
 const page = () => {
   const {
-    // username,
-    // email,
-    // password,
-    // error,
-    // loading,
-    // usernameMessage,
-    // isCheckingUsername,
-    // setUsername,
-    // setEmail,
-    // setPassword,
-    // isUserNameIsUnique,
-    // submitting,
+    userChosenUsernameForRegistrationPurpose,
+    checkIfUserChosenUsernameIsUniqueForRegistration,
   } = useRegistration()
 
   const form = useForm<z.infer<typeof signUpGuard>>({
@@ -34,14 +24,16 @@ const page = () => {
   })
 
   useEffect(() => {
-    if (username.trim().length > 0) {
-      isUserNameIsUnique()
+    if (userChosenUsernameForRegistrationPurpose.trim().length > 1) {
+      checkIfUserChosenUsernameIsUniqueForRegistration()
     }
-  }, [username])
+  }, [userChosenUsernameForRegistrationPurpose])
 
   return (
     <>
-      <div></div>
+      <div className="h-[100vh] w-full border-4 border-red-400">
+        <Card
+      </div>
     </>
   )
 }
