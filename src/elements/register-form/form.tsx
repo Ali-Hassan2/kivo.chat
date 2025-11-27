@@ -77,6 +77,36 @@ const form = ({ form, onSubmit }: RegisterFormProps) => {
               )
             }}
           />
+          <FormField
+            name="password"
+            control={form.control}
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Password here" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )
+            }}
+          />
+          <FormField
+            name="fullName"
+            control={form.control}
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormLabel>FullName</FormLabel>
+                  <FormControl>
+                    <Input placehoder="You Fullname (...optional)" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )
+            }}
+          />
         </form>
       </Form>
     </>
