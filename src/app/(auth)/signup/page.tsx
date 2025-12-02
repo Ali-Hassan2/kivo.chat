@@ -42,7 +42,7 @@ const page = () => {
     if (username.trim().length > 1) {
       checkIfUserChosenUsernameIsUniqueForRegistration()
     }
-  }, 1000)
+  }, 2000)
 
   return (
     <>

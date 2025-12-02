@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Loader2 } from 'lucide-react'
 import { UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
@@ -14,6 +14,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { USERNAME_UNIQUENESS_SUCCESS } from '@/constants'
 import { signUpGuard } from '@/guards'
+import { showToast } from '@/utils'
 
 interface RegisterFormProps {
   form: UseFormReturn<z.infer<typeof signUpGuard>>
@@ -31,10 +32,23 @@ const RegistrationFormForApp = ({
   isCheckingUsernameUniqueness,
   isSubmittingForm,
 }: RegisterFormProps) => {
+  const handleSubmit = async (data: z.infer<typeof signUpGuard>) => {
+    if (userNameAvailabilityMessage !== USERNAME_UNIQUENESS_SUCCESS) {
+      showToast(userNameAvailabilityMessage, 'error')
+      return
+    }
+    const result = await onSubmit(data)
+    if (result?.success && result.message) {
+      showToast(result.message, 'success')
+    } else if (!result?.success && result?.message) {
+      showToast(result.message, 'error')
+    }
+  }
+
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
           <FormField
             name="username"
             control={form.control}
