@@ -4,7 +4,7 @@ import { verifyUser } from '@/services'
 
 interface useVerificationProps {
   verficationCode: string
-  username: string
+  username?: string
 }
 
 const useVerification = () => {
