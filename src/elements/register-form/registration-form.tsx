@@ -13,8 +13,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { USERNAME_UNIQUENESS_SUCCESS } from '@/constants'
+import { VERIFICATION_CODE } from '@/constants/page-urls'
 import { signUpGuard } from '@/guards'
-import { showToast } from '@/utils'
+import { showToast, useNavigation } from '@/utils'
 
 interface RegisterFormProps {
   form: UseFormReturn<z.infer<typeof signUpGuard>>
@@ -32,6 +33,7 @@ const RegistrationFormForApp = ({
   isCheckingUsernameUniqueness,
   isSubmittingForm,
 }: RegisterFormProps) => {
+  const { navigateTo } = useNavigation()
   const handleSubmit = async (data: z.infer<typeof signUpGuard>) => {
     if (userNameAvailabilityMessage !== USERNAME_UNIQUENESS_SUCCESS) {
       showToast(userNameAvailabilityMessage, 'error')
@@ -40,6 +42,9 @@ const RegistrationFormForApp = ({
     const result = await onSubmit(data)
     if (result?.success && result.message) {
       showToast(result.message, 'success')
+      setTimeout(() => {
+        navigateTo(VERIFICATION_CODE)
+      }, 2000)
     } else if (!result?.success && result?.message) {
       showToast(result.message, 'error')
     }

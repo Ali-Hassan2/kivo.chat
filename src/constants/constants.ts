@@ -15,6 +15,8 @@ const MAX_AGE = 30 * 24 * 60 * 60
 
 const CHAT_ENGINE = process.env.CHAT_ENGINE || 'http://localhost:8001'
 
+const EXCLUDED_LAYOUT_PAGES = ['/signup', '/signin', '/not_found']
+
 export {
   REQUEST_STATUS,
   CHAT_ENGINE,
