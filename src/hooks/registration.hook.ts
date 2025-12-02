@@ -31,6 +31,10 @@ export const useRegistration = () => {
     setUsernameAvailabilityMessageForRegistrationProcess,
   ] = useState<string>('')
   const [
+    RegistrationFormSubmissionResponse,
+    setRegistrationFormSubmissionResponse,
+  ] = useState<string>('')
+  const [
     isFormLoadingDuringRegistrationProcess,
     toggleFormLoadingDuringRegistrationProcess,
   ] = useToggle(false)
@@ -55,6 +59,7 @@ export const useRegistration = () => {
     setRegistrationErrorMessageForUserInterface('')
     toggleUsernameBeingCheckedForAvailabilityDuringRegistrationProcess(true)
     setUsernameAvailabilityMessageForRegistrationProcess('')
+
     const result = await getUserNameUniqueness({
       username: userChosenUsernameForRegistrationPurpose,
     })
@@ -78,6 +83,7 @@ export const useRegistration = () => {
     registrationAbortControllerReferenceForCurrentApiRequest.current =
       controller
     setRegistrationErrorMessageForUserInterface('')
+    setRegistrationFormSubmissionResponse('')
     toggleFormSubmissionInProgressDuringRegistrationProcess(true)
     const result = await createNewUser({
       username: data.username,
@@ -86,11 +92,15 @@ export const useRegistration = () => {
       fullName: data.fullName,
       signal: controller.signal,
     })
+    console.log('Only result is:', result)
+    console.log('The result message is:', result.message)
     toggleFormSubmissionInProgressDuringRegistrationProcess(false)
     if (!result.success) {
       setRegistrationErrorMessageForUserInterface(
         result.message || result.error || 'Unknown Error',
       )
+    } else {
+      setRegistrationFormSubmissionResponse(result.message)
     }
     return result
   }
@@ -102,12 +112,14 @@ export const useRegistration = () => {
     setUserChosenUsernameForRegistrationPurpose,
     userEmailAddressForRegistrationPurpose,
     setUserEmailAddressForRegistrationPurpose,
+    RegistrationFormSubmissionResponse,
     userPasswordForRegistrationPurpose,
     setUserPasswordForRegistrationPurpose,
     registrationErrorMessageForUserInterface,
     usernameAvailabilityMessageForRegistrationProcess,
     isFormLoadingDuringRegistrationProcess,
     isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess,
+    setRegistrationErrorMessageForUserInterface,
     isFormSubmissionInProgressDuringRegistrationProcess,
     checkIfUserChosenUsernameIsUniqueForRegistration,
     submitUserRegistrationFormWithFullData,
