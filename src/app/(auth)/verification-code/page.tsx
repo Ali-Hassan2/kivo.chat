@@ -15,7 +15,6 @@ import {
 import { Verification } from '@/elements'
 import { verifyCodeSchema } from '@/guards'
 import { useVerification } from '@/hooks/verification.hook'
-import { verifyUser } from '@/services'
 
 const page = () => {
   const form = useForm<z.infer<typeof verifyCodeSchema>>({
@@ -25,7 +24,7 @@ const page = () => {
     },
   })
   const searchParams = useSearchParams()
-  const username = searchParams.get('username')
+  const username = searchParams.get('username') ?? ''
   const {
     isVerifyingCode,
     verificationProcessErrorMessage,
@@ -53,7 +52,7 @@ const page = () => {
               onSubmit={(data) =>
                 verifyUserCode({
                   verficationCode: data.verficationCode,
-                  username,
+                  username: username,
                 })
               }
               verifyingProcessMessage={verificationProcessMessage}
