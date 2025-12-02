@@ -16,6 +16,8 @@ import { Verification } from '@/elements'
 import { verifyCodeSchema } from '@/guards'
 import { useVerification } from '@/hooks/verification.hook'
 
+export const dynamic = 'force-dynamic'
+
 const page = () => {
   const form = useForm<z.infer<typeof verifyCodeSchema>>({
     resolver: zodResolver(verifyCodeSchema),
