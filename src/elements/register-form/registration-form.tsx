@@ -1,5 +1,6 @@
 import React from 'react'
 import { Loader2 } from 'lucide-react'
+import { UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
 import { Button } from '@/components/ui/button'
 import {
@@ -15,8 +16,8 @@ import { USERNAME_UNIQUENESS_SUCCESS } from '@/constants'
 import { signUpGuard } from '@/guards'
 
 interface RegisterFormProps {
-  form: z.infer<typeof signUpGuard>
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  form: UseFormReturn<z.infer<typeof signUpGuard>>
+  onSubmit: (data: z.infer<typeof signUpGuard>) => Promise<void>
   onUsernameChange: (username: string) => void
   userNameAvailabilityMessage: string
   isCheckingUsernameUniqueness: string
