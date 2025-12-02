@@ -19,7 +19,6 @@ import { useRegistration } from '@/hooks'
 
 const page = () => {
   const {
-    userChosenUsernameForRegistrationPurpose,
     setUserChosenUsernameForRegistrationPurpose,
     checkIfUserChosenUsernameIsUniqueForRegistration,
     submitUserRegistrationFormWithFullData,

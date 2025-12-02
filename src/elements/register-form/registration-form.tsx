@@ -17,7 +17,7 @@ import { signUpGuard } from '@/guards'
 
 interface RegisterFormProps {
   form: UseFormReturn<z.infer<typeof signUpGuard>>
-  onSubmit: (data: z.infer<typeof signUpGuard>) => Promise<void>
+  onSubmit: (data: z.infer<typeof signUpGuard>) => Promise<any> | void
   onUsernameChange: (username: string) => void
   userNameAvailabilityMessage: string
   isCheckingUsernameUniqueness: string
