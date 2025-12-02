@@ -12,8 +12,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { KIVO_PROFILE } from '@/constants/page-urls'
 import { verifyCodeSchema } from '@/guards'
-import { showToast } from '@/utils'
+import { showToast, useNavigation } from '@/utils'
 
 interface VerificationFormProps {
   form: UseFormReturn<z.infer<typeof verifyCodeSchema>>
@@ -30,9 +31,13 @@ const Verification = ({
   isVerifyingCode,
   verifyProcessError,
 }: VerificationFormProps) => {
+  const { navigateTo } = useNavigation()
   useEffect(() => {
     if (verifyingProcessMessage) {
       showToast(verifyingProcessMessage, 'success')
+      setTimeout(() => {
+        navigateTo(KIVO_PROFILE)
+      }, 1000)
     }
   }, [verifyingProcessMessage])
   useEffect(() => {

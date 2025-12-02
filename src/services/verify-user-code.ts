@@ -17,9 +17,10 @@ const verifyUser = async ({
   try {
     const response = await axios.post(
       `${API_ENDPOINTS.verifyUserCode}?username=${username}`,
-      { verificationCode },
+      { verifyCode: verificationCode },
       { signal },
     )
+    console.log('The verificaation code is:', verificationCode)
     return response.data
   } catch (error: unknown) {
     const axiosError = error as AxiosError<ApiResponse>

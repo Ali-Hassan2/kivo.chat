@@ -12,6 +12,7 @@ async function POST(request: Request) {
       : ''
     const body = await request.json().catch(() => ({}))
     const verifyCode = body?.verifyCode
+    console.log('The verifyCode is:', verifyCode)
     if (!decodedUsername || !verifyCode) {
       return NextResponse.json(
         {

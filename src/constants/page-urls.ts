@@ -1,3 +1,5 @@
 const VERIFICATION_CODE = '/verification-code'
 
-export { VERIFICATION_CODE }
+const KIVO_PROFILE = '/dashboard'
+
+export { VERIFICATION_CODE, KIVO_PROFILE }
