@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { useSearchParams } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,6 +15,7 @@ import { verifyCodeSchema } from '@/guards'
 import { useVerification } from '@/hooks/verification.hook'
 
 export const dynamic = 'force-dynamic'
+;('use client')
 
 const page = () => {
   const form = useForm<z.infer<typeof verifyCodeSchema>>({
