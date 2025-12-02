@@ -120,7 +120,7 @@ const RegistrationFormForApp = ({
               )
             }}
           />
-          <Button type="submit" disbaled={isSubmittingForm} className="mt-4">
+          <Button type="submit" disabled={isSubmittingForm} className="mt-4">
             {isSubmittingForm ? (
               <>
                 <Loader2 className="animate-spin" />
