@@ -2,10 +2,9 @@ import { useRef, useState } from 'react'
 import { useToggle } from 'react-use'
 import * as z from 'zod'
 import { signUpGuard } from '@/guards'
-import { getUserNameUniqueness } from '@/services'
-import { createNewUser } from '@/services/sign-up.service'
+import { createNewUser, getUserNameUniqueness } from '@/services'
 
-export const useRegistration = () => {
+const useRegistration = () => {
   const [
     userFullNameForRegistrationPurpose,
     setUserFullNameForRegistrationPurpose,
@@ -92,8 +91,6 @@ export const useRegistration = () => {
       fullName: data.fullName,
       signal: controller.signal,
     })
-    console.log('Only result is:', result)
-    console.log('The result message is:', result.message)
     toggleFormSubmissionInProgressDuringRegistrationProcess(false)
     if (!result.success) {
       setRegistrationErrorMessageForUserInterface(
@@ -125,5 +122,7 @@ export const useRegistration = () => {
     submitUserRegistrationFormWithFullData,
   }
 }
+
+export { useRegistration }
 
 // --foreground: oklch(0.141 0.005 285.823);

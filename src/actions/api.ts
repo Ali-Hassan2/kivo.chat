@@ -3,6 +3,7 @@ const BASE_URL = process.env.BACKEND_URL
 const API_ENDPOINTS = {
   confirmUniqueUsername: `/api/member/isusernameunique`,
   getUserRegister: `/api/member/signup`,
+  verifyUserCode: `/api/member/verifycode`,
 }
 
 export { API_ENDPOINTS }
