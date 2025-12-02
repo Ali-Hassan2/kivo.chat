@@ -23,6 +23,9 @@ const page = () => {
     setUserChosenUsernameForRegistrationPurpose,
     checkIfUserChosenUsernameIsUniqueForRegistration,
     submitUserRegistrationFormWithFullData,
+    usernameAvailabilityMessageForRegistrationProcess,
+    isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess,
+    isFormSubmissionInProgressDuringRegistrationProcess,
   } = useRegistration()
 
   const form = useForm<z.infer<typeof signUpGuard>>({
@@ -40,13 +43,13 @@ const page = () => {
     if (username.trim().length > 1) {
       checkIfUserChosenUsernameIsUniqueForRegistration()
     }
-  }, 1000) // 1 second debounce
+  }, 1000)
 
   return (
     <>
-      <div className="flex h-[100vh] w-full items-center justify-center border-4 border-red-400">
-        <Card className="flex w-full max-w-md flex-col items-center justify-center">
-          <CardHeader className="flex w-full flex-col items-center justify-center border-4 text-center">
+      <div className="flex h-[100vh] w-full items-center justify-center bg-white">
+        <Card className="flex w-full max-w-md flex-col items-center justify-center shadow-lg">
+          <CardHeader className="flex w-full flex-col items-center justify-center text-center">
             <CardTitle>
               <Label className="text-3xl">Member Registration.</Label>
             </CardTitle>
@@ -55,11 +58,22 @@ const page = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <RegistrationFormForApp
-              form={form}
-              onSubmit={submitUserRegistrationFormWithFullData}
-              onUsernameChange={debouncedCheckUsername}
-            />
+            <div className="w-[400px]">
+              <RegistrationFormForApp
+                form={form}
+                onSubmit={submitUserRegistrationFormWithFullData}
+                onUsernameChange={debouncedCheckUsername}
+                userNameAvailabilityMessage={
+                  usernameAvailabilityMessageForRegistrationProcess
+                }
+                isCheckingUsernameUniqueness={
+                  isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess
+                }
+                isSubmittingForm={
+                  isFormSubmissionInProgressDuringRegistrationProcess
+                }
+              />
+            </div>
           </CardContent>
         </Card>
       </div>

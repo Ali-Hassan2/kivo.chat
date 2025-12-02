@@ -18,6 +18,7 @@ async function POST(request: Request) {
   await connect_db()
   try {
     const { username, email, password } = await request.json()
+    console.log('The---------', username, email, password)
     const hashedPassword = await bcrypt.hash(password, 10)
     const userByUsername = await UserModel.findOne({ username })
     if (userByUsername) {

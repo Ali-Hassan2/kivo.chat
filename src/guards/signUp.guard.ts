@@ -7,12 +7,10 @@ const usernameGuard = z
     message: 'Username should not have special characters.',
   })
   .min(4, { message: 'Username should be at least 4 characters long.' })
-  .max(10, { message: 'Username can be up to 10 characters long.' })
 const emailGuard = z.email({ message: 'Invalid email.' })
 const passwordGuard = z
   .string()
   .min(4, { message: 'Password must be at least 4 characters long.' })
-  .max(8, { message: 'Password can be at most 8 characters long.' })
   .regex(/[A-Z]/, {
     message: 'Password must contain at least one uppercase letter.',
   })

@@ -57,17 +57,17 @@ export const useRegistration = () => {
     setUsernameAvailabilityMessageForRegistrationProcess('')
     const result = await getUserNameUniqueness({
       username: userChosenUsernameForRegistrationPurpose,
-      signal: controller.signal,
     })
     toggleUsernameBeingCheckedForAvailabilityDuringRegistrationProcess(false)
     if (!result.success) {
-      setRegistrationErrorMessageForUserInterface(
+      setUsernameAvailabilityMessageForRegistrationProcess(
         result.message || result.error || 'Unknown Error',
       )
     } else {
       setUsernameAvailabilityMessageForRegistrationProcess(result.message)
     }
   }
+
   const submitUserRegistrationFormWithFullData = async (
     data: z.infer<typeof signUpGuard>,
   ) => {

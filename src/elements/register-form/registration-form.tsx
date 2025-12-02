@@ -1,7 +1,7 @@
 import React from 'react'
 import { Loader2 } from 'lucide-react'
-import { useDebounceCallback } from 'usehooks-ts'
 import * as z from 'zod'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -11,24 +11,25 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { USERNAME_UNIQUENESS_SUCCESS } from '@/constants'
 import { signUpGuard } from '@/guards'
-import { useRegistration } from '@/hooks'
 
 interface RegisterFormProps {
   form: z.infer<typeof signUpGuard>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   onUsernameChange: (username: string) => void
+  userNameAvailabilityMessage: string
+  isCheckingUsernameUniqueness: string
+  isSubmittingForm: string
 }
 const RegistrationFormForApp = ({
   form,
   onSubmit,
   onUsernameChange,
+  userNameAvailabilityMessage,
+  isCheckingUsernameUniqueness,
+  isSubmittingForm,
 }: RegisterFormProps) => {
-  const {
-    userChosenUsernameForRegistrationPurpose,
-    usernameAvailabilityMessageForRegistrationProcess,
-    isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess,
-  } = useRegistration()
   return (
     <>
       <Form {...form}>
@@ -38,8 +39,8 @@ const RegistrationFormForApp = ({
             control={form.control}
             render={({ field }) => {
               return (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
+                <FormItem className="flex flex-col gap-3">
+                  <FormLabel className="">Username</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Username"
@@ -48,16 +49,19 @@ const RegistrationFormForApp = ({
                         field.onChange(e)
                         onUsernameChange(e.target.value)
                       }}
+                      className="outline-none"
                     />
                   </FormControl>
-                  {isUsernameBeingCheckedForAvailabilityDuringRegistrationProcess && (
-                    <Loader2 className="animate-spin" />
-                  )}
-                  <p
-                    className={`${usernameMessage === 'Username is available.' ? 'text-green-500' : 'text-red-500'}`}
-                  >
-                    {usernameAvailabilityMessageForRegistrationProcess}
-                  </p>
+                  <div className="-mt-1 mb-3">
+                    {isCheckingUsernameUniqueness && (
+                      <Loader2 className="animate-spin" />
+                    )}
+                    <p
+                      className={`${userNameAvailabilityMessage === USERNAME_UNIQUENESS_SUCCESS ? 'text-green-500' : 'text-red-500'}`}
+                    >
+                      {userNameAvailabilityMessage}
+                    </p>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )
@@ -68,7 +72,7 @@ const RegistrationFormForApp = ({
             control={form.control}
             render={({ field }) => {
               return (
-                <FormItem>
+                <FormItem className="flex flex-col gap-2">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input placeholder="Your email" {...field} />
@@ -83,10 +87,14 @@ const RegistrationFormForApp = ({
             control={form.control}
             render={({ field }) => {
               return (
-                <FormItem>
+                <FormItem className="mt-2 flex flex-col gap-2">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="Password here" {...field} />
+                    <Input
+                      placeholder="Password here"
+                      type="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -98,16 +106,29 @@ const RegistrationFormForApp = ({
             control={form.control}
             render={({ field }) => {
               return (
-                <FormItem>
+                <FormItem className="mt-2 flex flex-col gap-2">
                   <FormLabel>FullName</FormLabel>
                   <FormControl>
-                    <Input placehoder="You Fullname (...optional)" {...field} />
+                    <Input
+                      placeholder="You Fullname (...optional)"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )
             }}
           />
+          <Button type="submit" disbaled={isSubmittingForm} className="mt-4">
+            {isSubmittingForm ? (
+              <>
+                <Loader2 className="animate-spin" />
+                submitting
+              </>
+            ) : (
+              <p>Register</p>
+            )}
+          </Button>
         </form>
       </Form>
     </>
