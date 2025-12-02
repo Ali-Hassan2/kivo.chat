@@ -20,8 +20,8 @@ interface RegisterFormProps {
   onSubmit: (data: z.infer<typeof signUpGuard>) => Promise<any> | void
   onUsernameChange: (username: string) => void
   userNameAvailabilityMessage: string
-  isCheckingUsernameUniqueness: string
-  isSubmittingForm: string
+  isCheckingUsernameUniqueness: boolean
+  isSubmittingForm: boolean
 }
 const RegistrationFormForApp = ({
   form,
