@@ -25,7 +25,7 @@ const useVerification = () => {
     const controller = new AbortController()
     verificationControllerForCurrentApiRequest.current = controller
     const result = await verifyUser({
-      verificationCodeForVerificationProcess,
+      verificationCode: verificationCodeForVerificationProcess,
       signal: controller.signal,
     })
     if (!result.success) {

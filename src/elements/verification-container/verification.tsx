@@ -1,16 +1,19 @@
-import { useState } from 'react'
-import { Button } from '@react-email/components'
+import { useEffect } from 'react'
+import { Loader2 } from 'lucide-react'
 import { UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
+import { Button } from '@/components/ui/button'
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { verifyCodeSchema } from '@/guards'
+import { showToast } from '@/utils'
 
 interface VerificationFormProps {
   form: UseFormReturn<z.infer<typeof verifyCodeSchema>>
@@ -20,30 +23,59 @@ interface VerificationFormProps {
   verifyProcessError: string
 }
 
-const Verification = () => {
+const Verification = ({
+  form,
+  onSubmit,
+  verifyingProcessMessage,
+  isVerifyingCode,
+  verifyProcessError,
+}: VerificationFormProps) => {
+  useEffect(() => {
+    if (verifyingProcessMessage) {
+      showToast(verifyingProcessMessage, 'success')
+    }
+  }, [verifyingProcessMessage])
+  useEffect(() => {
+    if (verifyProcessError) {
+      showToast(verifyProcessError, 'error')
+    }
+  }, [verifyProcessError])
   return (
-    <div className="flex h-[100vh] w-[100vw] items-center justify-center border-4 border-red-500">
-      <Card className="w-100">
-        <CardHeader>
-          <CardTitle className="mx-auto text-2xl">Kivo Verification</CardTitle>
-          <CardDescription className="mt-2">
-            Please check your provided mail to get the code. Enter the valid
-            code to proceed.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="w-full border-2 border-blue-400 py-24">
-            <Input
-              placeholder="Verificaiton code here...."
-              type="number"
-              onChange={(e) => setVerificationCode(e.target.value)}
-              className="py-6"
-            />
-            <Button>Verify</Button>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          name="verficationCode"
+          control={form.control}
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>Verification Code</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Verification Code here..."
+                    {...field}
+                    className="mt-2"
+                  />
+                </FormControl>
+              </FormItem>
+            )
+          }}
+        />
+        <Button
+          type="submit"
+          disabled={isVerifyingCode}
+          className="mt-4 w-full cursor-pointer rounded-xl border-2 border-black bg-transparent text-black transition-all duration-300 hover:border-none hover:text-white"
+        >
+          {isVerifyingCode ? (
+            <>
+              <Loader2 className="animate-spin" />
+            </>
+          ) : (
+            <p>Verify</p>
+          )}
+        </Button>
+      </form>
+    </Form>
   )
 }
 

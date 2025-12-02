@@ -6,8 +6,10 @@ interface verifyUserProps {
   verificationCode: string
   signal?: AbortSignal
 }
+
 const verifyUser = async ({
   verificationCode,
+  signal,
 }: verifyUserProps): Promise<ApiResponse> => {
   console.log('The verificationCode is:', verificationCode)
   try {
