@@ -4,17 +4,20 @@ import { ApiResponse } from '@/types'
 
 interface verifyUserProps {
   verificationCode: string
+  username: string
   signal?: AbortSignal
 }
 
 const verifyUser = async ({
   verificationCode,
+  username,
   signal,
 }: verifyUserProps): Promise<ApiResponse> => {
   console.log('The verificationCode is:', verificationCode)
   try {
-    const response = await axios.get(
-      `${API_ENDPOINTS.verifyUserCode}?verifyCode=${verificationCode}`,
+    const response = await axios.post(
+      `${API_ENDPOINTS.verifyUserCode}?username=${username}`,
+      { verificationCode },
       { signal },
     )
     return response.data

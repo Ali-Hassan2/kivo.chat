@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { useSearchParams } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -14,6 +15,7 @@ import {
 import { Verification } from '@/elements'
 import { verifyCodeSchema } from '@/guards'
 import { useVerification } from '@/hooks/verification.hook'
+import { verifyUser } from '@/services'
 
 const page = () => {
   const form = useForm<z.infer<typeof verifyCodeSchema>>({
@@ -22,7 +24,8 @@ const page = () => {
       verficationCode: '',
     },
   })
-
+  const searchParams = useSearchParams()
+  const username = searchParams.get('username')
   const {
     isVerifyingCode,
     verificationProcessErrorMessage,
@@ -47,7 +50,12 @@ const page = () => {
           <CardContent>
             <Verification
               form={form}
-              onSubmit={verifyUserCode}
+              onSubmit={(data) =>
+                verifyUserCode({
+                  verficationCode: data.verficationCode,
+                  username,
+                })
+              }
               verifyingProcessMessage={verificationProcessMessage}
               verifyProcessError={verificationProcessErrorMessage}
               isVerifyingCode={isVerifyingCode}

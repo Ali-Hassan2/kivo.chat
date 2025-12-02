@@ -2,11 +2,12 @@ import React, { useRef, useState } from 'react'
 import { useToggle } from 'react-use'
 import { verifyUser } from '@/services'
 
+interface useVerificationProps {
+  verficationCode: string
+  username: string
+}
+
 const useVerification = () => {
-  const [
-    verificationCodeForVerificationProcess,
-    setVerificationCodeForVerificationProcess,
-  ] = useState<string>('')
   const [verificationProcessMessage, setverificationProcessMessage] =
     useState<string>('')
   const [isVerifyingCode, setisVerifyingCode] = useToggle(false)
@@ -15,7 +16,10 @@ const useVerification = () => {
   const verificationControllerForCurrentApiRequest =
     useRef<AbortController | null>(null)
 
-  const verifyUserCode = async () => {
+  const verifyUserCode = async ({
+    verficationCode,
+    username,
+  }: useVerificationProps) => {
     setverificationProcessMessage('')
     setisVerifyingCode(false)
     setVerificationErrorMessage('')
@@ -25,7 +29,8 @@ const useVerification = () => {
     const controller = new AbortController()
     verificationControllerForCurrentApiRequest.current = controller
     const result = await verifyUser({
-      verificationCode: verificationCodeForVerificationProcess,
+      verificationCode: verficationCode,
+      username: username,
       signal: controller.signal,
     })
     if (!result.success) {
