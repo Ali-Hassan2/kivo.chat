@@ -43,7 +43,7 @@ const RegistrationFormForApp = ({
     if (result?.success && result.message) {
       showToast(result.message, 'success')
       setTimeout(() => {
-        navigateTo(VERIFICATION_CODE)
+        navigateTo(`${VERIFICATION_CODE}?username=${data.username}`)
       }, 2000)
     } else if (!result?.success && result?.message) {
       showToast(result.message, 'error')
