@@ -1,5 +1,6 @@
+'use client'
+
 import React from 'react'
-import { useSearchParams } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -10,22 +11,24 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { QUERY_PARAMS } from '@/constants'
 import { Verification } from '@/elements'
 import { verifyCodeSchema } from '@/guards'
 import { useVerification } from '@/hooks/verification.hook'
-
-export const dynamic = 'force-dynamic'
-;('use client')
+import { QueryParams } from '@/utils'
 
 const page = () => {
+  const username = QueryParams({
+    key: QUERY_PARAMS.USERNAME,
+    defaultValue: QUERY_PARAMS.DEFAULT,
+  })
   const form = useForm<z.infer<typeof verifyCodeSchema>>({
     resolver: zodResolver(verifyCodeSchema),
     defaultValues: {
       verficationCode: '',
     },
   })
-  const searchParams = useSearchParams()
-  const username = searchParams.get('username') ?? ''
+
   const {
     isVerifyingCode,
     verificationProcessErrorMessage,

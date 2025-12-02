@@ -9,6 +9,11 @@ enum PIN_ACTIONS {
   UNPIN = 'UNPIN',
 }
 
+const QUERY_PARAMS = {
+  USERNAME: 'username',
+  DEFAULT: 'guest',
+}
+
 const USERNAME_UNIQUENESS_SUCCESS = 'Username is available.'
 
 const MAX_AGE = 30 * 24 * 60 * 60
@@ -23,4 +28,5 @@ export {
   PIN_ACTIONS,
   MAX_AGE,
   USERNAME_UNIQUENESS_SUCCESS,
+  QUERY_PARAMS,
 }
