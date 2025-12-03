@@ -37,6 +37,9 @@ const useAuth = () => {
   }
 
   const authProceed = async (data: z.infer<typeof signInGuard>) => {
+    setError('')
+    setSuccess('')
+    setauthSignInProcessLoading(true)
     try {
       if (data.rememberMe) {
         localStorage.setItem('remembered', data.identifier)
@@ -51,7 +54,28 @@ const useAuth = () => {
       console.log('The ====response,', response)
       if (!response?.ok) {
         setError(response?.error || 'Error occured while procceeding auth.')
+      } else {
+        setSuccess('Auth Procceeded, welcome.')
       }
-    } catch (error: unknown) {}
+    } catch (error: unknown) {
+      let errorMessage = ''
+      if (error instanceof Error) {
+        errorMessage = error.message
+      }
+      if (typeof error === 'string') {
+        errorMessage = error
+      }
+
+      setError(errorMessage)
+    } finally {
+      setauthSignInProcessLoading(false)
+    }
+  }
+
+  return {
+    authSignInProcessLoading,
+    authProcessFinalizedStatusResposne,
   }
 }
+
+export { useAuth }
