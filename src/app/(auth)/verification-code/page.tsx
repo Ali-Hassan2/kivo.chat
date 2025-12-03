@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -37,36 +37,38 @@ const page = () => {
   } = useVerification()
 
   return (
-    <div className="flex h-[100vh] w-[100vw] items-center justify-center bg-white">
-      <div className="shadow-kivo rounded-kivo">
-        <Card className="w-100">
-          <CardHeader>
-            <CardTitle className="mx-auto text-2xl">
-              Kivo Verification
-            </CardTitle>
-            <div className="mx-auto w-4/5 border-1"></div>
-            <CardDescription className="mt-2">
-              Please check your provided mail to get the code. Enter the valid
-              code to proceed.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Verification
-              form={form}
-              onSubmit={(data) =>
-                verifyUserCode({
-                  verficationCode: data.verficationCode,
-                  username: username,
-                })
-              }
-              verifyingProcessMessage={verificationProcessMessage}
-              verifyProcessError={verificationProcessErrorMessage}
-              isVerifyingCode={isVerifyingCode}
-            />
-          </CardContent>
-        </Card>
+    <Suspense fallback={null}>
+      <div className="flex h-[100vh] w-[100vw] items-center justify-center bg-white">
+        <div className="shadow-kivo rounded-kivo">
+          <Card className="w-100">
+            <CardHeader>
+              <CardTitle className="mx-auto text-2xl">
+                Kivo Verification
+              </CardTitle>
+              <div className="mx-auto w-4/5 border-1"></div>
+              <CardDescription className="mt-2">
+                Please check your provided mail to get the code. Enter the valid
+                code to proceed.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Verification
+                form={form}
+                onSubmit={(data) =>
+                  verifyUserCode({
+                    verficationCode: data.verficationCode,
+                    username: username,
+                  })
+                }
+                verifyingProcessMessage={verificationProcessMessage}
+                verifyProcessError={verificationProcessErrorMessage}
+                isVerifyingCode={isVerifyingCode}
+              />
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
+    </Suspense>
   )
 }
 
