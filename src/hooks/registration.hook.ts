@@ -1,3 +1,5 @@
+'use client'
+
 import { useRef, useState } from 'react'
 import { useToggle } from 'react-use'
 import * as z from 'zod'

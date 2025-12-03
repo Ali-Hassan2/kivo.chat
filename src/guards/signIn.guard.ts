@@ -1,14 +1,15 @@
 import { z } from 'zod'
 
-const usernameGuard = z
-  .string()
-  .trim()
-  .regex(/^[a-zA-Z0-9]+$/, {
-    message: 'Username should not have special characters.',
-  })
-  .min(4, { message: 'Username should be at least 4 characters long.' })
-  .max(10, { message: 'Username can be up to 10 characters long.' })
-const emailGuard = z.email({ message: 'Invalid email' })
+// const usernameGuard = z
+//   .string()
+//   .trim()
+//   .regex(/^[a-zA-Z0-9]+$/, {
+//     message: 'Username should not have special characters.',
+//   })
+//   .min(4, { message: 'Username should be at least 4 characters long.' })
+//   .max(10, { message: 'Username can be up to 10 characters long.' })
+// const emailGuard = z.email({ message: 'Invalid email' })
+const identifierGuard = z.string()
 const passwordGuard = z
   .string()
   .min(4, { message: 'Password must be at least 4 characters long.' })
@@ -20,11 +21,14 @@ const passwordGuard = z
     message: 'Password must contain at least one lowercase letter.',
   })
   .regex(/[0-9]/, { message: 'Password must contain at least one number.' })
+const rememberMeGuard = z.boolean().optional()
 
 const signInGuard = z.object({
-  username: usernameGuard,
-  email: emailGuard,
+  // username: usernameGuard,
+  // email: emailGuard,
+  identifier: identifierGuard,
   password: passwordGuard,
+  rememberMe: rememberMeGuard,
 })
 
 export { signInGuard }
