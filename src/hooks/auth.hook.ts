@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import { signIn, SignInResponse } from 'next-auth/react'
 import { useToggle } from 'react-use'

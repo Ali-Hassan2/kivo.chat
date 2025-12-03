@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useRef, useState } from 'react'
 import { useToggle } from 'react-use'
 import { verifyUser } from '@/services'
