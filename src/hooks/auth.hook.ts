@@ -19,7 +19,6 @@ const useAuth = () => {
     success: '',
     error: '',
   })
-
   const setSuccess = (message: string) => {
     setAuthProcessFinalizedStatusResposne((prev) => ({
       ...prev,
@@ -27,7 +26,6 @@ const useAuth = () => {
       error: '',
     }))
   }
-
   const setError = (message: string) => {
     setAuthProcessFinalizedStatusResposne((prev) => ({
       ...prev,
@@ -35,7 +33,6 @@ const useAuth = () => {
       error: message,
     }))
   }
-
   const authProceed = async (data: z.infer<typeof signInGuard>) => {
     setError('')
     setSuccess('')
@@ -51,7 +48,6 @@ const useAuth = () => {
         identifier: data.identifier,
         password: data.password,
       })
-      console.log('The ====response,', response)
       if (!response?.ok) {
         setError(response?.error || 'Error occured while procceeding auth.')
       } else {
@@ -65,7 +61,6 @@ const useAuth = () => {
       if (typeof error === 'string') {
         errorMessage = error
       }
-
       setError(errorMessage)
     } finally {
       setauthSignInProcessLoading(false)
@@ -75,6 +70,7 @@ const useAuth = () => {
   return {
     authSignInProcessLoading,
     authProcessFinalizedStatusResposne,
+    authProceed,
   }
 }
 
