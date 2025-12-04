@@ -108,7 +108,7 @@ const RegistrationFormForApp = ({
           control={form.control}
           render={({ field }) => {
             return (
-              <FormItem className="mt-2 flex flex-col gap-2">
+              <FormItem className="mt-5 flex flex-col gap-2">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
@@ -127,7 +127,7 @@ const RegistrationFormForApp = ({
           control={form.control}
           render={({ field }) => {
             return (
-              <FormItem className="mt-2 flex flex-col gap-2">
+              <FormItem className="mt-5 flex flex-col gap-2">
                 <FormLabel>FullName</FormLabel>
                 <FormControl>
                   <Input placeholder="You Fullname (...optional)" {...field} />
@@ -137,7 +137,11 @@ const RegistrationFormForApp = ({
             )
           }}
         />
-        <Button type="submit" disabled={isSubmittingForm} className="mt-4">
+        <Button
+          type="submit"
+          disabled={isSubmittingForm}
+          className="mt-6 w-full cursor-pointer rounded-3xl py-6"
+        >
           {isSubmittingForm ? (
             <>
               <Loader2 className="animate-spin" />

@@ -50,6 +50,7 @@ const page = () => {
           <CardTitle>
             <Label className="text-3xl">Member Registration.</Label>
           </CardTitle>
+          <div className="mx-auto w-4/5 border-1"></div>
           <CardDescription>
             Provide the required information to create a new account on kivo.
           </CardDescription>
