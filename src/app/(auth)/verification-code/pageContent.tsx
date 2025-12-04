@@ -44,12 +44,11 @@ export default function PageContent() {
             <CardTitle className="mx-auto text-2xl">
               Kivo Verification
             </CardTitle>
-            <div className="mx-auto w-4/5 border-1"></div>
+            <div className="mx-auto w-4/5 border-1" />
             <CardDescription className="mt-2">
               Please check your provided mail to get the code.
             </CardDescription>
           </CardHeader>
-
           <CardContent>
             <Verification
               form={form}

@@ -11,7 +11,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { AuthForm } from '@/elements'
 import { signInGuard } from '@/guards'
+import { useAuth } from '@/hooks/auth.hook'
 
 const page = () => {
   const form = useForm<z.infer<typeof signInGuard>>({
@@ -23,6 +25,12 @@ const page = () => {
     },
   })
 
+  const {
+    authSignInProcessLoading,
+    authProcessFinalizedStatusResposne,
+    authProceed,
+  } = useAuth()
+
   useEffect(() => {
     const savedAuthMember = localStorage.getItem('remebered')
     if (savedAuthMember) {
@@ -30,16 +38,25 @@ const page = () => {
       form.setValue('rememberMe', false)
     }
   }, [form])
+
   return (
-    <div className="flex h-[100vh] w-[100vw] items-center justify-center border-4 border-red-500 text-white">
+    <div className="flex h-[100vh] w-[100vw] items-center justify-center bg-white text-white shadow-lg">
       <Card className="w-[400px]">
         <CardHeader>
-          <CardTitle>Kivo Auth</CardTitle>
+          <CardTitle className="text-2xl font-bold">Kivo Auth</CardTitle>
           <CardDescription>
             Login to your account with valid credentials.
           </CardDescription>
+          <div className="w-4/5 border-1"></div>
         </CardHeader>
-        <CardContent></CardContent>
+        <CardContent>
+          <AuthForm
+            form={form}
+            onSubmit={authProceed}
+            authProcessResponseStatus={authProcessFinalizedStatusResposne}
+            authProcessLoadingState={authSignInProcessLoading}
+          />
+        </CardContent>
       </Card>
     </div>
   )
