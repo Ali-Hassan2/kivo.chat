@@ -28,10 +28,8 @@ interface authFormProps {
 const AuthForm = ({
   form,
   onSubmit,
-  authProcessResponseStatus,
   authProcessLoadingState,
 }: authFormProps) => {
-  const handleSubmit = () => {}
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
