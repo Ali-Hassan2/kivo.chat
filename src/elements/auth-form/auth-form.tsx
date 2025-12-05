@@ -15,9 +15,11 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PERSONAL_BOARD } from '@/constants'
 import { signInGuard } from '@/guards'
 import { AuthStatus } from '@/types'
-import { showToast } from '@/utils'
+import { showToast, useNavigation } from '@/utils'
+import { cn } from '@/utils/cn'
 
 interface authFormProps {
   form: UseFormReturn<z.infer<typeof signInGuard>>
@@ -32,10 +34,14 @@ const AuthForm = ({
   authProcessResponseStatus,
   authProcessLoadingState,
 }: authFormProps) => {
+  const { navigateTo } = useNavigation()
   useEffect(() => {
     if (authProcessResponseStatus.success) {
       const successMessage = authProcessResponseStatus.success
       showToast(successMessage, 'success')
+      setTimeout(() => {
+        navigateTo(PERSONAL_BOARD)
+      },2000)
     }
     if (authProcessResponseStatus.error) {
       const errorMessage = authProcessResponseStatus.error
@@ -56,7 +62,7 @@ const AuthForm = ({
                   <Input
                     placeholder="Identifier here...."
                     {...field}
-                    className="py-6"
+                    className={cn('bg-transparent')}
                   />
                 </FormControl>
                 <FormMessage />

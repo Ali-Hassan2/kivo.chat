@@ -4,4 +4,6 @@ const AUTH = '/auth'
 
 const KIVO_PROFILE = '/dashboard'
 
-export { VERIFICATION_CODE, KIVO_PROFILE, AUTH }
+const PERSONAL_BOARD = '/personal-dashboard'
+
+export { VERIFICATION_CODE, KIVO_PROFILE, AUTH, PERSONAL_BOARD }
