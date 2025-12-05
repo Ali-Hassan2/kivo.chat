@@ -34,7 +34,7 @@ const AuthForm = ({
   const handleSubmit = () => {}
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           name="identifier"
           control={form.control}
