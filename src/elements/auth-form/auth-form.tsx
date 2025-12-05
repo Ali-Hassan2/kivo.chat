@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Loader2 } from 'lucide-react'
 import { UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { signInGuard } from '@/guards'
 import { AuthStatus } from '@/types'
+import { showToast } from '@/utils'
 
 interface authFormProps {
   form: UseFormReturn<z.infer<typeof signInGuard>>
@@ -28,8 +29,19 @@ interface authFormProps {
 const AuthForm = ({
   form,
   onSubmit,
+  authProcessResponseStatus,
   authProcessLoadingState,
 }: authFormProps) => {
+  useEffect(() => {
+    if (authProcessResponseStatus.success) {
+      const successMessage = authProcessResponseStatus.success
+      showToast(successMessage, 'success')
+    }
+    if (authProcessResponseStatus.error) {
+      const errorMessage = authProcessResponseStatus.error
+      showToast(errorMessage, 'error')
+    }
+  }, [authProcessResponseStatus])
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
