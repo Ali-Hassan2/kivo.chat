@@ -73,6 +73,7 @@ const useAuth = () => {
     authSignInProcessLoading,
     authProcessFinalizedStatusResposne,
     authProceed,
+    setAuthProcessFinalizedStatusResposne,
   }
 }
 

@@ -29,6 +29,7 @@ const page = () => {
     authSignInProcessLoading,
     authProcessFinalizedStatusResposne,
     authProceed,
+    setAuthProcessFinalizedStatusResposne,
   } = useAuth()
 
   useEffect(() => {
