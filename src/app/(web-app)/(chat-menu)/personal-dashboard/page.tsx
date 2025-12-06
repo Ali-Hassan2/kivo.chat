@@ -1,11 +1,12 @@
 'use client'
 
+import { ContactBoard } from '@/elements'
 import { cn } from '@/utils/cn'
 
 const page = () => {
   return (
     <div className={cn('text-white')}>
-      Welcome to Dashbord you are in welcome to new world order
+      <ContactBoard />
     </div>
   )
 }

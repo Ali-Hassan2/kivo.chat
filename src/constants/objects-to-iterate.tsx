@@ -24,4 +24,17 @@ const HEADER_DROPDOWN_LABELS = [
   },
 ]
 
-export { HEADER_DROPDOWN_LABELS }
+const MOCK_CONTACTS = [
+  { FullName: 'Ali Hassan' },
+  { FullName: 'Sara Ahmed' },
+  { FullName: 'Bilal Khan' },
+  { FullName: 'Ayesha Iqbal' },
+  { FullName: 'Omar Farooq' },
+  { FullName: 'Fatima Noor' },
+  { FullName: 'Zain Ali' },
+  { FullName: 'Hina Raza' },
+  { FullName: 'Kamran Javed' },
+  { FullName: 'Sadia Malik' },
+]
+
+export { HEADER_DROPDOWN_LABELS, MOCK_CONTACTS }
