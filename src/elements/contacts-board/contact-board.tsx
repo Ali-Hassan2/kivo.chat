@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo, useState } from 'react'
 import { Avatar } from '@radix-ui/themes'
 import { Search } from '@/components'
 import { Label } from '@/components/ui/label'
@@ -7,6 +8,18 @@ import { MOCK_CONTACTS } from '@/constants/objects-to-iterate'
 import { cn } from '@/utils/cn'
 
 const ContactBoard = () => {
+  const [
+    queryFullNameToGetFromSearchResult,
+    setQueryFullNameToGetFromSearchResult,
+  ] = useState<string>('')
+
+  const FilteredContactConversationList = useMemo(() => {
+    return MOCK_CONTACTS.filter((contact) =>
+      contact.FullName.toLowerCase().includes(
+        queryFullNameToGetFromSearchResult.toLowerCase(),
+      ),
+    )
+  }, [queryFullNameToGetFromSearchResult])
   return (
     <div
       className={cn(
@@ -15,7 +28,7 @@ const ContactBoard = () => {
     >
       <Search />
       <div className="flex flex-col gap-3 px-2 pb-4">
-        {MOCK_CONTACTS.map((mc) => (
+        {FilteredContactConversationList.map((mc) => (
           <div
             className="flex cursor-pointer gap-3 rounded-md p-2 hover:bg-gray-100"
             key={mc.FullName}
