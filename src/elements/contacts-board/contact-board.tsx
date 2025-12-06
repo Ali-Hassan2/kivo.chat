@@ -1,6 +1,7 @@
 'use client'
 
 import { Avatar } from '@radix-ui/themes'
+import { Search } from '@/components'
 import { Label } from '@/components/ui/label'
 import { MOCK_CONTACTS } from '@/constants/objects-to-iterate'
 import { cn } from '@/utils/cn'
@@ -12,6 +13,7 @@ const ContactBoard = () => {
         'flex h-full w-80 flex-col overflow-y-auto border-r bg-white pt-16',
       )}
     >
+      <Search />
       <div className="flex flex-col gap-3 px-2 pb-4">
         {MOCK_CONTACTS.map((mc) => (
           <div
