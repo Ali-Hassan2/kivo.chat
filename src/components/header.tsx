@@ -12,7 +12,6 @@ import {
 } from '@/constants/objects-to-iterate'
 import { useAuthRedirection } from '@/utils'
 import { cn } from '@/utils/cn'
-import dotGreen from '../../public/dotpng.png'
 import { ArrowDownIcon, ArrowUpIcon } from './icons/arrows'
 
 interface HeaderProps {
@@ -55,8 +54,10 @@ const Header = ({ bgColor }: HeaderProps) => {
         <Box className="flex items-center gap-2">
           <Box className="h-4 w-4">
             <Image
-              src={dotGreen}
+              src="/dotpng.png"
               alt="green enabled"
+              width={16}
+              height={16}
               style={{ objectFit: 'contain' }}
             />
           </Box>
