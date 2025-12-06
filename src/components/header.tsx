@@ -75,7 +75,7 @@ const Header = ({ bgColor }: HeaderProps) => {
             fallback={username?.[0].toUpperCase() ?? 'A'}
             className="flex h-12 w-12 flex-row items-center justify-center rounded-full bg-blue-200 text-blue-800"
           />
-          <Label>username</Label>
+          <Label>{username}</Label>
         </div>
         <div className="h-[1px] bg-black/20" />
         <div className="flex flex-col gap-2 p-2">

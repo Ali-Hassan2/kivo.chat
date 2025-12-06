@@ -2,12 +2,12 @@ import { toast, ToastOptions } from 'react-toastify'
 
 const defaultOptions: ToastOptions = {
   position: 'top-right',
-  autoClose: 0,
+  autoClose: 1500,
   pauseOnHover: true,
   closeOnClick: true,
   draggable: true,
   theme: 'colored',
-  hideProgressBar: true,
+  hideProgressBar: false,
 }
 
 const showToast = (
