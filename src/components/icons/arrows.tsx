@@ -29,7 +29,7 @@ const ArrowUpIcon = () => {
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="lucide lucide-chevron-up-icon lucide-chevron-up"
+      className="lucide lucide-chevron-up-icon lucide-chevron-up"
     >
       <path d="m18 15-6-6-6 6" />
     </svg>
