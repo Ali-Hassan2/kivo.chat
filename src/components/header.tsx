@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Label } from '@radix-ui/react-label'
 import { Avatar } from '@radix-ui/themes'
 import { useToggle } from 'react-use'
@@ -19,6 +19,23 @@ const Header = ({ bgColor }: HeaderProps) => {
   const [isDropDownOpned, setIsDropDownOpend] = useToggle(false)
   const dropDownRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        dropDownRef.current &&
+        !dropDownRef.current?.contains(event.target as Node) &&
+        triggerRef.current &&
+        !triggerRef.current?.contains(event.target as Node)
+      ) {
+        setIsDropDownOpend(false)
+      }
+    }
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [setIsDropDownOpend])
 
   return (
     <div
