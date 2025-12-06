@@ -13,10 +13,10 @@ const identifierGuard = z.string()
 const passwordGuard = z
   .string()
   .min(4, { message: 'Password must be at least 4 characters long.' })
-  .max(8, { message: 'Password can be at most 8 characters long.' })
-  .regex(/[A-Z]/, {
-    message: 'Password must contain at least one uppercase letter.',
-  })
+  // .max(8, { message: 'Password can be at most 8 characters long.' })
+  // .regex(/[A-Z]/, {
+  //   message: 'Password must contain at least one uppercase letter.',
+  // })
   .regex(/[a-z]/, {
     message: 'Password must contain at least one lowercase letter.',
   })

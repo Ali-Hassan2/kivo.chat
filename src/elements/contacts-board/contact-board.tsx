@@ -6,6 +6,7 @@ import { Search } from '@/components'
 import { Label } from '@/components/ui/label'
 import { MOCK_CONTACTS } from '@/constants/objects-to-iterate'
 import { cn } from '@/utils/cn'
+import { SEARCH_NOT_FOUND_MESSAGE } from '@/constants'
 
 const ContactBoard = () => {
   const [
@@ -27,7 +28,7 @@ const ContactBoard = () => {
 
   useEffect(() => {
     if (filteredContactListBasedOnSearchQuery.length === 0) {
-      setNoResultMessageToDisplayWhenSearchYieldsNoResults('No Result Found.')
+      setNoResultMessageToDisplayWhenSearchYieldsNoResults(SEARCH_NOT_FOUND_MESSAGE)
     } else {
       setNoResultMessageToDisplayWhenSearchYieldsNoResults('')
     }
