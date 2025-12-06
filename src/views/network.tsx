@@ -1,12 +1,17 @@
 'use client'
 
 import React from 'react'
-import { ProfileNetwork } from '@/elements'
+import { NetworkBoard, ProfileNetwork } from '@/elements'
+import { cn } from '@/utils/cn'
 
-const Network = () => {
+interface NetworkProps {
+  height: string
+}
+const Network = ({ height }: NetworkProps) => {
   return (
-    <div>
+    <div className={cn(height, 'flex')}>
       <ProfileNetwork />
+      <NetworkBoard />
     </div>
   )
 }

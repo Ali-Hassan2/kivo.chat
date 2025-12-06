@@ -57,7 +57,7 @@ const AuthForm = ({
           render={({ field }) => {
             return (
               <FormItem className="flex flex-col gap-4">
-                <FormLabel className="pl-1">Email/Username</FormLabel>
+                <FormLabel className="">Email/Username</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Identifier here...."
