@@ -1,0 +1,6 @@
+export * from './header'
+export * from './icons/arrows'
+export * from './icons/friends'
+export * from './icons/notifications'
+export * from './icons/profile'
+export * from './icons/settings'

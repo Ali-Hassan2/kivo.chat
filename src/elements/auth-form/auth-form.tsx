@@ -41,7 +41,7 @@ const AuthForm = ({
       showToast(successMessage, 'success')
       setTimeout(() => {
         navigateTo(PERSONAL_BOARD)
-      },2000)
+      }, 2000)
     }
     if (authProcessResponseStatus.error) {
       const errorMessage = authProcessResponseStatus.error
@@ -81,7 +81,7 @@ const AuthForm = ({
                   <Input
                     placeholder="password here..."
                     {...field}
-                    className="py-6"
+                    className=""
                   />
                 </FormControl>
                 <FormMessage />
