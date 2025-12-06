@@ -16,6 +16,8 @@ const mock_users = [
     email: 'basit.test@example.com',
     password: '$2b$12$q7nHI1TDyEldjxSIJ2k3LOwARZcRdrp7Pb.l.LuBMR2CsLBkehhXi',
     verficationCode: '000000',
+    fullName: 'Basit Ali',
+    bio: 'We build We broke but we also say no grit no grind no greatness.',
     verficationExpiry: '2025-10-25T09:03:55.989427Z',
     isShowingIdentity: true,
     isVerifiedUser: true,
@@ -32,6 +34,8 @@ const mock_users = [
     username: 'faaiz',
     email: 'faaiz.test@example.com',
     password: bcrypt.hashSync('Faaiz.1234', 10),
+    fullName: 'Faaiz Ali',
+    bio: 'We build We broke but we also say no grit no grind no greatness.',
     verficationCode: '111111',
     verficationExpiry: new Date(
       Date.now() + 1000 * 60 * 60 * 24 * 7,
@@ -52,6 +56,8 @@ const mock_users = [
     email: 'daud.test@example.com',
     password: bcrypt.hashSync('Daud.1234', 10),
     verficationCode: '111111',
+    fullName: 'Daud Ali',
+    bio: 'We build We broke but we also say no grit no grind no greatness.',
     verficationExpiry: new Date(
       Date.now() + 1000 * 60 * 60 * 24 * 7,
     ).toISOString(),
@@ -72,6 +78,8 @@ const mock_users = [
     email: 'ahmed.test@example.com',
     password: bcrypt.hashSync('Ahmed.1234', 10),
     verficationCode: '111111',
+    fullName: 'Ahmed Ali',
+    bio: 'We build We broke but we also say no grit no grind no greatness.',
     verficationExpiry: new Date(
       Date.now() + 1000 * 60 * 60 * 24 * 7,
     ).toISOString(),
@@ -93,6 +101,8 @@ const mock_users = [
     email: 'abdullah.test@example.com',
     password: bcrypt.hashSync('abdullah.1234', 10),
     verficationCode: '111111',
+    fullName: 'Abdullah Ali',
+    bio: 'We build We broke but we also say no grit no grind no greatness.',
     verficationExpiry: new Date(
       Date.now() + 1000 * 60 * 60 * 24 * 7,
     ).toISOString(),
@@ -157,6 +167,8 @@ async function seedDatabase() {
       username: String,
       email: String,
       password: String,
+      fullName: String,
+      bio: String,
       isVerifiedUser: Boolean,
       isShowingIdentity: Boolean,
       isAnon: Boolean,

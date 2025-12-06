@@ -1,9 +1,10 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Label } from '@radix-ui/react-label'
-import { Avatar } from '@radix-ui/themes'
+import { Avatar, Box } from '@radix-ui/themes'
 import { useToggle } from 'react-use'
 import {
   HEADER_DROPDOWN_LABELS,
@@ -11,6 +12,7 @@ import {
 } from '@/constants/objects-to-iterate'
 import { useAuthRedirection } from '@/utils'
 import { cn } from '@/utils/cn'
+import dotGreen from '../../public/dotpng.png'
 import { ArrowDownIcon, ArrowUpIcon } from './icons/arrows'
 
 interface HeaderProps {
@@ -48,17 +50,30 @@ const Header = ({ bgColor }: HeaderProps) => {
         'relative flex h-20 w-full items-center justify-between border shadow-xl',
       )}
     >
-      <div className="flex h-full flex-1 items-center justify-start pl-8 pl-12 font-bold">
+      <div className="flex h-full flex-1 items-center justify-between pl-8 pl-12 font-bold">
         <Label className="text-4xl font-bold">K.</Label>
+        <Box className="flex items-center gap-2">
+          <Box className="h-4 w-4">
+            <Image
+              src={dotGreen}
+              alt="green enabled"
+              style={{ objectFit: 'contain' }}
+            />
+          </Box>
+          <Label className="font-normal">
+            Kivo-chat engine is enabled you can communicate with those to whom
+            you love. |
+          </Label>
+        </Box>
       </div>
-      <div className="flex h-full flex-1 cursor-pointer items-center justify-between pr-12">
+      <div className="flex h-full flex-1 cursor-pointer items-center justify-between p-3 pr-12">
         <div className="flex h-full gap-12">
           {HEADER_LINKS.map((link) => {
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex h-full flex-row items-center gap-2 rounded-md px-2 py-2 hover:bg-gray-300"
+                className="flex h-full flex-row items-center gap-2 rounded-full px-2 py-2 outline-none hover:border-b"
               >
                 {link.icon}
                 {link.label}
