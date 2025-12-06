@@ -12,7 +12,6 @@ const ContactBoard = () => {
     queryFullNameToGetFromSearchResult,
     setQueryFullNameToGetFromSearchResult,
   ] = useState<string>('')
-
   const [
     noResultMessageToDisplayWhenSearchYieldsNoResults,
     setNoResultMessageToDisplayWhenSearchYieldsNoResults,
@@ -37,7 +36,7 @@ const ContactBoard = () => {
   return (
     <div
       className={cn(
-        'flex h-full w-80 flex-col overflow-y-auto border-r bg-white pt-16',
+        'flex h-full w-80 flex-col overflow-y-auto border-r bg-white pt-8',
       )}
     >
       <Search onSearchFieldResponse={setQueryFullNameToGetFromSearchResult} />
