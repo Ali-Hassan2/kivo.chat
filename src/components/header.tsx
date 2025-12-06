@@ -47,7 +47,7 @@ const Header = ({ bgColor }: HeaderProps) => {
       <div
         ref={dropDownRef}
         className={cn(
-          'absolute top-18 right-8 w-58 origin-top-right flex-col rounded-lg border bg-white shadow-lg transition-all duration-300 ease-in-out',
+          'absolute top-18 right-4 w-58 origin-top-right flex-col rounded-lg border bg-white shadow-lg transition-all duration-300 ease-in-out',
           isDropDownOpned
             ? 'visible scale-y-100 opacity-100'
             : 'invisible scale-y-0 opacity-0',
@@ -62,9 +62,9 @@ const Header = ({ bgColor }: HeaderProps) => {
         </div>
         <div className="h-[1px] bg-black/20" />
         <div className="flex flex-col gap-2 p-2">
-          {HEADER_DROPDOWN_LABELS.map((licon, index) => (
+          {HEADER_DROPDOWN_LABELS.map((licon) => (
             <div
-              key={index}
+              key={licon.label}
               className="flex cursor-pointer gap-3 rounded-md border border-transparent py-3 pl-2 transition-colors duration-300 ease-in-out hover:border-blue-600 hover:bg-blue-100"
             >
               <div>{licon.icon}</div>
