@@ -1,10 +1,14 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { Label } from '@radix-ui/react-label'
 import { Avatar } from '@radix-ui/themes'
 import { useToggle } from 'react-use'
-import { HEADER_DROPDOWN_LABELS } from '@/constants/objects-to-iterate'
+import {
+  HEADER_DROPDOWN_LABELS,
+  HEADER_LINKS,
+} from '@/constants/objects-to-iterate'
 import { useAuthRedirection } from '@/utils'
 import { cn } from '@/utils/cn'
 import { ArrowDownIcon, ArrowUpIcon } from './icons/arrows'
@@ -47,7 +51,21 @@ const Header = ({ bgColor }: HeaderProps) => {
       <div className="flex h-full flex-1 items-center justify-start pl-8 pl-12 font-bold">
         <Label className="text-4xl font-bold">K.</Label>
       </div>
-      <div className="flex h-full flex-1 cursor-pointer items-center justify-end pr-12">
+      <div className="flex h-full flex-1 cursor-pointer items-center justify-between pr-12">
+        <div className="flex h-full gap-12">
+          {HEADER_LINKS.map((link) => {
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="flex h-full flex-row items-center gap-2 rounded-md px-2 py-2 hover:bg-gray-300"
+              >
+                {link.icon}
+                {link.label}
+              </Link>
+            )
+          })}
+        </div>
         <div
           className="relative flex items-center justify-center gap-3"
           onClick={setIsDropDownOpend}
