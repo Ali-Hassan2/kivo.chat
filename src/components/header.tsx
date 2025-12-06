@@ -24,7 +24,7 @@ const Header = ({ bgColor }: HeaderProps) => {
     <div
       className={cn(
         bgColor ?? 'white',
-        'flex h-20 w-full items-center justify-between border shadow-lg',
+        'flex h-20 w-full items-center justify-between border shadow-xl',
       )}
     >
       <div className="flex h-full flex-1 items-center justify-start pl-8 pl-12 font-bold">
@@ -48,9 +48,9 @@ const Header = ({ bgColor }: HeaderProps) => {
       {isDropDownOpned && (
         <div
           ref={dropDownRef}
-          className="absolute top-18 right-8 w-58 flex-col rounded-lg bg-red-500"
+          className="absolute top-18 right-8 w-58 flex-col rounded-lg border bg-white shadow-lg"
         >
-          <div className="flex flex-1 items-center justify-start gap-3 rounded-t-lg bg-blue-500 py-3 pl-2">
+          <div className="flex flex-1 items-center justify-start gap-3 rounded-t-lg py-3 pl-2">
             <Avatar
               // fallback={username?.[0].toUpperCase() ?? 'A'}
               fallback="A"
@@ -59,10 +59,10 @@ const Header = ({ bgColor }: HeaderProps) => {
             <Label>username</Label>
           </div>
           <div className="h-[1px] bg-black/20" />
-          <div>
+          <div className="p-2">
             {HEADER_DROPDOWN_LABELS.map((licon) => {
               return (
-                <div className="">
+                <div className="duration:300 flex cursor-pointer gap-3 rounded-md py-4 pl-2 transition-all hover:border hover:border-blue-600 hover:bg-blue-100">
                   <div>{licon.icon}</div>
                   <Label>{licon.label}</Label>
                 </div>
