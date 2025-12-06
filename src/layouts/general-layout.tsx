@@ -12,9 +12,9 @@ const GeneralLayout = ({ children }: Readonly<PropsWithChildren>) => {
     return <>{children}</>
   }
   return (
-    <Flex className="h-screen w-[100vw] flex-col">
+    <Flex className="h-screen w-[100vw]">
       <Header bgColor="bg-white" />
-      <Flex className="flex-1 overflow-hidden bg-white">
+      <Flex direction="row" className="flex-1 overflow-hidden bg-white">
         <Box className="flex-1 overflow-y-auto">{children}</Box>
       </Flex>
     </Flex>

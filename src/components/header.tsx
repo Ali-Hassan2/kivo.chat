@@ -24,28 +24,25 @@ const Header = ({ bgColor }: HeaderProps) => {
 
   const username = session?.user.username
   return (
-    <Box className={cn(bgColor ?? 'bg-white', 'sticky py-4 shadow-lg')}>
-      <Flex direction="row" className="items-center justify-between">
-        <Box className="border-4">
-          <Label className="pl-6 text-4xl font-bold">K.</Label>
-        </Box>
-
-        <Flex
-          direction="row"
-          align="center"
-          justify="end"
-          className="h-full cursor-pointer"
-        >
-          <Box className="flex items-center gap-2 border-4">
-            <Avatar
-              fallback={username?.[0].toUpperCase() ?? "A"}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-200 text-blue-600"
-            />
-            <Label>Hello</Label>
-          </Box>
-        </Flex>
-      </Flex>
-    </Box>
+    <div
+      className={cn(
+        bgColor ?? 'white',
+        'flex h-20 w-full items-center justify-between border shadow-lg',
+      )}
+    >
+      <div className="flex h-full flex-1 items-center justify-start pl-8 pl-12 font-bold">
+        <Label className="text-4xl font-bold">K.</Label>
+      </div>
+      <div className="flex h-full flex-1 items-center justify-end pr-12">
+        <div className="flex items-center justify-center gap-3">
+          <Avatar
+            fallback={username?.[0].toUpperCase() ?? 'A'}
+            className="flex h-12 w-12 flex-row items-center justify-center rounded-full bg-blue-200 text-blue-800"
+          />
+          <Label>{username}</Label>
+        </div>
+      </div>
+    </div>
   )
 }
 
