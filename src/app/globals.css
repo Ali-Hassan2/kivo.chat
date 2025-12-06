@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 body {
-  background: var(--foreground);
+  background: white;
   display: flex;
   justify-content: center;
 }
