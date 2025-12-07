@@ -6,4 +6,5 @@ export interface ApiResponse {
   message: string
   messages?: Array<IMessages>
   error?: string
+  data?: any[]
 }

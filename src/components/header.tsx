@@ -46,12 +46,12 @@ const Header = ({ bgColor }: HeaderProps) => {
     <div
       className={cn(
         bgColor ?? 'white',
-        'relative flex h-20 w-full items-center justify-between border shadow-xl',
+        'relative flex h-auto w-full flex-col items-center justify-between border shadow-xl md:flex-row',
       )}
     >
-      <div className="flex h-full flex-1 items-center justify-between pl-8 pl-12 font-bold">
-        <Label className="text-4xl font-bold">K.</Label>
-        <Box className="flex items-center gap-2">
+      <div className="flex h-full w-full flex-1 items-center justify-evenly py-4 pl-4 font-bold md:w-auto md:pl-12">
+        <Label className="-ml-4 text-3xl font-bold md:text-4xl">K.</Label>
+        <Box className="flex max-w-[65%] items-center gap-2 text-sm sm:max-w-[75%] md:max-w-full md:text-base">
           <Box className="h-4 w-4">
             <Image
               src="/dotpng.png"
@@ -61,20 +61,21 @@ const Header = ({ bgColor }: HeaderProps) => {
               style={{ objectFit: 'contain' }}
             />
           </Box>
-          <Label className="font-normal">
+          <Label className="hidden font-normal sm:block">
             Kivo-chat engine is enabled you can communicate with those to whom
             you love. |
           </Label>
         </Box>
       </div>
-      <div className="flex h-full flex-1 cursor-pointer items-center justify-between p-3 pr-12">
-        <div className="flex h-full gap-12">
+
+      <div className="flex h-full w-full flex-1 cursor-pointer items-center justify-between p-3 md:w-auto md:pr-12">
+        <div className="hidden h-full gap-8 md:flex lg:gap-12">
           {HEADER_LINKS.map((link) => {
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex h-full flex-row items-center gap-2 rounded-full px-2 py-2 outline-none hover:border-b"
+                className="flex h-full flex-row items-center gap-2 rounded-full px-2 py-2 text-sm outline-none hover:border-b lg:text-base"
               >
                 {link.icon}
                 {link.label}
@@ -82,14 +83,15 @@ const Header = ({ bgColor }: HeaderProps) => {
             )
           })}
         </div>
+
         <div
-          className="relative flex items-center justify-center gap-3"
+          className="relative ml-auto flex items-center justify-center gap-3 md:ml-0"
           onClick={setIsDropDownOpend}
           ref={triggerRef}
         >
           <Avatar
             fallback={username?.[0].toUpperCase() ?? 'A'}
-            className="flex h-12 w-12 flex-row items-center justify-center rounded-full bg-blue-200 text-blue-800"
+            className="flex h-10 w-10 flex-row items-center justify-center rounded-full bg-blue-200 text-blue-800 md:h-12 md:w-12"
           />
           {isDropDownOpned ? <ArrowDownIcon /> : <ArrowUpIcon />}
         </div>
@@ -98,7 +100,7 @@ const Header = ({ bgColor }: HeaderProps) => {
       <div
         ref={dropDownRef}
         className={cn(
-          'absolute top-18 right-4 w-58 origin-top-right flex-col rounded-lg border bg-white shadow-lg transition-all duration-300 ease-in-out',
+          'absolute top-20 right-4 z-50 w-48 origin-top-right flex-col rounded-lg border bg-white shadow-lg transition-all duration-300 ease-in-out sm:w-56',
           isDropDownOpned
             ? 'visible scale-y-100 opacity-100'
             : 'invisible scale-y-0 opacity-0',
@@ -107,16 +109,16 @@ const Header = ({ bgColor }: HeaderProps) => {
         <div className="flex flex-1 items-center justify-start gap-3 rounded-t-lg py-3 pl-2">
           <Avatar
             fallback={username?.[0].toUpperCase() ?? 'A'}
-            className="flex h-12 w-12 flex-row items-center justify-center rounded-full bg-blue-200 text-blue-800"
+            className="flex h-10 w-10 flex-row items-center justify-center rounded-full bg-blue-200 text-blue-800 md:h-12 md:w-12"
           />
-          <Label>{username}</Label>
+          <Label className="text-sm md:text-base">{username}</Label>
         </div>
         <div className="h-[1px] bg-black/20" />
         <div className="flex flex-col gap-2 p-2">
           {HEADER_DROPDOWN_LABELS.map((licon) => (
             <div
               key={licon.label}
-              className="flex cursor-pointer gap-3 rounded-md border border-transparent py-3 pl-2 transition-colors duration-300 ease-in-out hover:border-blue-600 hover:bg-blue-100"
+              className="flex cursor-pointer gap-3 rounded-md border border-transparent py-2 pl-2 text-sm transition-colors duration-300 ease-in-out hover:border-blue-600 hover:bg-blue-100 md:py-3 md:text-base"
             >
               <div>{licon.icon}</div>
               <Label>{licon.label}</Label>

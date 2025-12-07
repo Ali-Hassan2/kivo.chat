@@ -1,12 +1,36 @@
 'use client'
 
-import React from 'react'
-import { ProfileNetwork } from '@/elements'
+import React, { useEffect } from 'react'
+import { NetworkBoard, ProfileNetwork } from '@/elements'
+import { useNetworkUsers } from '@/hooks'
+import { cn } from '@/utils/cn'
 
-const Network = () => {
+interface NetworkProps {
+  height: string
+}
+const Network = ({ height }: NetworkProps) => {
+  const {
+    getAllNetworkBuildingUsers,
+    gettingAllUsersForNetworkConnections,
+    gettingNetworkUsersResponseStatus,
+    usersRecordForBuildingNetwork,
+  } = useNetworkUsers()
+
+  useEffect(() => {
+    getAllNetworkBuildingUsers()
+  }, [])
+
   return (
-    <div>
+    <div className={cn(height, 'flex')}>
       <ProfileNetwork />
+      <NetworkBoard
+        getAllNetworkBuildingUsers={getAllNetworkBuildingUsers}
+        gettingAllUsersForNetworkConnections={
+          gettingAllUsersForNetworkConnections
+        }
+        gettingNetworkUsersResponseStatus={gettingNetworkUsersResponseStatus}
+        usersRecordForBuildingNetwork={usersRecordForBuildingNetwork}
+      />
     </div>
   )
 }

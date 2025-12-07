@@ -4,11 +4,7 @@ import React from 'react'
 import { Network } from '@/views'
 
 const page = () => {
-  return (
-    <div className="h-[91vh] border-4 text-white">
-      <Network />
-    </div>
-  )
+  return <Network height="h-[91vh]" />
 }
 
 export default page

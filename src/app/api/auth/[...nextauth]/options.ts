@@ -36,6 +36,7 @@ const authOptions: NextAuthOptions = {
           username: user.username,
           isVerifiedUser: user.isVerifiedUser,
           fullName: user.fullName,
+          bio: user.bio,
         }
       },
     }),
@@ -53,6 +54,7 @@ const authOptions: NextAuthOptions = {
         token.username = user.username
         token.isVerified = (user as any).isVerifiedUser ?? true
         token.fullName = user.fullName
+        token.bio = user.bio
       }
       return token
     },
@@ -62,6 +64,7 @@ const authOptions: NextAuthOptions = {
         username: token.username as string,
         isVerified: token.isVerified as boolean,
         fullName: token.fullName as string,
+        bio: token.bio as string,
       }
       return session
     },
