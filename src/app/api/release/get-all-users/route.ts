@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { Types } from 'mongoose'
 import { UserModel } from '@/entities'
 import { getCurrentUser } from '@/helpers'
 
@@ -50,7 +51,13 @@ class GETTINGUSERS {
       if (count === 0) {
         return GETTINGUSERS.respond(false, 'No Users found', null, 400)
       }
-      return GETTINGUSERS.respond(true, 'Users Fetched', users, 200)
+      const user_id_str = user?._id
+      const filteredUsers = users.filter(
+        (uid) =>
+          (uid._id as Types.ObjectId).toString() !==
+          (user_id_str as Types.ObjectId).toString(),
+      )
+      return GETTINGUSERS.respond(true, 'Users Fetched', filteredUsers, 200)
     } catch (error: unknown) {
       let errorMessage = 'Unknown Error'
       if (error instanceof Error) {
