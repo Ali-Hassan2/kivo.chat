@@ -37,6 +37,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.66.1",
+    "react-loading-skeleton": "^3.5.0",
     "react-toastify": "^11.0.5",
     "react-use": "^17.6.0",
     "resend": "^6.1.3",
