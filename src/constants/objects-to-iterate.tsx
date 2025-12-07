@@ -8,16 +8,24 @@ import {
 } from '@/components'
 import { NetworkIcon } from '@/components/icons/network'
 import { SupportIcon } from '@/components/icons/support'
-import { ABOUT_PAGE, CONTACT_PAGE, NETWORK, PERSONAL_BOARD } from './page-urls'
+import {
+  ABOUT_PAGE,
+  CONTACT_PAGE,
+  FRIENDS,
+  NETWORK,
+  PERSONAL_BOARD,
+} from './page-urls'
 
 const HEADER_DROPDOWN_LABELS = [
   {
     label: 'Profile',
     icon: <ProfileIcon />,
+    href: '#',
   },
   {
     label: 'Friends',
     icon: <FriendsIcon />,
+    href: FRIENDS,
   },
   {
     label: 'Notifications',
@@ -26,6 +34,7 @@ const HEADER_DROPDOWN_LABELS = [
   {
     label: 'Settings',
     icon: <SettingIcon />,
+    href: '#',
   },
 ]
 
