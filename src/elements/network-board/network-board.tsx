@@ -13,8 +13,11 @@ interface NetworkBoardProps {
 }
 
 const NetworkBoard = ({
-  
-}) => {
+  getAllNetworkBuildingUsers,
+  gettingAllUsersForNetworkConnections,
+  gettingNetworkUsersResponseStatus,
+  usersRecordForBuildingNetwork,
+}: NetworkBoardProps) => {
   return (
     <Box className="w-full">
       <Flex direction="column">
