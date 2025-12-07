@@ -5,4 +5,5 @@ export interface INetworkUsers {
   username?: string
   isAcceptingMessages?: boolean
   isShowingIdentity?: boolean
+  bio?: string
 }

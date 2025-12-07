@@ -27,7 +27,7 @@ const ProfileNetwork = () => {
         <Box className="flex w-full flex-col items-center justify-center gap-3">
           <Avatar
             fallback={username?.[0].toUpperCase() ?? '?'}
-            className="flex h-24 w-24 items-center justify-center rounded-full bg-blue-200 text-blue-800"
+            className="flex h-24 w-24 items-center justify-center rounded-full bg-blue-200 text-4xl text-blue-800"
           />
           <Box className="flex flex-col items-center justify-center gap-2 px-2 text-center">
             <Label>{user?.fullName}</Label>
