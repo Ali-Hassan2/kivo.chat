@@ -1,11 +1,15 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Label } from '@radix-ui/react-label'
 import { Avatar, Box, Flex, Grid, Text } from '@radix-ui/themes'
+import { Loader2 } from 'lucide-react'
+import * as z from 'zod'
 import { SkeletonWrapper } from '@/components'
 import { Button } from '@/components/ui/button'
+import { makeRequestGuard } from '@/guards'
 import { AuthStatus, INetworkUsers } from '@/types'
+import { showToast } from '@/utils'
 import { GridSkeleton } from './skeleton'
 
 interface NetworkBoardProps {
@@ -13,6 +17,12 @@ interface NetworkBoardProps {
   gettingAllUsersForNetworkConnections: boolean
   gettingNetworkUsersResponseStatus: AuthStatus
   usersRecordForBuildingNetwork: INetworkUsers[]
+  isSendingNewRequestOnNetwork: boolean
+  newRequestCreationResponseStatus: AuthStatus
+  sendingNewRequest: (
+    data: z.infer<typeof makeRequestGuard>,
+  ) => Promise<any> | void
+  requestingRequestUserOnNetwork: string
 }
 
 const NetworkBoard = ({
@@ -20,8 +30,21 @@ const NetworkBoard = ({
   gettingAllUsersForNetworkConnections,
   gettingNetworkUsersResponseStatus,
   usersRecordForBuildingNetwork,
+  isSendingNewRequestOnNetwork,
+  newRequestCreationResponseStatus,
+  sendingNewRequest,
+  requestingRequestUserOnNetwork,
 }: NetworkBoardProps) => {
-  console.log('The usersRecord', usersRecordForBuildingNetwork)
+  useEffect(() => {
+    if (newRequestCreationResponseStatus.success) {
+      const successMessagge = newRequestCreationResponseStatus.success
+      showToast(successMessagge, 'success')
+    }
+    if (newRequestCreationResponseStatus.error) {
+      const errorMessage = newRequestCreationResponseStatus.error
+      showToast(errorMessage, 'error')
+    }
+  }, [newRequestCreationResponseStatus])
   return (
     <Box className="w-full">
       <Flex direction="column">
@@ -51,8 +74,20 @@ const NetworkBoard = ({
                   <Text className="mt-2 text-center text-sm text-gray-700">
                     {record.bio ?? 'Naveed have no bio'}
                   </Text>
-                  <Button className="mt-4 w-full cursor-pointer rounded-full bg-blue-700 py-4">
-                    Connect
+                  <Button
+                    className="mt-4 w-full cursor-pointer rounded-full bg-blue-700 py-4"
+                    onClick={() =>
+                      sendingNewRequest({
+                        username: record.username ?? '',
+                      })
+                    }
+                  >
+                    {isSendingNewRequestOnNetwork &&
+                    requestingRequestUserOnNetwork === record.username ? (
+                      <Loader2 className="animate-spin" />
+                    ) : (
+                      <Label>Connect</Label>
+                    )}
                   </Button>
                 </div>
               ))}
