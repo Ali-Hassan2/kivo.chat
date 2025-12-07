@@ -19,7 +19,7 @@ const Network = ({ height }: NetworkProps) => {
   return (
     <div className={cn(height, 'flex')}>
       <ProfileNetwork />
-      <NetworkBoard  />
+      <NetworkBoard />
     </div>
   )
 }

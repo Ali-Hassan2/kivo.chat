@@ -3,16 +3,18 @@
 import React from 'react'
 import { Label } from '@radix-ui/react-label'
 import { Box, Flex, Grid } from '@radix-ui/themes'
-import { INetworkUsers } from '@/hooks/types'
+import { AuthStatus, INetworkUsers } from '@/types'
 
 interface NetworkBoardProps {
-  getAllNetworkBuildingUsers: INetworkUsers[]
-  gettingAllUsersForNetworkConnections
-  gettingNetworkUsersResponseStatus
-  usersRecordForBuildingNetwork
+  getAllNetworkBuildingUsers: () => void
+  gettingAllUsersForNetworkConnections: boolean
+  gettingNetworkUsersResponseStatus: AuthStatus
+  usersRecordForBuildingNetwork: INetworkUsers[]
 }
 
-const NetworkBoard = () => {
+const NetworkBoard = ({
+  
+}) => {
   return (
     <Box className="w-full">
       <Flex direction="column">
