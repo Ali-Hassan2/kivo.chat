@@ -3,6 +3,14 @@
 import React from 'react'
 import { Label } from '@radix-ui/react-label'
 import { Box, Flex, Grid } from '@radix-ui/themes'
+import { INetworkUsers } from '@/hooks/types'
+
+interface NetworkBoardProps {
+  getAllNetworkBuildingUsers: INetworkUsers[]
+  gettingAllUsersForNetworkConnections
+  gettingNetworkUsersResponseStatus
+  usersRecordForBuildingNetwork
+}
 
 const NetworkBoard = () => {
   return (
@@ -15,9 +23,7 @@ const NetworkBoard = () => {
           </Box>
         </Box>
         <Box className="border-4">
-            <Grid>
-                
-            </Grid>
+          <Grid></Grid>
         </Box>
       </Flex>
     </Box>

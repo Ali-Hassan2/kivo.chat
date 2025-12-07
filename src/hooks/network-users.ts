@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
 import { useToggle } from 'react-use'
 import { getAllUsersForNetworkConnections } from '@/services'
-import { INetworkUsers } from './types'
+import { INetworkUsers } from '@/types'
+
 
 interface AuthStatus {
   success: string
