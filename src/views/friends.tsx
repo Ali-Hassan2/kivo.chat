@@ -1,9 +1,17 @@
 import React from 'react'
+import { ProfileNetwork } from '@/elements'
+import { cn } from '@/utils/cn'
 
-const friends = () => {
+interface FriendsViewProps {
+  height: string
+}
+
+const FriendsView = ({ height }: FriendsViewProps) => {
   return (
-    <div>friends</div>
+    <div className={cn(height, 'flex')}>
+      <ProfileNetwork />
+    </div>
   )
 }
 
-export default friends
+export { FriendsView }

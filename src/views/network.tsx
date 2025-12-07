@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react'
 import { NetworkBoard, ProfileNetwork } from '@/elements'
-import { useNetworkUsers } from '@/hooks'
+import { useNetworkUsers, useNewRequest } from '@/hooks'
 import { cn } from '@/utils/cn'
 
 interface NetworkProps {
@@ -15,6 +15,13 @@ const Network = ({ height }: NetworkProps) => {
     gettingNetworkUsersResponseStatus,
     usersRecordForBuildingNetwork,
   } = useNetworkUsers()
+
+  const {
+    isSendingNewRequestOnNetwork,
+    newRequestCreationResponseStatus,
+    sendingNewRequest,
+    requestingRequestUserOnNetwork,
+  } = useNewRequest()
 
   useEffect(() => {
     getAllNetworkBuildingUsers()
@@ -30,6 +37,10 @@ const Network = ({ height }: NetworkProps) => {
         }
         gettingNetworkUsersResponseStatus={gettingNetworkUsersResponseStatus}
         usersRecordForBuildingNetwork={usersRecordForBuildingNetwork}
+        isSendingNewRequestOnNetwork={isSendingNewRequestOnNetwork}
+        newRequestCreationResponseStatus={newRequestCreationResponseStatus}
+        sendingNewRequest={sendingNewRequest}
+        requestingRequestUserOnNetwork={requestingRequestUserOnNetwork}
       />
     </div>
   )

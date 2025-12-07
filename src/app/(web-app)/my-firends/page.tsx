@@ -1,9 +1,10 @@
 'use client'
 
 import React from 'react'
+import { FriendsView } from '@/views'
 
 const page = () => {
-  return <div className="text-black">Hello bro i am here</div>
+  return <FriendsView height="h-[91vh]" />
 }
 
 export default page
