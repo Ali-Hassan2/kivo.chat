@@ -47,7 +47,7 @@ const useNewRequest = () => {
       setError(response.message || 'Request Not Sent.')
     }
     setIsSendingNewRequestOnNetwork(false)
-    setRequestingRequestUserOnNetwork(null)
+    setRequestingRequestUserOnNetwork('')
   }
 
   return {
