@@ -14,7 +14,6 @@ const SkeletonWrapper = ({
   ...rest
 }: SkeletonWrapperProps) => {
   if (loading) {
-    // Just render children as they are, so you can use a skeleton layout inside children
     return <>{children}</>
   }
 
