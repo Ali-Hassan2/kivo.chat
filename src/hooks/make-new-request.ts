@@ -13,7 +13,7 @@ const useNewRequest = () => {
     setNewRequestCreationResponseStatus,
   ] = useState<AuthStatus>({ success: '', error: '' })
   const [requestingRequestUserOnNetwork, setRequestingRequestUserOnNetwork] =
-    useState<string | null>(null)
+    useState<string>('')
   const setError = (message: string) => {
     setNewRequestCreationResponseStatus((prev) => ({
       success: '',
