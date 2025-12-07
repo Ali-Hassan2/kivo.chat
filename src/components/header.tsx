@@ -83,7 +83,6 @@ const Header = ({ bgColor }: HeaderProps) => {
             )
           })}
         </div>
-
         <div
           className="relative ml-auto flex items-center justify-center gap-3 md:ml-0"
           onClick={setIsDropDownOpend}
@@ -116,13 +115,14 @@ const Header = ({ bgColor }: HeaderProps) => {
         <div className="h-[1px] bg-black/20" />
         <div className="flex flex-col gap-2 p-2">
           {HEADER_DROPDOWN_LABELS.map((licon) => (
-            <div
+            <Link
               key={licon.label}
-              className="flex cursor-pointer gap-3 rounded-md border border-transparent py-2 pl-2 text-sm transition-colors duration-300 ease-in-out hover:border-blue-600 hover:bg-blue-100 md:py-3 md:text-base"
+              href={licon.href ?? '#'}
+              className="flex gap-3 rounded-md border border-transparent py-2 pl-2 text-sm transition-colors duration-300 ease-in-out hover:border-blue-600 hover:bg-blue-100 md:py-3 md:text-base"
             >
               <div>{licon.icon}</div>
               <Label>{licon.label}</Label>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
