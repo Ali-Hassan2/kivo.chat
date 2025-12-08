@@ -7,11 +7,7 @@ interface FriendsViewProps {
 }
 
 const FriendsView = ({ height }: FriendsViewProps) => {
-  return (
-    <div className={cn(height, 'flex')}>
-      <ProfileNetwork />
-    </div>
-  )
+  return <div className={cn(height, 'flex')}>{/* <ProfileNetwork /> */}</div>
 }
 
 export { FriendsView }

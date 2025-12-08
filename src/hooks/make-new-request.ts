@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useToggle } from 'react-use'
 import * as z from 'zod'
 import { makeRequestGuard } from '@/guards'
@@ -14,6 +14,25 @@ const useNewRequest = () => {
   ] = useState<AuthStatus>({ success: '', error: '' })
   const [requestingRequestUserOnNetwork, setRequestingRequestUserOnNetwork] =
     useState<string>('')
+
+  const [statusForSendingRequest, setStatusForSendingRequest] = useState<
+    Record<string, string>
+  >({})
+
+  useEffect(() => {
+    const savedStatus = localStorage.getItem('networkStatus')
+    if (savedStatus) {
+      setStatusForSendingRequest(JSON.parse(savedStatus))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(
+      'networkStatus',
+      JSON.stringify(statusForSendingRequest),
+    )
+  }, [statusForSendingRequest])
+
   const setError = (message: string) => {
     setNewRequestCreationResponseStatus((prev) => ({
       success: '',
@@ -43,6 +62,10 @@ const useNewRequest = () => {
     })
     if (response.success) {
       setSuccess(response.message || 'Request Sent.')
+      setStatusForSendingRequest((prev) => ({
+        ...prev,
+        [data.username]: response.newRequest?.status || 'sent',
+      }))
     } else {
       setError(response.message || 'Request Not Sent.')
     }
@@ -55,6 +78,7 @@ const useNewRequest = () => {
     newRequestCreationResponseStatus,
     sendingNewRequest,
     requestingRequestUserOnNetwork,
+    statusForSendingRequest,
   }
 }
 

@@ -6,12 +6,25 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
+import { AuthStatus } from '@/types'
 import { useAuthRedirection } from '@/utils'
 import { cn } from '@/utils/cn'
+import { CountSkeleton } from './skeleton-count'
 
-const ProfileNetwork = () => {
+interface NetworkProfileProps {
+  userCountObtainedFromNetwork: number
+  isGettingUserNetworkCount: boolean
+  userCountResponseStatusForNetwork: AuthStatus
+}
+
+const ProfileNetwork = ({
+  userCountObtainedFromNetwork,
+  isGettingUserNetworkCount,
+  userCountResponseStatusForNetwork,
+}: NetworkProfileProps) => {
   const user = useAuthRedirection()
   const username = user?.username
+  console.log('The users count:', userCountObtainedFromNetwork)
   return (
     <div
       className={cn(
@@ -34,8 +47,13 @@ const ProfileNetwork = () => {
             <Label className="font-normal text-gray-700">{user?.bio}</Label>
           </Box>
         </Box>
-        {/* TODO:// call get total friends api to get count. */}
-        <Label className="mt-2 ml-3">Total Connections: 59</Label>
+        {isGettingUserNetworkCount ? (
+          <CountSkeleton width="16" loading={isGettingUserNetworkCount} />
+        ) : (
+          <Label className="mt-2 ml-3">
+            Total Connections: {userCountObtainedFromNetwork}
+          </Label>
+        )}
       </Card>
     </div>
   )

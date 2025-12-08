@@ -56,8 +56,6 @@ const useNetworkUsers = () => {
     setSuccess('')
     setGettingAllUsersForNetworkConnection(true)
 
-    await new Promise((resolve) => setTimeout(resolve, 10000))
-
     const response = await getAllUsersForNetworkConnections({
       signal: controller.signal,
     })

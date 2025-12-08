@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { makeRequestGuard } from '@/guards'
 import { AuthStatus, INetworkUsers } from '@/types'
 import { showToast } from '@/utils'
+import { cn } from '@/utils/cn'
 import { GridSkeleton } from './skeleton'
 
 interface NetworkBoardProps {
@@ -23,6 +24,7 @@ interface NetworkBoardProps {
     data: z.infer<typeof makeRequestGuard>,
   ) => Promise<any> | void
   requestingRequestUserOnNetwork: string
+  statusForSendingRequest: Record<string, string>
 }
 
 const NetworkBoard = ({
@@ -34,6 +36,7 @@ const NetworkBoard = ({
   newRequestCreationResponseStatus,
   sendingNewRequest,
   requestingRequestUserOnNetwork,
+  statusForSendingRequest,
 }: NetworkBoardProps) => {
   useEffect(() => {
     if (newRequestCreationResponseStatus.success) {
@@ -56,7 +59,11 @@ const NetworkBoard = ({
         </Box>
         <Box className="">
           {gettingAllUsersForNetworkConnections ? (
-            <GridSkeleton gettingAllUsersForNetworkConnections={true} />
+            <GridSkeleton
+              gettingAllUsersForNetworkConnections={
+                gettingAllUsersForNetworkConnections
+              }
+            />
           ) : (
             <div className="grid grid-cols-4 gap-5 p-4">
               {usersRecordForBuildingNetwork.map((record) => (
@@ -75,19 +82,30 @@ const NetworkBoard = ({
                     {record.bio ?? 'Naveed have no bio'}
                   </Text>
                   <Button
-                    className="mt-4 w-full cursor-pointer rounded-full bg-blue-700 py-4"
+                    className={cn(
+                      'mt-4 w-full cursor-pointer rounded-full bg-blue-700 py-4',
+                      statusForSendingRequest ??
+                        'border border-blue-700 bg-transparent',
+                    )}
                     onClick={() =>
-                      sendingNewRequest({
-                        username: record.username ?? '',
-                      })
+                      sendingNewRequest({ username: record.username ?? '' })
                     }
                   >
-                    {isSendingNewRequestOnNetwork &&
-                    requestingRequestUserOnNetwork === record.username ? (
-                      <Loader2 className="animate-spin" />
-                    ) : (
-                      <Label>Connect</Label>
-                    )}
+                    {(() => {
+                      const username = record.username ?? ''
+                      if (
+                        isSendingNewRequestOnNetwork &&
+                        requestingRequestUserOnNetwork === username
+                      ) {
+                        return <Loader2 className="animate-spin" />
+                      }
+                      if (statusForSendingRequest[username]) {
+                        return (
+                          <Label>{statusForSendingRequest[username]}</Label>
+                        )
+                      }
+                      return <Label>Connect</Label>
+                    })()}
                   </Button>
                 </div>
               ))}

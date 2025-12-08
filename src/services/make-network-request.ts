@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import { API_ENDPOINTS } from '@/actions'
-import { ApiResponse } from '@/types'
+import { MakeNewNetworkRequest } from '@/types'
 
 interface MakeRequestProps {
   username: string
@@ -10,7 +10,7 @@ interface MakeRequestProps {
 const MakeNetworkRequest = async ({
   username,
   signal,
-}: MakeRequestProps): Promise<ApiResponse> => {
+}: MakeRequestProps): Promise<MakeNewNetworkRequest> => {
   try {
     const response = await axios.post(
       `${API_ENDPOINTS.makeANetowrkRequest}?username=${username}`,
@@ -20,7 +20,7 @@ const MakeNetworkRequest = async ({
     )
     return response.data
   } catch (error: unknown) {
-    const axiosError = error as AxiosError<ApiResponse>
+    const axiosError = error as AxiosError<MakeNewNetworkRequest>
     if (axiosError.code === 'ERR_CANCEDLLED') {
       return {
         success: false,

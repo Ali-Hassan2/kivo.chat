@@ -6,6 +6,7 @@ const API_ENDPOINTS = {
   verifyUserCode: `/api/member/verifycode`,
   networkUsers: `/api/release/get-all-users`,
   makeANetowrkRequest: '/api/request/ro/createrequest',
+  getNetworkCount: '/api/release/get-user-network-count',
 }
 
 export { API_ENDPOINTS }

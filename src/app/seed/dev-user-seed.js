@@ -121,6 +121,8 @@ const mock_users = [
     _id: '68f74a56962880f2c850e156',
     username: 'naveed',
     email: 'naveed.test@example.com',
+    bio: 'We are the men of culture. We speak and we conquer.',
+    fullName: 'Naveed Ahmed',
     password: bcrypt.hashSync('naveed.1234', 10),
     verficationCode: '111111',
     verficationExpiry: new Date(
@@ -138,9 +140,11 @@ const mock_users = [
     __v: 0,
   },
   {
-    _id: '68f74a56962880f2c850e153',
+    _id: '68f74a56962880f2c850e157',
     username: 'noman',
     email: 'noman.test@example.com',
+    bio: 'We are the men of culture. We speak and we conquer.',
+    fullName: 'Noman Azam',
     password: bcrypt.hashSync('noman.1234', 10),
     verficationCode: '111111',
     verficationExpiry: new Date(
