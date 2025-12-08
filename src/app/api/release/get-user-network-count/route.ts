@@ -46,8 +46,13 @@ class GETUSERNETWORK {
       return userValidationResult
     }
 
-    const networkLength = user?.friends.length ?? 0
+    const uid = user?._id
+    const userByDB = await UserModel.findById(uid)
 
+    if (!userByDB) {
+      return GETUSERNETWORK.respond(false, 'User not found', null, 400)
+    }
+    const networkLength = userByDB?.friends.length ?? 0
     return GETUSERNETWORK.respond(true, 'Network count fetched.', {
       networkLength,
     })
