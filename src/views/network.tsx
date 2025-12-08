@@ -33,15 +33,15 @@ const Network = ({ height }: NetworkProps) => {
 
   useEffect(() => {
     getAllNetworkBuildingUsers()
+    gettingUserNetworkCount
   }, [])
 
   return (
     <div className={cn(height, 'flex')}>
       <ProfileNetwork
-        userCountObtainedFromNetwork={userCountObtainedFromNetwork}
+        userCountObtainedFromNetwork={userCountObtainedFromNetwork ?? 0}
         isGettingUserNetworkCount={isGettingUserNetworkCount}
         userCountResponseStatusForNetwork={userCountResponseStatusForNetwork}
-        gettingUserNetworkCount={gettingUserNetworkCount}
       />
       <NetworkBoard
         getAllNetworkBuildingUsers={getAllNetworkBuildingUsers}

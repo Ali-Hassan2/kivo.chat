@@ -14,12 +14,16 @@ interface NetworkProfileProps {
   userCountObtainedFromNetwork: number
   isGettingUserNetworkCount: boolean
   userCountResponseStatusForNetwork: AuthStatus
-  gettingUserNetworkCount: () => Promise<void>
 }
 
-const ProfileNetwork = () => {
+const ProfileNetwork = ({
+  userCountObtainedFromNetwork,
+  isGettingUserNetworkCount,
+  userCountResponseStatusForNetwork,
+}: NetworkProfileProps) => {
   const user = useAuthRedirection()
   const username = user?.username
+  console.log('The users count:', userCountObtainedFromNetwork)
   return (
     <div
       className={cn(
@@ -43,7 +47,9 @@ const ProfileNetwork = () => {
           </Box>
         </Box>
         {/* TODO:// call get total friends api to get count. */}
-        <Label className="mt-2 ml-3">Total Connections: 59</Label>
+        <Label className="mt-2 ml-3">
+          Total Connections: {userCountObtainedFromNetwork}
+        </Label>
       </Card>
     </div>
   )
