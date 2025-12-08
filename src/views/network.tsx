@@ -37,7 +37,12 @@ const Network = ({ height }: NetworkProps) => {
 
   return (
     <div className={cn(height, 'flex')}>
-      <ProfileNetwork />
+      <ProfileNetwork
+        userCountObtainedFromNetwork={userCountObtainedFromNetwork}
+        isGettingUserNetworkCount={isGettingUserNetworkCount}
+        userCountResponseStatusForNetwork={userCountResponseStatusForNetwork}
+        gettingUserNetworkCount={gettingUserNetworkCount}
+      />
       <NetworkBoard
         getAllNetworkBuildingUsers={getAllNetworkBuildingUsers}
         gettingAllUsersForNetworkConnections={
@@ -50,10 +55,6 @@ const Network = ({ height }: NetworkProps) => {
         sendingNewRequest={sendingNewRequest}
         requestingRequestUserOnNetwork={requestingRequestUserOnNetwork}
         statusForSendingRequest={statusForSendingRequest}
-        userCountObtainedFromNetwork={userCountObtainedFromNetwork}
-        isGettingUserNetworkCount={isGettingUserNetworkCount}
-        userCountResponseStatusForNetwork={userCountResponseStatusForNetwork}
-        gettingUserNetworkCount={gettingUserNetworkCount}
       />
     </div>
   )

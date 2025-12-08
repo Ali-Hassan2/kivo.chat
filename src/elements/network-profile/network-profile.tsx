@@ -6,8 +6,16 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
+import { AuthStatus } from '@/types'
 import { useAuthRedirection } from '@/utils'
 import { cn } from '@/utils/cn'
+
+interface NetworkProfileProps {
+  userCountObtainedFromNetwork: number
+  isGettingUserNetworkCount: boolean
+  userCountResponseStatusForNetwork: AuthStatus
+  gettingUserNetworkCount: () => Promise<void>
+}
 
 const ProfileNetwork = () => {
   const user = useAuthRedirection()
