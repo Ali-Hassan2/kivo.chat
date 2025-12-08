@@ -2,12 +2,13 @@ import { useRef, useState } from 'react'
 import { ZodNumberCheck } from 'zod/v3'
 import { GetNetworkUser } from '@/services'
 import { AuthStatus, NetworkLength } from '@/types'
+import { useToggle } from 'react-use'
 
 const useNetworkCount = () => {
   const [userCountObtainedFromNetwork, setUserCountObtainedFromNetwork] =
     useState<number>()
   const [isGettingUserNetworkCount, setIsGettingUserNetworkCount] =
-    useState<boolean>(false)
+    useToggle(false)
   const [
     userCountResponseStatusForNetwork,
     setUserCountResponseStatusForNetwork,
