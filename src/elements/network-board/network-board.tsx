@@ -25,6 +25,10 @@ interface NetworkBoardProps {
   ) => Promise<any> | void
   requestingRequestUserOnNetwork: string
   statusForSendingRequest: Record<string, string>
+  userCountObtainedFromNetwork: number
+  isGettingUserNetworkCount: boolean
+  userCountResponseStatusForNetwork: AuthStatus
+  gettingUserNetworkCount: () => Promise<void>
 }
 
 const NetworkBoard = ({
@@ -37,8 +41,12 @@ const NetworkBoard = ({
   sendingNewRequest,
   requestingRequestUserOnNetwork,
   statusForSendingRequest,
+  userCountObtainedFromNetwork,
+  isGettingUserNetworkCount,
+  userCountResponseStatusForNetwork,
+  gettingUserNetworkCount,
 }: NetworkBoardProps) => {
-  console.log('The status:', statusForSendingRequest)
+  console.log('The count:')
   useEffect(() => {
     if (newRequestCreationResponseStatus.success) {
       const successMessagge = newRequestCreationResponseStatus.success

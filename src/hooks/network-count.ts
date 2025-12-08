@@ -61,6 +61,7 @@ const useNetworkCount = () => {
     userCountObtainedFromNetwork,
     isGettingUserNetworkCount,
     userCountResponseStatusForNetwork,
+    gettingUserNetworkCount,
   }
 }
 
