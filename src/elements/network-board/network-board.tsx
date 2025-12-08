@@ -24,7 +24,7 @@ interface NetworkBoardProps {
     data: z.infer<typeof makeRequestGuard>,
   ) => Promise<any> | void
   requestingRequestUserOnNetwork: string
-  statusForSendingRequest: Record<string, string>
+  statusForRequests: Record<string, string>
 }
 
 const NetworkBoard = ({
@@ -36,7 +36,7 @@ const NetworkBoard = ({
   newRequestCreationResponseStatus,
   sendingNewRequest,
   requestingRequestUserOnNetwork,
-  statusForSendingRequest,
+  statusForRequests,
 }: NetworkBoardProps) => {
   useEffect(() => {
     if (newRequestCreationResponseStatus.success) {
@@ -83,9 +83,10 @@ const NetworkBoard = ({
                   </Text>
                   <Button
                     className={cn(
-                      'mt-4 w-full cursor-pointer rounded-full bg-blue-700 py-4',
-                      statusForSendingRequest ??
-                        'border border-blue-700 bg-transparent',
+                      'mt-4 w-full cursor-pointer rounded-full py-4',
+                      statusForRequests[record.username ?? '']
+                        ? 'bg-gray-300 text-black'
+                        : 'bg-blue-700 text-white',
                     )}
                     onClick={() =>
                       sendingNewRequest({ username: record.username ?? '' })
@@ -99,10 +100,8 @@ const NetworkBoard = ({
                       ) {
                         return <Loader2 className="animate-spin" />
                       }
-                      if (statusForSendingRequest[username]) {
-                        return (
-                          <Label>{statusForSendingRequest[username]}</Label>
-                        )
+                      if (statusForRequests[username]) {
+                        return <Label>{statusForRequests[username]}</Label>
                       }
                       return <Label>Connect</Label>
                     })()}
