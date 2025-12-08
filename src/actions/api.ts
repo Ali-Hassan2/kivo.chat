@@ -7,6 +7,7 @@ const API_ENDPOINTS = {
   networkUsers: `/api/release/get-all-users`,
   makeANetowrkRequest: '/api/request/ro/createrequest',
   getNetworkCount: '/api/release/get-user-network-count',
+  getAllRequestStatuses: '/api/release/get-all-requests-status',
 }
 
 export { API_ENDPOINTS }

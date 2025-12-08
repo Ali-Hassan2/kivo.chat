@@ -27,3 +27,9 @@ export interface NetworkLength {
     networkLength: number
   }
 }
+
+export interface GettingStatuses {
+  success: boolean
+  message: string
+  statuses?: Record<string, string>
+}
