@@ -19,3 +19,13 @@ export interface MakeNewNetworkRequest {
   message: string
   newRequest?: NewRequest
 }
+
+export interface NetworkLength {
+  networkLength: string
+}
+
+export interface NetworkLength {
+  success: boolean
+  message: string
+  data: NetworkLength
+}
