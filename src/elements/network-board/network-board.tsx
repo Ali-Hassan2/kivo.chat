@@ -59,7 +59,11 @@ const NetworkBoard = ({
         </Box>
         <Box className="">
           {gettingAllUsersForNetworkConnections ? (
-            <GridSkeleton gettingAllUsersForNetworkConnections={true} />
+            <GridSkeleton
+              gettingAllUsersForNetworkConnections={
+                gettingAllUsersForNetworkConnections
+              }
+            />
           ) : (
             <div className="grid grid-cols-4 gap-5 p-4">
               {usersRecordForBuildingNetwork.map((record) => (

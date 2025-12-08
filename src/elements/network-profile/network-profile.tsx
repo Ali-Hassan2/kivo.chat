@@ -46,7 +46,6 @@ const ProfileNetwork = ({
             <Label className="font-normal text-gray-700">{user?.bio}</Label>
           </Box>
         </Box>
-        {/* TODO:// call get total friends api to get count. */}
         <Label className="mt-2 ml-3">
           Total Connections: {userCountObtainedFromNetwork}
         </Label>
