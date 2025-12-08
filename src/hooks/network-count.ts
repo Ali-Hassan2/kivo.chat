@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react'
+import { ZodNumberCheck } from 'zod/v3'
 import { GetNetworkUser } from '@/services'
 import { AuthStatus, NetworkLength } from '@/types'
 
 const useNetworkCount = () => {
   const [userCountObtainedFromNetwork, setUserCountObtainedFromNetwork] =
-    useState<NetworkLength>()
+    useState<number>()
   const [isGettingUserNetworkCount, setIsGettingUserNetworkCount] =
     useState<boolean>(false)
   const [
@@ -41,7 +42,7 @@ const useNetworkCount = () => {
     const controller = new AbortController()
     currentControllerForGettingUserCount.current = controller
 
-    setIsGettingUserNetworkCount(false)
+    setIsGettingUserNetworkCount(true)
     setError('')
     setSuccess('')
 
@@ -50,7 +51,17 @@ const useNetworkCount = () => {
       setError(response.message || 'Cannot fetch the network count')
       setIsGettingUserNetworkCount(false)
     } else {
-      //   setUserCountObtainedFromNetwork(response.data.networkLength)
+      setUserCountObtainedFromNetwork(response.data?.networkLength)
+      setSuccess(response.message)
     }
+    setIsGettingUserNetworkCount(false)
+  }
+
+  return {
+    userCountObtainedFromNetwork,
+    isGettingUserNetworkCount,
+    userCountResponseStatusForNetwork,
   }
 }
+
+export { useNetworkCount }

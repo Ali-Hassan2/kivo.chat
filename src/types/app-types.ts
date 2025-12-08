@@ -21,11 +21,9 @@ export interface MakeNewNetworkRequest {
 }
 
 export interface NetworkLength {
-  networkLength: string
-}
-
-export interface NetworkLength {
   success: boolean
   message: string
-  data: NetworkLength
+  data?: {
+    networkLength: number
+  }
 }

@@ -1,6 +1,6 @@
 import axios, { Axios, AxiosError } from 'axios'
 import { API_ENDPOINTS } from '@/actions'
-import { ApiResponse } from '@/types'
+import { ApiResponse, NetworkLength } from '@/types'
 
 interface GetNetworkUserProps {
   signal?: AbortSignal
@@ -8,7 +8,7 @@ interface GetNetworkUserProps {
 
 const GetNetworkUser = async ({
   signal,
-}: GetNetworkUserProps): Promise<ApiResponse> => {
+}: GetNetworkUserProps): Promise<NetworkLength> => {
   try {
     const response = await axios.get(API_ENDPOINTS.getNetworkCount, {
       signal,
@@ -16,7 +16,7 @@ const GetNetworkUser = async ({
 
     return response.data
   } catch (error: unknown) {
-    const axiosError = error as AxiosError<ApiResponse>
+    const axiosError = error as AxiosError<NetworkLength>
     if (axiosError.code === 'ERR_CANCELLED') {
       return {
         success: false,
