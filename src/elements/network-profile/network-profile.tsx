@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label'
 import { AuthStatus } from '@/types'
 import { useAuthRedirection } from '@/utils'
 import { cn } from '@/utils/cn'
+import { CountSkeleton } from './skeleton-count'
 
 interface NetworkProfileProps {
   userCountObtainedFromNetwork: number
@@ -46,9 +47,13 @@ const ProfileNetwork = ({
             <Label className="font-normal text-gray-700">{user?.bio}</Label>
           </Box>
         </Box>
-        <Label className="mt-2 ml-3">
-          Total Connections: {userCountObtainedFromNetwork}
-        </Label>
+        {isGettingUserNetworkCount ? (
+          <CountSkeleton width="16" loading={isGettingUserNetworkCount} />
+        ) : (
+          <Label className="mt-2 ml-3">
+            Total Connections: {userCountObtainedFromNetwork}
+          </Label>
+        )}
       </Card>
     </div>
   )
