@@ -21,6 +21,7 @@ const Network = ({ height }: NetworkProps) => {
     newRequestCreationResponseStatus,
     sendingNewRequest,
     requestingRequestUserOnNetwork,
+    statusForSendingRequest,
   } = useNewRequest()
 
   useEffect(() => {
@@ -41,6 +42,7 @@ const Network = ({ height }: NetworkProps) => {
         newRequestCreationResponseStatus={newRequestCreationResponseStatus}
         sendingNewRequest={sendingNewRequest}
         requestingRequestUserOnNetwork={requestingRequestUserOnNetwork}
+        statusForSendingRequest={statusForSendingRequest}
       />
     </div>
   )

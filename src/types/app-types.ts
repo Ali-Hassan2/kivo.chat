@@ -7,3 +7,15 @@ export interface INetworkUsers {
   isShowingIdentity?: boolean
   bio?: string
 }
+
+export interface NewRequest {
+  status: string
+  from?: string
+  to?: string
+}
+export interface MakeNewNetworkRequest {
+  success: boolean
+  statusCode?: number
+  message: string
+  newRequest?: NewRequest
+}
