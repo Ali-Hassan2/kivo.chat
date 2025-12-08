@@ -77,6 +77,9 @@ class GETREQUESTSTATUS {
         { statuses: statusMap },
         200,
       )
+
+
+      
     } catch (error: unknown) {
       let errorMessage = 'unknown server error'
       if (error instanceof Error) {
