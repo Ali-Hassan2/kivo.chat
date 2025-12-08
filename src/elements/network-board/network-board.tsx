@@ -7,6 +7,7 @@ import { Loader2 } from 'lucide-react'
 import * as z from 'zod'
 import { SkeletonWrapper } from '@/components'
 import { Button } from '@/components/ui/button'
+import { REQUEST_STATUS } from '@/constants'
 import { makeRequestGuard } from '@/guards'
 import { AuthStatus, INetworkUsers } from '@/types'
 import { showToast } from '@/utils'
@@ -48,6 +49,7 @@ const NetworkBoard = ({
       showToast(errorMessage, 'error')
     }
   }, [newRequestCreationResponseStatus])
+
   return (
     <Box className="w-full">
       <Flex direction="column">
@@ -66,48 +68,53 @@ const NetworkBoard = ({
             />
           ) : (
             <div className="grid grid-cols-4 gap-5 p-4">
-              {usersRecordForBuildingNetwork.map((record) => (
-                <div
-                  key={record.username}
-                  className="flex flex-col items-center rounded-md border border-blue-700 p-3"
-                >
-                  <Avatar
-                    fallback={record.username?.[0].toUpperCase() ?? '?'}
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-700"
-                  />
-                  <Label className="mt-2 font-semibold">
-                    {record.fullName ?? 'Naveed'}
-                  </Label>
-                  <Text className="mt-2 text-center text-sm text-gray-700">
-                    {record.bio ?? 'Naveed have no bio'}
-                  </Text>
-                  <Button
-                    className={cn(
-                      'mt-4 w-full cursor-pointer rounded-full py-4',
-                      statusForRequests[record.username ?? '']
-                        ? 'bg-gray-300 text-black'
-                        : 'bg-blue-700 text-white',
-                    )}
-                    onClick={() =>
-                      sendingNewRequest({ username: record.username ?? '' })
-                    }
+              {usersRecordForBuildingNetwork.map((record) => {
+                const userId = record?._id
+                return (
+                  <div
+                    key={record.username}
+                    className="flex flex-col items-center rounded-md border border-blue-700 p-3"
                   >
-                    {(() => {
-                      const username = record.username ?? ''
-                      if (
-                        isSendingNewRequestOnNetwork &&
-                        requestingRequestUserOnNetwork === username
-                      ) {
-                        return <Loader2 className="animate-spin" />
+                    <Avatar
+                      fallback={record.username?.[0].toUpperCase() ?? '?'}
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-700"
+                    />
+                    <Label className="mt-2 font-semibold">
+                      {record.fullName ?? 'Naveed'}
+                    </Label>
+                    <Text className="mt-2 text-center text-sm text-gray-700">
+                      {record.bio ?? 'Naveed have no bio'}
+                    </Text>
+                    <Button
+                      className={cn(
+                        'mt-4 w-full cursor-pointer rounded-full py-4',
+                        statusForRequests[userId]
+                          ? 'border border-blue-500 bg-transparent text-black hover:bg-transparent'
+                          : 'bg-blue-700 text-white',
+                      )}
+                      onClick={() =>
+                        sendingNewRequest({ username: record.username ?? '' })
                       }
-                      if (statusForRequests[username]) {
-                        return <Label>{statusForRequests[username]}</Label>
+                      disabled={
+                        statusForRequests[userId] === REQUEST_STATUS.PENDING
                       }
-                      return <Label>Connect</Label>
-                    })()}
-                  </Button>
-                </div>
-              ))}
+                    >
+                      {(() => {
+                        if (
+                          isSendingNewRequestOnNetwork &&
+                          requestingRequestUserOnNetwork === record.username
+                        ) {
+                          return <Loader2 className="animate-spin" />
+                        }
+                        if (statusForRequests[userId]) {
+                          return <Label>{statusForRequests[userId]}</Label>
+                        }
+                        return <Label>Connect</Label>
+                      })()}
+                    </Button>
+                  </div>
+                )
+              })}
             </div>
           )}
         </Box>

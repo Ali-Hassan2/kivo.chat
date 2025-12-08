@@ -21,8 +21,8 @@ const useGetStatuses = () => {
     const response = await GettingAllRequestStatuses({
       signal: controller.signal,
     })
-    if (response.success && response.statuses) {
-      setStatusesForRequests(response.statuses)
+    if (response.success) {
+      setStatusesForRequests(response.data?.statuses ?? {})
     }
     setIsGettingStatusesForRequests(false)
   }
