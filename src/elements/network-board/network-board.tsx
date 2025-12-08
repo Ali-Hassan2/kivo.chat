@@ -46,7 +46,7 @@ const NetworkBoard = ({
   userCountResponseStatusForNetwork,
   gettingUserNetworkCount,
 }: NetworkBoardProps) => {
-  console.log('The count:')
+  console.log('The count:', userCountObtainedFromNetwork)
   useEffect(() => {
     if (newRequestCreationResponseStatus.success) {
       const successMessagge = newRequestCreationResponseStatus.success
