@@ -117,6 +117,17 @@ const NetworkBoard = ({
                         return <Label>Connect</Label>
                       })()}
                     </Button>
+                    {statusForRequests[userId] ? (
+                      <Button
+                        type="button"
+                        className="hover:border-black-800 duration:300 mt-2 w-full cursor-pointer rounded-full transition-all hover:border-2 hover:bg-black/80 hover:text-white"
+                      >
+                        {' '}
+                        Cancel Request
+                      </Button>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 )
               })}
