@@ -28,13 +28,15 @@ const ProfileNetwork = ({
   return (
     <div
       className={cn(
-        'flex h-full w-80 flex-col items-center justify-start border-r p-4 pt-16',
+        'flex h-full w-80 flex-col items-center justify-start border-r px-2 pt-16',
       )}
     >
-      <Card className="w-full shadow-xl">
+      <Card className="w-full p-4 shadow-xl">
         <CardHeader>
-          <CardTitle>Profile Stats</CardTitle>
-          <CardDescription>Your Public Stats here</CardDescription>
+          <CardTitle className="-ml-4">Profile Stats</CardTitle>
+          <CardDescription className="-ml-4">
+            Your Public Stats here
+          </CardDescription>
         </CardHeader>
         <div className="ml-4 h-[1px] w-4/5 bg-gray-200" />
         <Box className="flex w-full flex-col items-center justify-center gap-3">
@@ -48,7 +50,7 @@ const ProfileNetwork = ({
           </Box>
         </Box>
         {isGettingUserNetworkCount ? (
-          <CountSkeleton width="16" loading={isGettingUserNetworkCount} />
+          <CountSkeleton width="8" loading={isGettingUserNetworkCount} />
         ) : (
           <Label className="mt-2 ml-3">
             Total Connections: {userCountObtainedFromNetwork}

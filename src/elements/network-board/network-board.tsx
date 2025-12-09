@@ -2,12 +2,12 @@
 
 import React, { useEffect } from 'react'
 import { Label } from '@radix-ui/react-label'
-import { Avatar, Box, Flex, Grid, Text } from '@radix-ui/themes'
+import { Avatar, Box, Flex, Text } from '@radix-ui/themes'
 import { Loader2 } from 'lucide-react'
 import * as z from 'zod'
-import { SkeletonWrapper } from '@/components'
 import { Button } from '@/components/ui/button'
-import { makeRequestGuard } from '@/guards'
+import { REQUEST_STATUS } from '@/constants'
+import { cancelRequestSchema, makeRequestGuard } from '@/guards'
 import { AuthStatus, INetworkUsers } from '@/types'
 import { showToast } from '@/utils'
 import { cn } from '@/utils/cn'
@@ -24,7 +24,13 @@ interface NetworkBoardProps {
     data: z.infer<typeof makeRequestGuard>,
   ) => Promise<any> | void
   requestingRequestUserOnNetwork: string
-  statusForSendingRequest: Record<string, string>
+  statusForRequests: Record<string, string>
+  isGettingStatusesForRequests: boolean
+  cancelRequestForPendingRequestOnNetwork: AuthStatus
+  isCancellingRequestInPendingRequestOnNetwork: boolean
+  cancelRequestOnNetwork: (
+    data: z.infer<typeof cancelRequestSchema>,
+  ) => Promise<any> | void
 }
 
 const NetworkBoard = ({
@@ -36,7 +42,11 @@ const NetworkBoard = ({
   newRequestCreationResponseStatus,
   sendingNewRequest,
   requestingRequestUserOnNetwork,
-  statusForSendingRequest,
+  statusForRequests,
+  isGettingStatusesForRequests,
+  cancelRequestForPendingRequestOnNetwork,
+  isCancellingRequestInPendingRequestOnNetwork,
+  cancelRequestOnNetwork,
 }: NetworkBoardProps) => {
   useEffect(() => {
     if (newRequestCreationResponseStatus.success) {
@@ -47,7 +57,20 @@ const NetworkBoard = ({
       const errorMessage = newRequestCreationResponseStatus.error
       showToast(errorMessage, 'error')
     }
-  }, [newRequestCreationResponseStatus])
+
+    if (cancelRequestForPendingRequestOnNetwork.success) {
+      const successMessage = cancelRequestForPendingRequestOnNetwork.success
+      showToast(successMessage, 'success')
+    }
+    if (cancelRequestForPendingRequestOnNetwork.error) {
+      const errorMessage = cancelRequestForPendingRequestOnNetwork.error
+      showToast(errorMessage, 'error')
+    }
+  }, [
+    newRequestCreationResponseStatus,
+    cancelRequestForPendingRequestOnNetwork,
+  ])
+
   return (
     <Box className="w-full">
       <Flex direction="column">
@@ -66,49 +89,68 @@ const NetworkBoard = ({
             />
           ) : (
             <div className="grid grid-cols-4 gap-5 p-4">
-              {usersRecordForBuildingNetwork.map((record) => (
-                <div
-                  key={record.username}
-                  className="flex flex-col items-center rounded-md border border-blue-700 p-3"
-                >
-                  <Avatar
-                    fallback={record.username?.[0].toUpperCase() ?? '?'}
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-700"
-                  />
-                  <Label className="mt-2 font-semibold">
-                    {record.fullName ?? 'Naveed'}
-                  </Label>
-                  <Text className="mt-2 text-center text-sm text-gray-700">
-                    {record.bio ?? 'Naveed have no bio'}
-                  </Text>
-                  <Button
-                    className={cn(
-                      'mt-4 w-full cursor-pointer rounded-full bg-blue-700 py-4',
-                      statusForSendingRequest ??
-                        'border border-blue-700 bg-transparent',
-                    )}
-                    onClick={() =>
-                      sendingNewRequest({ username: record.username ?? '' })
-                    }
+              {usersRecordForBuildingNetwork.map((record) => {
+                const userId = record?._id
+                const requestId = record?.requests[0]
+                console.log('The requesssssssid', requestId)
+                return (
+                  <div
+                    key={record.username}
+                    className="flex flex-col items-center rounded-md border border-blue-700 p-3"
                   >
-                    {(() => {
-                      const username = record.username ?? ''
-                      if (
-                        isSendingNewRequestOnNetwork &&
-                        requestingRequestUserOnNetwork === username
-                      ) {
-                        return <Loader2 className="animate-spin" />
+                    <Avatar
+                      fallback={record.username?.[0].toUpperCase() ?? '?'}
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-700"
+                    />
+                    <Label className="mt-2 font-semibold">
+                      {record.fullName ?? 'Naveed'}
+                    </Label>
+                    <Text className="mt-2 text-center text-sm text-gray-700">
+                      {record.bio ?? 'Naveed have no bio'}
+                    </Text>
+                    <Button
+                      className={cn(
+                        'mt-4 w-full cursor-pointer rounded-full py-4',
+                        statusForRequests[userId]
+                          ? 'border border-blue-500 bg-transparent text-black hover:bg-transparent'
+                          : 'bg-blue-700 text-white',
+                      )}
+                      onClick={() =>
+                        sendingNewRequest({ username: record.username ?? '' })
                       }
-                      if (statusForSendingRequest[username]) {
-                        return (
-                          <Label>{statusForSendingRequest[username]}</Label>
-                        )
+                      disabled={
+                        statusForRequests[userId] === REQUEST_STATUS.PENDING
                       }
-                      return <Label>Connect</Label>
-                    })()}
-                  </Button>
-                </div>
-              ))}
+                    >
+                      {(() => {
+                        if (
+                          isSendingNewRequestOnNetwork &&
+                          requestingRequestUserOnNetwork === record.username
+                        ) {
+                          return <Loader2 className="animate-spin" />
+                        }
+                        if (statusForRequests[userId]) {
+                          return <Label>{statusForRequests[userId]}</Label>
+                        }
+                        return <Label>Connect</Label>
+                      })()}
+                    </Button>
+                    {statusForRequests[userId] && requestId ? (
+                      <Button
+                        type="button"
+                        className="hover:border-black-800 duration:300 mt-2 w-full cursor-pointer rounded-full transition-all hover:border-2 hover:bg-black/80 hover:text-white"
+                        onClick={() => cancelRequestOnNetwork({ requestId })}
+                      >
+                        {isCancellingRequestInPendingRequestOnNetwork ? (
+                          <Loader2 className="animate-spin" />
+                        ) : (
+                          <Label>Cancel Request</Label>
+                        )}
+                      </Button>
+                    ) : null}
+                  </div>
+                )
+              })}
             </div>
           )}
         </Box>

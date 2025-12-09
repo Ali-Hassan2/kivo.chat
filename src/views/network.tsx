@@ -2,7 +2,13 @@
 
 import React, { useEffect } from 'react'
 import { NetworkBoard, ProfileNetwork } from '@/elements'
-import { useNetworkCount, useNetworkUsers, useNewRequest } from '@/hooks'
+import {
+  useCancelRequest,
+  useGetStatuses,
+  useNetworkCount,
+  useNetworkUsers,
+  useNewRequest,
+} from '@/hooks'
 import { cn } from '@/utils/cn'
 
 interface NetworkProps {
@@ -21,7 +27,6 @@ const Network = ({ height }: NetworkProps) => {
     newRequestCreationResponseStatus,
     sendingNewRequest,
     requestingRequestUserOnNetwork,
-    statusForSendingRequest,
   } = useNewRequest()
 
   const {
@@ -31,9 +36,22 @@ const Network = ({ height }: NetworkProps) => {
     gettingUserNetworkCount,
   } = useNetworkCount()
 
+  const {
+    isGettingStatusesForRequests,
+    StatusesForRequests,
+    getStatusesForRequests,
+  } = useGetStatuses()
+
+  const {
+    cancelRequestForPendingRequestOnNetwork,
+    isCancellingRequestInPendingRequestOnNetwork,
+    cancelRequestOnNetwork,
+  } = useCancelRequest()
+
   useEffect(() => {
     getAllNetworkBuildingUsers()
-    gettingUserNetworkCount
+    gettingUserNetworkCount()
+    getStatusesForRequests()
   }, [])
 
   return (
@@ -54,7 +72,15 @@ const Network = ({ height }: NetworkProps) => {
         newRequestCreationResponseStatus={newRequestCreationResponseStatus}
         sendingNewRequest={sendingNewRequest}
         requestingRequestUserOnNetwork={requestingRequestUserOnNetwork}
-        statusForSendingRequest={statusForSendingRequest}
+        statusForRequests={StatusesForRequests}
+        isGettingStatusesForRequests={isGettingStatusesForRequests}
+        cancelRequestForPendingRequestOnNetwork={
+          cancelRequestForPendingRequestOnNetwork
+        }
+        isCancellingRequestInPendingRequestOnNetwork={
+          isCancellingRequestInPendingRequestOnNetwork
+        }
+        cancelRequestOnNetwork={cancelRequestOnNetwork}
       />
     </div>
   )

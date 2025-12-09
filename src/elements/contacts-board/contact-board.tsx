@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from 'react'
 import { Avatar } from '@radix-ui/themes'
 import { Search } from '@/components'
 import { Label } from '@/components/ui/label'
+import { SEARCH_NOT_FOUND_MESSAGE } from '@/constants'
 import { MOCK_CONTACTS } from '@/constants/objects-to-iterate'
 import { cn } from '@/utils/cn'
-import { SEARCH_NOT_FOUND_MESSAGE } from '@/constants'
 
 const ContactBoard = () => {
   const [
@@ -28,7 +28,9 @@ const ContactBoard = () => {
 
   useEffect(() => {
     if (filteredContactListBasedOnSearchQuery.length === 0) {
-      setNoResultMessageToDisplayWhenSearchYieldsNoResults(SEARCH_NOT_FOUND_MESSAGE)
+      setNoResultMessageToDisplayWhenSearchYieldsNoResults(
+        SEARCH_NOT_FOUND_MESSAGE,
+      )
     } else {
       setNoResultMessageToDisplayWhenSearchYieldsNoResults('')
     }

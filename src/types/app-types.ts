@@ -6,6 +6,7 @@ export interface INetworkUsers {
   isAcceptingMessages?: boolean
   isShowingIdentity?: boolean
   bio?: string
+  requests: any[]
 }
 
 export interface NewRequest {
@@ -25,5 +26,13 @@ export interface NetworkLength {
   message: string
   data?: {
     networkLength: number
+  }
+}
+
+export interface GettingStatuses {
+  success: boolean
+  message: string
+  data?: {
+    statuses?: Record<string, string>
   }
 }
