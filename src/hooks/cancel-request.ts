@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 import { useToggle } from 'react-use'
+import * as z from 'zod'
+import { cancelRequestSchema } from '@/guards'
 import { CancelRequestForPendingRequest } from '@/services'
 import { AuthStatus } from '@/types'
 
@@ -33,7 +35,9 @@ const useCancelRequest = () => {
     }))
   }
 
-  const cancelRequestOnNetwork = async () => {
+  const cancelRequestOnNetwork = async (
+    data: z.infer<typeof cancelRequestSchema>,
+  ) => {
     setIsCancellingRequestInPendingRequestOnNetwork(true)
     setError('')
     setSuccess('')
@@ -45,6 +49,7 @@ const useCancelRequest = () => {
       controller
     const response = await CancelRequestForPendingRequest({
       signal: controller.signal,
+      requestId: data.requestId,
     })
     if (response.success) {
       setSuccess(response.message)

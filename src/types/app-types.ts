@@ -6,6 +6,7 @@ export interface INetworkUsers {
   isAcceptingMessages?: boolean
   isShowingIdentity?: boolean
   bio?: string
+  requests: any[]
 }
 
 export interface NewRequest {

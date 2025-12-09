@@ -7,7 +7,7 @@ import { Loader2 } from 'lucide-react'
 import * as z from 'zod'
 import { Button } from '@/components/ui/button'
 import { REQUEST_STATUS } from '@/constants'
-import { makeRequestGuard } from '@/guards'
+import { cancelRequestSchema, makeRequestGuard } from '@/guards'
 import { AuthStatus, INetworkUsers } from '@/types'
 import { showToast } from '@/utils'
 import { cn } from '@/utils/cn'
@@ -28,7 +28,9 @@ interface NetworkBoardProps {
   isGettingStatusesForRequests: boolean
   cancelRequestForPendingRequestOnNetwork: AuthStatus
   isCancellingRequestInPendingRequestOnNetwork: boolean
-  cancelRequestOnNetwork: () => Promise<any> | void
+  cancelRequestOnNetwork: (
+    data: z.infer<typeof cancelRequestSchema>,
+  ) => Promise<any> | void
 }
 
 const NetworkBoard = ({
@@ -89,6 +91,8 @@ const NetworkBoard = ({
             <div className="grid grid-cols-4 gap-5 p-4">
               {usersRecordForBuildingNetwork.map((record) => {
                 const userId = record?._id
+                const requestId = record?.requests[0]
+                console.log('The requesssssssid', requestId)
                 return (
                   <div
                     key={record.username}
@@ -131,22 +135,19 @@ const NetworkBoard = ({
                         return <Label>Connect</Label>
                       })()}
                     </Button>
-                    {statusForRequests[userId] ? (
+                    {statusForRequests[userId] && requestId ? (
                       <Button
                         type="button"
                         className="hover:border-black-800 duration:300 mt-2 w-full cursor-pointer rounded-full transition-all hover:border-2 hover:bg-black/80 hover:text-white"
-                        onClick={() => cancelRequestOnNetwork}
+                        onClick={() => cancelRequestOnNetwork({ requestId })}
                       >
-                        {' '}
                         {isCancellingRequestInPendingRequestOnNetwork ? (
                           <Loader2 className="animate-spin" />
                         ) : (
                           <Label>Cancel Request</Label>
                         )}
                       </Button>
-                    ) : (
-                      <></>
-                    )}
+                    ) : null}
                   </div>
                 )
               })}
