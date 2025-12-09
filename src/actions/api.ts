@@ -8,6 +8,7 @@ const API_ENDPOINTS = {
   makeANetowrkRequest: '/api/request/ro/createrequest',
   getNetworkCount: '/api/release/get-user-network-count',
   getAllRequestStatuses: '/api/release/get-all-requests-status',
+  cancelRequestWhichIsInPendingState: '/api/request/ro/cancelrequest'
 }
 
 export { API_ENDPOINTS }
