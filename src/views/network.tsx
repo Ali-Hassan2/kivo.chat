@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react'
 import { NetworkBoard, ProfileNetwork } from '@/elements'
 import {
+  useCancelRequest,
   useGetStatuses,
   useNetworkCount,
   useNetworkUsers,
@@ -41,6 +42,12 @@ const Network = ({ height }: NetworkProps) => {
     getStatusesForRequests,
   } = useGetStatuses()
 
+  const {
+    cancelRequestForPendingRequestOnNetwork,
+    isCancellingRequestInPendingRequestOnNetwork,
+    cancelRequestOnNetwork,
+  } = useCancelRequest()
+
   useEffect(() => {
     getAllNetworkBuildingUsers()
     gettingUserNetworkCount()
@@ -67,6 +74,13 @@ const Network = ({ height }: NetworkProps) => {
         requestingRequestUserOnNetwork={requestingRequestUserOnNetwork}
         statusForRequests={StatusesForRequests}
         isGettingStatusesForRequests={isGettingStatusesForRequests}
+        cancelRequestForPendingRequestOnNetwork={
+          cancelRequestForPendingRequestOnNetwork
+        }
+        isCancellingRequestInPendingRequestOnNetwork={
+          isCancellingRequestInPendingRequestOnNetwork
+        }
+        cancelRequestOnNetwork={cancelRequestOnNetwork}
       />
     </div>
   )

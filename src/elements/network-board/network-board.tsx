@@ -26,6 +26,9 @@ interface NetworkBoardProps {
   requestingRequestUserOnNetwork: string
   statusForRequests: Record<string, string>
   isGettingStatusesForRequests: boolean
+  cancelRequestForPendingRequestOnNetwork: AuthStatus
+  isCancellingRequestInPendingRequestOnNetwork: boolean
+  cancelRequestOnNetwork: () => Promise<any> | void
 }
 
 const NetworkBoard = ({
@@ -39,6 +42,9 @@ const NetworkBoard = ({
   requestingRequestUserOnNetwork,
   statusForRequests,
   isGettingStatusesForRequests,
+  cancelRequestForPendingRequestOnNetwork,
+  isCancellingRequestInPendingRequestOnNetwork,
+  cancelRequestOnNetwork,
 }: NetworkBoardProps) => {
   useEffect(() => {
     if (newRequestCreationResponseStatus.success) {
@@ -49,12 +55,20 @@ const NetworkBoard = ({
       const errorMessage = newRequestCreationResponseStatus.error
       showToast(errorMessage, 'error')
     }
-  }, [newRequestCreationResponseStatus])
 
-  console.log(
-    'Is the skeleton is loading',
-    gettingAllUsersForNetworkConnections,
-  )
+    if (cancelRequestForPendingRequestOnNetwork.success) {
+      const successMessage = cancelRequestForPendingRequestOnNetwork.success
+      showToast(successMessage, 'success')
+    }
+    if (cancelRequestForPendingRequestOnNetwork.error) {
+      const errorMessage = cancelRequestForPendingRequestOnNetwork.error
+      showToast(errorMessage, 'error')
+    }
+  }, [
+    newRequestCreationResponseStatus,
+    cancelRequestForPendingRequestOnNetwork,
+  ])
+
   return (
     <Box className="w-full">
       <Flex direction="column">
@@ -121,9 +135,14 @@ const NetworkBoard = ({
                       <Button
                         type="button"
                         className="hover:border-black-800 duration:300 mt-2 w-full cursor-pointer rounded-full transition-all hover:border-2 hover:bg-black/80 hover:text-white"
+                        onClick={() => cancelRequestOnNetwork}
                       >
                         {' '}
-                        Cancel Request
+                        {isCancellingRequestInPendingRequestOnNetwork ? (
+                          <Loader2 className="animate-spin" />
+                        ) : (
+                          <Label>Cancel Request</Label>
+                        )}
                       </Button>
                     ) : (
                       <></>
