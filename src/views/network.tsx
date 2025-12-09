@@ -66,6 +66,7 @@ const Network = ({ height }: NetworkProps) => {
         sendingNewRequest={sendingNewRequest}
         requestingRequestUserOnNetwork={requestingRequestUserOnNetwork}
         statusForRequests={StatusesForRequests}
+        isGettingStatusesForRequests={isGettingStatusesForRequests}
       />
     </div>
   )

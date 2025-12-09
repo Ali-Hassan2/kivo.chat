@@ -44,6 +44,7 @@ const useNetworkCount = () => {
     currentControllerForGettingUserCount.current = controller
 
     setIsGettingUserNetworkCount(true)
+    await new Promise((resolve) => setTimeout(resolve, 2000))
     setError('')
     setSuccess('')
 

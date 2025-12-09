@@ -2,10 +2,9 @@
 
 import React, { useEffect } from 'react'
 import { Label } from '@radix-ui/react-label'
-import { Avatar, Box, Flex, Grid, Text } from '@radix-ui/themes'
+import { Avatar, Box, Flex, Text } from '@radix-ui/themes'
 import { Loader2 } from 'lucide-react'
 import * as z from 'zod'
-import { SkeletonWrapper } from '@/components'
 import { Button } from '@/components/ui/button'
 import { REQUEST_STATUS } from '@/constants'
 import { makeRequestGuard } from '@/guards'
@@ -26,6 +25,7 @@ interface NetworkBoardProps {
   ) => Promise<any> | void
   requestingRequestUserOnNetwork: string
   statusForRequests: Record<string, string>
+  isGettingStatusesForRequests: boolean
 }
 
 const NetworkBoard = ({
@@ -38,6 +38,7 @@ const NetworkBoard = ({
   sendingNewRequest,
   requestingRequestUserOnNetwork,
   statusForRequests,
+  isGettingStatusesForRequests,
 }: NetworkBoardProps) => {
   useEffect(() => {
     if (newRequestCreationResponseStatus.success) {
@@ -50,6 +51,10 @@ const NetworkBoard = ({
     }
   }, [newRequestCreationResponseStatus])
 
+  console.log(
+    'Is the skeleton is loading',
+    gettingAllUsersForNetworkConnections,
+  )
   return (
     <Box className="w-full">
       <Flex direction="column">
