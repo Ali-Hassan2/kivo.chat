@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Box, Flex } from '@radix-ui/themes'
+import { Avatar, Box, Flex } from '@radix-ui/themes'
 import { BoardUpperHeader, NoData } from '@/components'
 import { Label } from '@/components/ui/label'
 import { NETWORK } from '@/constants'
@@ -52,14 +52,14 @@ const FriendBoard = ({
               {RecordRequestsForMeFromOverallNetwork.map((record) => {
                 return (
                   <div className="flex" key={record.from.username}>
-                    <Box>
+                    <Box className="flex gap-2">
                       <Avatar
                         fallback={
                           record.from.username?.[0].toUpperCase() ?? '?'
                         }
                         className="flex h-8 w-8 items-center justify-center bg-blue-200 text-blue-700"
                       />
-                      {record.from.username}
+                      <Label>{record.from.username}</Label>
                     </Box>
                   </div>
                 )
