@@ -32,7 +32,17 @@ const FriendsList = ({ height }: FriendsListProps) => {
         isGettingUserNetworkCount={isGettingUserNetworkCount}
         userCountResponseStatusForNetwork={userCountResponseStatusForNetwork}
       />
-      <FriendBoard />
+      <FriendBoard
+        isGettingRequestToMeFromOverallNetwork={
+          isGettingRequestToMeFromOverallNetwork
+        }
+        RecordRequestsForMeFromOverallNetwork={
+          RecordRequestsForMeFromOverallNetwork
+        }
+        totalNumberOfRequestsInPendingQueue={
+          totalNumberOfRequestsInPendingQueue
+        }
+      />
     </div>
   )
 }

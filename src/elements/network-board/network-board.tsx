@@ -8,7 +8,7 @@ import { useToggle } from 'react-use'
 import * as z from 'zod'
 import { BoardUpperHeader } from '@/components'
 import { Button } from '@/components/ui/button'
-import { REQUEST_STATUS } from '@/constants'
+import { FRIENDS_NETWORK_BOARD, REQUEST_STATUS } from '@/constants'
 import { cancelRequestSchema, makeRequestGuard } from '@/guards'
 import { AuthStatus, INetworkUsers } from '@/types'
 import { showToast } from '@/utils'
@@ -85,7 +85,15 @@ const NetworkBoard = ({
   return (
     <Box className="w-full">
       <Flex direction="column">
-        <BoardUpperHeader />
+        <BoardUpperHeader
+          NextHead=""
+          ButtonOne={{ label: 'Pending Requests', href: FRIENDS_NETWORK_BOARD }}
+          ButtonTwo={{
+            label: 'All Friends',
+            href: '#',
+          }}
+          lineWidth="w-40"
+        />
         <Box className="">
           {gettingAllUsersForNetworkConnections ? (
             <GridSkeleton
