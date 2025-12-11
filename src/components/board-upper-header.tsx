@@ -5,20 +5,34 @@ import { FRIENDS_NETWORK_BOARD } from '@/constants'
 import { Button } from './ui/button'
 import { Label } from './ui/label'
 
-const BoardUpperHeader = () => {
+interface BoardUpperProps {
+  NextHead: string
+  ButtonOne: string
+  ButtonTwo: string
+}
+
+const [goToWhereYouHaveContent,setgoToWhereYouHaveContent] = React.useState<string>('')
+
+const 
+
+const BoardUpperHeader = ({
+  NextHead,
+  ButtonOne,
+  ButtonTwo,
+}: BoardUpperProps): React.JSX.Element => {
   return (
     <Box className="flex h-40 items-center justify-between pl-4">
       <Box className="flex flex-col gap-2">
-        <Label className="text-4xl font-semibold">Network.</Label>
+        <Label className="text-4xl font-semibold">Network {NextHead}</Label>
         <div className="h-[1px] w-40 bg-gray-200" />
       </Box>
 
       <Box className="flex gap-4 pr-3">
         <Button asChild variant="outline" className="cursor-pointer">
-          <Link href={FRIENDS_NETWORK_BOARD}>Pending Requests</Link>
+          <Link href={FRIENDS_NETWORK_BOARD}>{ButtonOne}</Link>
         </Button>
         <Button className="cursor-pointer bg-blue-700 hover:bg-blue-600">
-          All Friends
+          {ButtonTwo ?? 'All Friends'}
         </Button>
       </Box>
     </Box>
