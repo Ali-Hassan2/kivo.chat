@@ -4,9 +4,11 @@ import React, { useEffect } from 'react'
 import { Label } from '@radix-ui/react-label'
 import { Avatar, Box, Flex, Text } from '@radix-ui/themes'
 import { Loader2 } from 'lucide-react'
+import { useToggle } from 'react-use'
 import * as z from 'zod'
+import { BoardUpperHeader } from '@/components'
 import { Button } from '@/components/ui/button'
-import { REQUEST_STATUS } from '@/constants'
+import { FRIENDS_NETWORK_BOARD, REQUEST_STATUS } from '@/constants'
 import { cancelRequestSchema, makeRequestGuard } from '@/guards'
 import { AuthStatus, INetworkUsers } from '@/types'
 import { showToast } from '@/utils'
@@ -31,6 +33,8 @@ interface NetworkBoardProps {
   cancelRequestOnNetwork: (
     data: z.infer<typeof cancelRequestSchema>,
   ) => Promise<any> | void
+  getStatusesForRequests: () => void
+  RequestMapForCancelingRequests: Record<string, string>
 }
 
 const NetworkBoard = ({
@@ -46,40 +50,50 @@ const NetworkBoard = ({
   isGettingStatusesForRequests,
   cancelRequestForPendingRequestOnNetwork,
   isCancellingRequestInPendingRequestOnNetwork,
+  getStatusesForRequests,
   cancelRequestOnNetwork,
+  RequestMapForCancelingRequests,
 }: NetworkBoardProps) => {
+  const [cancelingUser, setCancelingUser] = React.useState<string | null>(null)
   useEffect(() => {
     if (newRequestCreationResponseStatus.success) {
-      const successMessagge = newRequestCreationResponseStatus.success
-      showToast(successMessagge, 'success')
+      showToast(newRequestCreationResponseStatus.success, 'success')
+      getStatusesForRequests()
     }
     if (newRequestCreationResponseStatus.error) {
-      const errorMessage = newRequestCreationResponseStatus.error
-      showToast(errorMessage, 'error')
-    }
-
-    if (cancelRequestForPendingRequestOnNetwork.success) {
-      const successMessage = cancelRequestForPendingRequestOnNetwork.success
-      showToast(successMessage, 'success')
-    }
-    if (cancelRequestForPendingRequestOnNetwork.error) {
-      const errorMessage = cancelRequestForPendingRequestOnNetwork.error
-      showToast(errorMessage, 'error')
+      showToast(newRequestCreationResponseStatus.error, 'error')
     }
   }, [
-    newRequestCreationResponseStatus,
-    cancelRequestForPendingRequestOnNetwork,
+    newRequestCreationResponseStatus.success,
+    newRequestCreationResponseStatus.error,
+  ])
+
+  useEffect(() => {
+    if (cancelRequestForPendingRequestOnNetwork.success) {
+      showToast(cancelRequestForPendingRequestOnNetwork.success, 'success')
+      setCancelingUser(null)
+      getStatusesForRequests()
+    }
+    if (cancelRequestForPendingRequestOnNetwork.error) {
+      showToast(cancelRequestForPendingRequestOnNetwork.error, 'error')
+    }
+  }, [
+    cancelRequestForPendingRequestOnNetwork.success,
+    cancelRequestForPendingRequestOnNetwork.error,
   ])
 
   return (
     <Box className="w-full">
       <Flex direction="column">
-        <Box className="flex h-40 items-center pl-4">
-          <Box className="flex flex-col gap-2">
-            <Label className="text-4xl font-semibold">Network.</Label>
-            <div className="h-[1px] w-40 bg-gray-200" />
-          </Box>
-        </Box>
+        <BoardUpperHeader
+          NextHead=""
+          ButtonOne={{ label: 'Pending Requests', href: FRIENDS_NETWORK_BOARD }}
+          ButtonTwo={{
+            label: 'All Friends',
+            href: '#',
+          }}
+          lineWidth="w-40"
+        />
         <Box className="">
           {gettingAllUsersForNetworkConnections ? (
             <GridSkeleton
@@ -135,13 +149,19 @@ const NetworkBoard = ({
                         return <Label>Connect</Label>
                       })()}
                     </Button>
-                    {statusForRequests[userId] && requestId ? (
+                    {statusForRequests[userId] === REQUEST_STATUS.PENDING &&
+                    RequestMapForCancelingRequests[userId] ? (
                       <Button
                         type="button"
                         className="hover:border-black-800 duration:300 mt-2 w-full cursor-pointer rounded-full transition-all hover:border-2 hover:bg-black/80 hover:text-white"
-                        onClick={() => cancelRequestOnNetwork({ requestId })}
+                        onClick={() =>
+                          cancelRequestOnNetwork({
+                            requestId: RequestMapForCancelingRequests[userId],
+                          })
+                        }
                       >
-                        {isCancellingRequestInPendingRequestOnNetwork ? (
+                        {isCancellingRequestInPendingRequestOnNetwork &&
+                        cancelingUser === userId ? (
                           <Loader2 className="animate-spin" />
                         ) : (
                           <Label>Cancel Request</Label>

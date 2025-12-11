@@ -1,0 +1,47 @@
+import React, { useRef } from 'react'
+import { useToggle } from 'react-use'
+import { getAllRequestToMe } from '@/services'
+import { GetAllRequest, requestToMe } from '@/types'
+
+const useRequestsToMe = () => {
+  const [
+    isGettingRequestToMeFromOverallNetwork,
+    setIsGettingRequestToMeFromOverallNetwork,
+  ] = useToggle(false)
+
+  const [
+    RecordRequestsForMeFromOverallNetwork,
+    setRecordRequestsForMeFromOverallNetwork,
+  ] = React.useState<requestToMe[]>([])
+
+  const [
+    totalNumberOfRequestsInPendingQueue,
+    setTotalNumberOfRequestsInPendingQueue,
+  ] = React.useState<number>(0)
+
+  const controllerForGettingMyRequestsInPendingQueue =
+    useRef<AbortController | null>(null)
+  const GetAllRequestsToMe = async () => {
+    setIsGettingRequestToMeFromOverallNetwork(true)
+    if (controllerForGettingMyRequestsInPendingQueue.current) {
+      controllerForGettingMyRequestsInPendingQueue.current.abort()
+    }
+    const controller = new AbortController()
+    controllerForGettingMyRequestsInPendingQueue.current = controller
+    const response = await getAllRequestToMe({ signal: controller.signal })
+    if (response.success) {
+      setRecordRequestsForMeFromOverallNetwork(response.requestToMe ?? [])
+      setTotalNumberOfRequestsInPendingQueue(response.count ?? 0)
+    }
+
+    setIsGettingRequestToMeFromOverallNetwork(false)
+  }
+
+  return {
+    isGettingRequestToMeFromOverallNetwork,
+    RecordRequestsForMeFromOverallNetwork,
+    totalNumberOfRequestsInPendingQueue,
+  }
+}
+
+export {useRequestsToMe}

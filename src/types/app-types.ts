@@ -34,5 +34,19 @@ export interface GettingStatuses {
   message: string
   data?: {
     statuses?: Record<string, string>
+    requestMap?: Record<string, string>
   }
+}
+
+export interface requestToMe {
+  from: {
+    username: string
+  }
+  status: string
+}
+export interface GetAllRequest {
+  success: boolean
+  message: string
+  requestToMe?: requestToMe[]
+  count?: number
 }
