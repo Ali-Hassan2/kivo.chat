@@ -6,6 +6,7 @@ import { Avatar, Box, Flex, Text } from '@radix-ui/themes'
 import { Loader2 } from 'lucide-react'
 import { useToggle } from 'react-use'
 import * as z from 'zod'
+import { NetworkBoardUpperHeader } from '@/components'
 import { Button } from '@/components/ui/button'
 import { REQUEST_STATUS } from '@/constants'
 import { cancelRequestSchema, makeRequestGuard } from '@/guards'
@@ -84,12 +85,7 @@ const NetworkBoard = ({
   return (
     <Box className="w-full">
       <Flex direction="column">
-        <Box className="flex h-40 items-center pl-4">
-          <Box className="flex flex-col gap-2">
-            <Label className="text-4xl font-semibold">Network.</Label>
-            <div className="h-[1px] w-40 bg-gray-200" />
-          </Box>
-        </Box>
+        <NetworkBoardUpperHeader />
         <Box className="">
           {gettingAllUsersForNetworkConnections ? (
             <GridSkeleton
