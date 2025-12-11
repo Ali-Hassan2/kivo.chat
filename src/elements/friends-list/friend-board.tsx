@@ -2,9 +2,10 @@
 
 import React from 'react'
 import { Box, Flex } from '@radix-ui/themes'
-import { BoardUpperHeader } from '@/components'
+import { BoardUpperHeader, NoData } from '@/components'
 import { NETWORK } from '@/constants'
 import { GetAllRequest, requestToMe } from '@/types'
+import { cn } from '@/utils/cn'
 
 interface FriendsBoardProps {
   isGettingRequestToMeFromOverallNetwork: boolean
@@ -17,6 +18,10 @@ const FriendBoard = ({
   RecordRequestsForMeFromOverallNetwork,
   totalNumberOfRequestsInPendingQueue,
 }: FriendsBoardProps) => {
+  console.log(
+    'The requests are from api are:',
+    RecordRequestsForMeFromOverallNetwork,
+  )
   return (
     <Box className="w-full">
       <Flex className="" direction="column"></Flex>
@@ -29,7 +34,17 @@ const FriendBoard = ({
         }}
         lineWidth="w-110"
       />
-      <Box className="w-full border-1 border-t"></Box>
+      <Box
+        className={cn(
+          RecordRequestsForMeFromOverallNetwork.length === 0 ? 'pt-20' : '',
+        )}
+      >
+        {RecordRequestsForMeFromOverallNetwork.length === 0 ? (
+          <NoData />
+        ) : (
+          <p>yes there is something here new.</p>
+        )}
+      </Box>
     </Box>
   )
 }
