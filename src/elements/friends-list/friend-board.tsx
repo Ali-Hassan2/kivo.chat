@@ -3,6 +3,7 @@
 import React from 'react'
 import { Avatar, Box, Flex } from '@radix-ui/themes'
 import { BoardUpperHeader, NoData } from '@/components'
+import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { NETWORK } from '@/constants'
 import { GetAllRequest, requestToMe } from '@/types'
@@ -64,7 +65,12 @@ const FriendBoard = ({
                       />
                       <Label>{record.from.username}</Label>
                     </Box>
-                    <Box className="flex items-center gap-3"></Box>
+                    <Box className="flex items-center gap-3">
+                      <Button className="bg-blue-700 hover:bg-blue-600">
+                        Accept Request
+                      </Button>
+                      <Button variant="outline">Reject Request</Button>
+                    </Box>
                   </div>
                 )
               })}
