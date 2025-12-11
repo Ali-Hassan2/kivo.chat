@@ -14,6 +14,8 @@ const CONTACT_PAGE = '/support-kivo'
 
 const FRIENDS = '/friends'
 
+const FRIENDS_NETWORK_BOARD = '/network-friends'
+
 const EXCLUDED_PAGES = ['/', '/auth', '/signup', '/verification-code']
 
 export {
@@ -26,4 +28,5 @@ export {
   ABOUT_PAGE,
   CONTACT_PAGE,
   FRIENDS,
+  FRIENDS_NETWORK_BOARD,
 }

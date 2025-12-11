@@ -1,9 +1,9 @@
 'use client'
 
-import { FriendBoard } from '@/elements'
+import { FriendsList } from '@/views'
 
 const page = () => {
-  return <FriendBoard />
+  return <FriendsList height="h-[91vh]" />
 }
 
 export default page
