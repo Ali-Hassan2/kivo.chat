@@ -51,8 +51,11 @@ const FriendBoard = ({
             <Box className="lists">
               {RecordRequestsForMeFromOverallNetwork.map((record) => {
                 return (
-                  <div className="flex" key={record.from.username}>
-                    <Box className="flex gap-2">
+                  <div
+                    className="flex justify-between"
+                    key={record.from.username}
+                  >
+                    <Box className="flex gap-2 border-4">
                       <Avatar
                         fallback={
                           record.from.username?.[0].toUpperCase() ?? '?'
@@ -61,6 +64,7 @@ const FriendBoard = ({
                       />
                       <Label>{record.from.username}</Label>
                     </Box>
+                    <Box className="flex items-center gap-3"></Box>
                   </div>
                 )
               })}
