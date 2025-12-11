@@ -82,6 +82,7 @@ const Network = ({ height }: NetworkProps) => {
         }
         cancelRequestOnNetwork={cancelRequestOnNetwork}
         getStatusesForRequests={getStatusesForRequests}
+        RequestMapForCancelingRequests={RequestMapForCancelingRequests}
       />
     </div>
   )

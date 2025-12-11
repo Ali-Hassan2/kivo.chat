@@ -33,6 +33,7 @@ interface NetworkBoardProps {
     data: z.infer<typeof cancelRequestSchema>,
   ) => Promise<any> | void
   getStatusesForRequests: () => void
+  RequestMapForCancelingRequests: Record<string, string>
 }
 
 const NetworkBoard = ({
@@ -50,6 +51,7 @@ const NetworkBoard = ({
   isCancellingRequestInPendingRequestOnNetwork,
   getStatusesForRequests,
   cancelRequestOnNetwork,
+  RequestMapForCancelingRequests,
 }: NetworkBoardProps) => {
   const [cancelingUser, setCancelingUser] = React.useState<string | null>(null)
   useEffect(() => {
@@ -144,14 +146,16 @@ const NetworkBoard = ({
                         return <Label>Connect</Label>
                       })()}
                     </Button>
-                    {statusForRequests[userId] && requestId ? (
+                    {statusForRequests[userId] === REQUEST_STATUS.PENDING &&
+                    RequestMapForCancelingRequests[userId] ? (
                       <Button
                         type="button"
                         className="hover:border-black-800 duration:300 mt-2 w-full cursor-pointer rounded-full transition-all hover:border-2 hover:bg-black/80 hover:text-white"
-                        onClick={() => {
-                          setCancelingUser(userId)
-                          cancelRequestOnNetwork({ requestId })
-                        }}
+                        onClick={() =>
+                          cancelRequestOnNetwork({
+                            requestId: RequestMapForCancelingRequests[userId],
+                          })
+                        }
                       >
                         {isCancellingRequestInPendingRequestOnNetwork &&
                         cancelingUser === userId ? (

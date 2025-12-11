@@ -34,6 +34,7 @@ const useGetStatuses = () => {
     isGettingStatusesForRequests,
     StatusesForRequests,
     getStatusesForRequests,
+    RequestMapForCancelingRequests,
   }
 }
 
