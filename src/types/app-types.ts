@@ -34,5 +34,6 @@ export interface GettingStatuses {
   message: string
   data?: {
     statuses?: Record<string, string>
+    requestMap?: Record<string, string>
   }
 }

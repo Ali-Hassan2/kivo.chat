@@ -81,6 +81,7 @@ const Network = ({ height }: NetworkProps) => {
           isCancellingRequestInPendingRequestOnNetwork
         }
         cancelRequestOnNetwork={cancelRequestOnNetwork}
+        getStatusesForRequests={getStatusesForRequests}
       />
     </div>
   )

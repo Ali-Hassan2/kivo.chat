@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { Label } from '@radix-ui/react-label'
 import { Avatar, Box, Flex, Text } from '@radix-ui/themes'
 import { Loader2 } from 'lucide-react'
+import { useToggle } from 'react-use'
 import * as z from 'zod'
 import { Button } from '@/components/ui/button'
 import { REQUEST_STATUS } from '@/constants'
@@ -31,6 +32,7 @@ interface NetworkBoardProps {
   cancelRequestOnNetwork: (
     data: z.infer<typeof cancelRequestSchema>,
   ) => Promise<any> | void
+  getStatusesForRequests: () => void
 }
 
 const NetworkBoard = ({
@@ -46,29 +48,36 @@ const NetworkBoard = ({
   isGettingStatusesForRequests,
   cancelRequestForPendingRequestOnNetwork,
   isCancellingRequestInPendingRequestOnNetwork,
+  getStatusesForRequests,
   cancelRequestOnNetwork,
 }: NetworkBoardProps) => {
+  const [cancelingUser, setCancelingUser] = React.useState<string | null>(null)
   useEffect(() => {
     if (newRequestCreationResponseStatus.success) {
-      const successMessagge = newRequestCreationResponseStatus.success
-      showToast(successMessagge, 'success')
+      showToast(newRequestCreationResponseStatus.success, 'success')
+      getStatusesForRequests()
+      getAllNetworkBuildingUsers()
     }
     if (newRequestCreationResponseStatus.error) {
-      const errorMessage = newRequestCreationResponseStatus.error
-      showToast(errorMessage, 'error')
-    }
-
-    if (cancelRequestForPendingRequestOnNetwork.success) {
-      const successMessage = cancelRequestForPendingRequestOnNetwork.success
-      showToast(successMessage, 'success')
-    }
-    if (cancelRequestForPendingRequestOnNetwork.error) {
-      const errorMessage = cancelRequestForPendingRequestOnNetwork.error
-      showToast(errorMessage, 'error')
+      showToast(newRequestCreationResponseStatus.error, 'error')
     }
   }, [
-    newRequestCreationResponseStatus,
-    cancelRequestForPendingRequestOnNetwork,
+    newRequestCreationResponseStatus.success,
+    newRequestCreationResponseStatus.error,
+  ])
+
+  useEffect(() => {
+    if (cancelRequestForPendingRequestOnNetwork.success) {
+      showToast(cancelRequestForPendingRequestOnNetwork.success, 'success')
+      setCancelingUser(null)
+      getStatusesForRequests()
+    }
+    if (cancelRequestForPendingRequestOnNetwork.error) {
+      showToast(cancelRequestForPendingRequestOnNetwork.error, 'error')
+    }
+  }, [
+    cancelRequestForPendingRequestOnNetwork.success,
+    cancelRequestForPendingRequestOnNetwork.error,
   ])
 
   return (
@@ -139,9 +148,13 @@ const NetworkBoard = ({
                       <Button
                         type="button"
                         className="hover:border-black-800 duration:300 mt-2 w-full cursor-pointer rounded-full transition-all hover:border-2 hover:bg-black/80 hover:text-white"
-                        onClick={() => cancelRequestOnNetwork({ requestId })}
+                        onClick={() => {
+                          setCancelingUser(userId)
+                          cancelRequestOnNetwork({ requestId })
+                        }}
                       >
-                        {isCancellingRequestInPendingRequestOnNetwork ? (
+                        {isCancellingRequestInPendingRequestOnNetwork &&
+                        cancelingUser === userId ? (
                           <Loader2 className="animate-spin" />
                         ) : (
                           <Label>Cancel Request</Label>

@@ -8,6 +8,8 @@ const useGetStatuses = () => {
   const [StatusesForRequests, setStatusesForRequests] = useState<
     Record<string, string>
   >({})
+  const [RequestMapForCancelingRequests, setRequestMapForCancelingRequests] =
+    useState<Record<string, string>>({})
   const controllerForGettingRequestsStatusesOnNetwork =
     useRef<AbortController | null>(null)
 
@@ -23,6 +25,7 @@ const useGetStatuses = () => {
     })
     if (response.success) {
       setStatusesForRequests(response.data?.statuses ?? {})
+      setRequestMapForCancelingRequests(response.data?.requestMap ?? {})
     }
     setIsGettingStatusesForRequests(false)
   }

@@ -57,24 +57,31 @@ class GETREQUESTSTATUS {
         ],
       })
       const statusMap: Record<string, string> = {}
+      const requestIdMap: Record<string, string> = {}
       requests.forEach((request) => {
         if (
           (request.from as Types.ObjectId).toString() ===
           (userId as Types.ObjectId).toString()
         ) {
           statusMap[request.to.toString()] = request.status
+          requestIdMap[request.to.toString()] = (
+            request._id as Types.ObjectId
+          ).toString()
         } else if (
           (request.to as Types.ObjectId).toString() ===
           (userId as Types.ObjectId).toString()
         ) {
           statusMap[request.from.toString()] = request.status
+          requestIdMap[request.from.toString()] = (
+            request._id as Types.ObjectId
+          ).toString()
         }
       })
 
       return GETREQUESTSTATUS.respond(
         true,
         'Request statuses found.',
-        { statuses: statusMap },
+        { statuses: statusMap, requestMap: requestIdMap },
         200,
       )
     } catch (error: unknown) {
