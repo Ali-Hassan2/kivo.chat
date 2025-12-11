@@ -58,7 +58,6 @@ const NetworkBoard = ({
     if (newRequestCreationResponseStatus.success) {
       showToast(newRequestCreationResponseStatus.success, 'success')
       getStatusesForRequests()
-      getAllNetworkBuildingUsers()
     }
     if (newRequestCreationResponseStatus.error) {
       showToast(newRequestCreationResponseStatus.error, 'error')
