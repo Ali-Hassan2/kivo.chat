@@ -3,6 +3,7 @@
 import React from 'react'
 import { Box, Flex } from '@radix-ui/themes'
 import { BoardUpperHeader, NoData } from '@/components'
+import { Label } from '@/components/ui/label'
 import { NETWORK } from '@/constants'
 import { GetAllRequest, requestToMe } from '@/types'
 import { cn } from '@/utils/cn'
@@ -42,7 +43,29 @@ const FriendBoard = ({
         {RecordRequestsForMeFromOverallNetwork.length === 0 ? (
           <NoData />
         ) : (
-          <p>yes there is something here new.</p>
+          <Box className="flex flex-col items-center justify-center border-4">
+            <Box className="flex w-full items-center justify-between">
+              <Label>Totl Pending Requests:</Label>
+              <Label>{totalNumberOfRequestsInPendingQueue}</Label>
+            </Box>
+            <Box className="lists">
+              {RecordRequestsForMeFromOverallNetwork.map((record) => {
+                return (
+                  <div className="flex" key={record.from.username}>
+                    <Box>
+                      <Avatar
+                        fallback={
+                          record.from.username?.[0].toUpperCase() ?? '?'
+                        }
+                        className="flex h-8 w-8 items-center justify-center bg-blue-200 text-blue-700"
+                      />
+                      {record.from.username}
+                    </Box>
+                  </div>
+                )
+              })}
+            </Box>
+          </Box>
         )}
       </Box>
     </Box>
