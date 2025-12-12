@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Box } from '@radix-ui/themes'
 import { FRIENDS_NETWORK_BOARD } from '@/constants'
 import { cn } from '@/utils/cn'
+import { AllFriends } from './icons/all-friends'
 import { Button } from './ui/button'
 import { Label } from './ui/label'
 
@@ -38,22 +39,30 @@ const BoardUpperHeader = ({
       </Box>
       <Box className="relative flex gap-4 pr-3">
         <Box className="relative">
-          <Button asChild variant="outline" className="cursor-pointer">
-            <div className="flex items-center gap-2">
-              {ButtonOne.Icon}
-              <Link href={ButtonOne.href}>{ButtonOne.label}</Link>
-            </div>
-          </Button>
-          <Box className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-black/90 text-xs font-semibold text-white">
-            {totalPendingRequests}
-          </Box>
+          <Link
+            href={ButtonOne.href}
+            className="relative inline-flex items-center gap-2 rounded-md border px-4 py-2"
+          >
+            {ButtonOne.Icon}
+            <span>{ButtonOne.label}</span>
+
+            {totalPendingRequests && (
+              <Box className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full border-4 bg-black text-xs font-semibold text-white">
+                {totalPendingRequests}
+              </Box>
+            )}
+          </Link>
         </Box>
-        <Button
-          asChild
-          className="cursor-pointer bg-blue-700 hover:bg-blue-600"
-        >
-          <Link href={ButtonTwo.href}>{ButtonTwo.label ?? 'All Friends'}</Link>
-        </Button>
+
+        <Box className="relative">
+          <Link
+            href={ButtonTwo.href}
+            className="relative inline-flex items-center gap-2 rounded-md border border-none bg-blue-700 px-4 py-2 font-semibold text-white"
+          >
+            <AllFriends />
+            <span>{ButtonTwo.label}</span>
+          </Link>
+        </Box>
       </Box>
     </Box>
   )
