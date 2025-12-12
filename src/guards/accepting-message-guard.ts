@@ -1,9 +1,9 @@
-import {z} from zodResolver
+import { z } from 'zod'
 
 const requestIdGuard = z.string()
 
 const acceptingMessageGuard = z.object({
-    requestId: requestIdGuard
+  requestId: requestIdGuard,
 })
 
-export {acceptingMessageGuard}
+export { acceptingMessageGuard }
