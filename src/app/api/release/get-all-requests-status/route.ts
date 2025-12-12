@@ -67,15 +67,16 @@ class GETREQUESTSTATUS {
           requestIdMap[request.to.toString()] = (
             request._id as Types.ObjectId
           ).toString()
-        } else if (
-          (request.to as Types.ObjectId).toString() ===
-          (userId as Types.ObjectId).toString()
-        ) {
-          statusMap[request.from.toString()] = request.status
-          requestIdMap[request.from.toString()] = (
-            request._id as Types.ObjectId
-          ).toString()
         }
+        //  else if (
+        //   (request.to as Types.ObjectId).toString() ===
+        //   (userId as Types.ObjectId).toString()
+        // ) {
+        //   statusMap[request.from.toString()] = request.status
+        //   requestIdMap[request.from.toString()] = (
+        //     request._id as Types.ObjectId
+        //   ).toString()
+        // }
       })
 
       return GETREQUESTSTATUS.respond(
