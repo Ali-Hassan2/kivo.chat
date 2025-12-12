@@ -44,34 +44,37 @@ const FriendBoard = ({
         {RecordRequestsForMeFromOverallNetwork.length === 0 ? (
           <NoData />
         ) : (
-          <Box className="flex flex-col items-center justify-center border-4">
-            <Box className="flex w-full items-center justify-between">
+          <Box className="flex flex-col items-center justify-center border">
+            <Box className="flex w-full items-center justify-between rounded-b-lg border p-3 pr-8">
               <Label>Totl Pending Requests:</Label>
               <Label>{totalNumberOfRequestsInPendingQueue}</Label>
             </Box>
-            <Box className="lists">
-              {RecordRequestsForMeFromOverallNetwork.map((record) => {
+            <Box className="lists w-full px-2 py-4">
+              {RecordRequestsForMeFromOverallNetwork.map((record, index) => {
                 return (
-                  <div
-                    className="flex justify-between"
+                  <Box
+                    className="mt-2 flex justify-between rounded-md border p-3"
                     key={record.from.username}
                   >
-                    <Box className="flex gap-2 border-4">
+                    <Box className="flex gap-2">
+                      <Label className="">{index}</Label>
                       <Avatar
                         fallback={
                           record.from.username?.[0].toUpperCase() ?? '?'
                         }
-                        className="flex h-8 w-8 items-center justify-center bg-blue-200 text-blue-700"
+                        className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-700"
                       />
-                      <Label>{record.from.username}</Label>
+                      <Label className="text-lg">{record.from.username}</Label>
                     </Box>
                     <Box className="flex items-center gap-3">
-                      <Button className="bg-blue-700 hover:bg-blue-600">
+                      <Button className="cursor-pointer bg-blue-700 hover:bg-blue-600">
                         Accept Request
                       </Button>
-                      <Button variant="outline">Reject Request</Button>
+                      <Button variant="outline" className="cursor-pointer">
+                        Reject Request
+                      </Button>
                     </Box>
-                  </div>
+                  </Box>
                 )
               })}
             </Box>
