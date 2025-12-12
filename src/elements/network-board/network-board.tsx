@@ -6,10 +6,12 @@ import { Avatar, Box, Flex, Text } from '@radix-ui/themes'
 import { Loader2 } from 'lucide-react'
 import { useToggle } from 'react-use'
 import * as z from 'zod'
-import { BoardUpperHeader } from '@/components'
+import { BoardUpperHeader, PendingIcon } from '@/components'
 import { Button } from '@/components/ui/button'
 import { FRIENDS_NETWORK_BOARD, REQUEST_STATUS } from '@/constants'
 import { cancelRequestSchema, makeRequestGuard } from '@/guards'
+import { useRequestsToMe } from '@/hooks'
+import { getAllRequestToMe } from '@/services'
 import { AuthStatus, INetworkUsers } from '@/types'
 import { showToast } from '@/utils'
 import { cn } from '@/utils/cn'
@@ -55,6 +57,12 @@ const NetworkBoard = ({
   RequestMapForCancelingRequests,
 }: NetworkBoardProps) => {
   const [cancelingUser, setCancelingUser] = React.useState<string | null>(null)
+  const { totalNumberOfRequestsInPendingQueue, GetAllRequestsToMe } =
+    useRequestsToMe()
+
+  useEffect(() => {
+    GetAllRequestsToMe()
+  }, [])
   useEffect(() => {
     if (newRequestCreationResponseStatus.success) {
       showToast(newRequestCreationResponseStatus.success, 'success')
@@ -87,12 +95,17 @@ const NetworkBoard = ({
       <Flex direction="column">
         <BoardUpperHeader
           NextHead=""
-          ButtonOne={{ label: 'Pending Requests', href: FRIENDS_NETWORK_BOARD }}
+          ButtonOne={{
+            label: 'Pending Requests',
+            href: FRIENDS_NETWORK_BOARD,
+            Icon: <PendingIcon />,
+          }}
           ButtonTwo={{
             label: 'All Friends',
             href: '#',
           }}
           lineWidth="w-40"
+          totalPendingRequests={totalNumberOfRequestsInPendingQueue}
         />
         <Box className="">
           {gettingAllUsersForNetworkConnections ? (

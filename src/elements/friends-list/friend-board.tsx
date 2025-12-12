@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Avatar, Box, Flex } from '@radix-ui/themes'
-import { Loader2 } from 'lucide-react'
+import { Loader2, NetworkIcon } from 'lucide-react'
 import * as z from 'zod'
 import { BoardUpperHeader, NoData } from '@/components'
 import { Button } from '@/components/ui/button'
@@ -38,11 +38,10 @@ const FriendBoard = ({
     <Box className="w-full">
       <BoardUpperHeader
         NextHead="/Pending Requests"
-        ButtonOne={{ label: 'Network', href: NETWORK }}
+        ButtonOne={{ label: 'Network', href: NETWORK, Icon: <NetworkIcon /> }}
         ButtonTwo={{ label: 'All Friends', href: '#' }}
         lineWidth="w-110"
       />
-
       <Box
         className={cn(
           RecordRequestsForMeFromOverallNetwork.length === 0 ? 'pt-20' : '',
