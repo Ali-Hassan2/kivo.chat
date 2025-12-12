@@ -102,8 +102,11 @@ async function POST(request: Request) {
     receiver.requests = receiver.requests.filter(
       (rId) => rId.toString() !== (requestDoc._id as Types.ObjectId).toString(),
     )
-    requestDoc.status = REQUEST_STATUS.APPROVED
-    await Promise.all([sender.save(), receiver.save(), requestDoc.save()])
+    await Promise.all([
+      sender.save(),
+      receiver.save(),
+      RequestModel.findByIdAndDelete(requestDoc._id),
+    ])
     return NextResponse.json(
       { success: true, message: 'Friend request accepted successfully.' },
       { status: 200 },
