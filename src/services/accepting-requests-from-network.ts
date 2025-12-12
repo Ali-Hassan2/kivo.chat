@@ -11,7 +11,7 @@ const AcceptRequestFromOverallNetwork = async ({
   requestId,
 }:AcceptingRequestFromOverallNetworkProps): Promise<ApiResponse> => {
     try {
-        const response = await axios
+        const response = await axios.
     } catch (error) {
         
     }

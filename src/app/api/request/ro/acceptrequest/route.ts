@@ -8,6 +8,17 @@ import { connect_db } from '@/settings'
 import { authOptions } from '../../../auth/[...nextauth]/options'
 
 async function POST(request: Request) {
+  if (request.method !== 'POST') {
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Method not allowed',
+      },
+      {
+        status: 405,
+      },
+    )
+  }
   try {
     const { searchParams } = new URL(request.url)
     const requestId = searchParams.get('requestId') || ''
