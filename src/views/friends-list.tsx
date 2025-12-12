@@ -13,6 +13,8 @@ const FriendsList = ({ height }: FriendsListProps) => {
     isGettingRequestToMeFromOverallNetwork,
     RecordRequestsForMeFromOverallNetwork,
     totalNumberOfRequestsInPendingQueue,
+    hasFetchedListDataForPendingReuqests,
+    GetAllRequestsToMe,
   } = useRequestsToMe()
 
   const {
@@ -24,6 +26,7 @@ const FriendsList = ({ height }: FriendsListProps) => {
 
   useEffect(() => {
     gettingUserNetworkCount()
+    GetAllRequestsToMe()
   }, [])
   return (
     <div className={cn(height, 'flex')}>
@@ -41,6 +44,9 @@ const FriendsList = ({ height }: FriendsListProps) => {
         }
         totalNumberOfRequestsInPendingQueue={
           totalNumberOfRequestsInPendingQueue
+        }
+        hasFetchedListDataForPendingReuqests={
+          hasFetchedListDataForPendingReuqests
         }
       />
     </div>

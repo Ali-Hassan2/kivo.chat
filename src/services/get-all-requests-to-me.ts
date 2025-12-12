@@ -10,7 +10,7 @@ const getAllRequestToMe = async ({
   signal,
 }: getAllRequestToMeProps): Promise<GetAllRequest> => {
   try {
-    const response = await axios.get(API_ENDPOINTS.getAllRequestStatuses, {
+    const response = await axios.get(API_ENDPOINTS.getAllRequestsToMe, {
       signal,
     })
     return response.data

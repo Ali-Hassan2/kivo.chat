@@ -104,12 +104,13 @@ const NetworkBoard = ({
           ) : (
             <div className="grid grid-cols-4 gap-5 p-4">
               {usersRecordForBuildingNetwork.map((record) => {
-                const userId = record?._id
-                const requestId = record?.requests[0]
+                const userKey = record._id
+                const requestId = RequestMapForCancelingRequests[userKey]
+                const status = statusForRequests[userKey]
                 console.log('The requesssssssid', requestId)
                 return (
                   <div
-                    key={record.username}
+                    key={record._id}
                     className="flex flex-col items-center rounded-md border border-blue-700 p-3"
                   >
                     <Avatar
@@ -125,16 +126,15 @@ const NetworkBoard = ({
                     <Button
                       className={cn(
                         'mt-4 w-full cursor-pointer rounded-full py-4',
-                        statusForRequests[userId]
+                        status
                           ? 'border border-blue-500 bg-transparent text-black hover:bg-transparent'
                           : 'bg-blue-700 text-white',
                       )}
-                      onClick={() =>
+                      onClick={() => {
                         sendingNewRequest({ username: record.username ?? '' })
-                      }
-                      disabled={
-                        statusForRequests[userId] === REQUEST_STATUS.PENDING
-                      }
+                        getStatusesForRequests()
+                      }}
+                      disabled={status === REQUEST_STATUS.PENDING}
                     >
                       {(() => {
                         if (
@@ -143,25 +143,25 @@ const NetworkBoard = ({
                         ) {
                           return <Loader2 className="animate-spin" />
                         }
-                        if (statusForRequests[userId]) {
-                          return <Label>{statusForRequests[userId]}</Label>
+                        if (status) {
+                          return <Label>{status}</Label>
                         }
                         return <Label>Connect</Label>
                       })()}
                     </Button>
-                    {statusForRequests[userId] === REQUEST_STATUS.PENDING &&
-                    RequestMapForCancelingRequests[userId] ? (
+                    {status === REQUEST_STATUS.PENDING &&
+                    RequestMapForCancelingRequests[userKey] ? (
                       <Button
                         type="button"
                         className="hover:border-black-800 duration:300 mt-2 w-full cursor-pointer rounded-full transition-all hover:border-2 hover:bg-black/80 hover:text-white"
                         onClick={() =>
                           cancelRequestOnNetwork({
-                            requestId: RequestMapForCancelingRequests[userId],
+                            requestId: RequestMapForCancelingRequests[userKey],
                           })
                         }
                       >
                         {isCancellingRequestInPendingRequestOnNetwork &&
-                        cancelingUser === userId ? (
+                        cancelingUser === userKey ? (
                           <Loader2 className="animate-spin" />
                         ) : (
                           <Label>Cancel Request</Label>

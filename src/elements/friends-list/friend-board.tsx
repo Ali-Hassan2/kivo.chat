@@ -8,17 +8,20 @@ import { Label } from '@/components/ui/label'
 import { NETWORK } from '@/constants'
 import { GetAllRequest, requestToMe } from '@/types'
 import { cn } from '@/utils/cn'
+import ListSkeleton from './skeleton'
 
 interface FriendsBoardProps {
   isGettingRequestToMeFromOverallNetwork: boolean
   RecordRequestsForMeFromOverallNetwork: requestToMe[]
   totalNumberOfRequestsInPendingQueue: number
+  hasFetchedListDataForPendingReuqests: boolean
 }
 
 const FriendBoard = ({
   isGettingRequestToMeFromOverallNetwork,
   RecordRequestsForMeFromOverallNetwork,
   totalNumberOfRequestsInPendingQueue,
+  hasFetchedListDataForPendingReuqests,
 }: FriendsBoardProps) => {
   console.log(
     'The requests are from api are:',
@@ -26,56 +29,54 @@ const FriendBoard = ({
   )
   return (
     <Box className="w-full">
-      <Flex className="" direction="column"></Flex>
       <BoardUpperHeader
         NextHead="/Pending Requests"
         ButtonOne={{ label: 'Network', href: NETWORK }}
-        ButtonTwo={{
-          label: 'All Friends',
-          href: '#',
-        }}
+        ButtonTwo={{ label: 'All Friends', href: '#' }}
         lineWidth="w-110"
       />
+
       <Box
         className={cn(
           RecordRequestsForMeFromOverallNetwork.length === 0 ? 'pt-20' : '',
         )}
       >
-        {RecordRequestsForMeFromOverallNetwork.length === 0 ? (
-          <NoData />
-        ) : (
-          <Box className="flex flex-col items-center justify-center border-4">
-            <Box className="flex w-full items-center justify-between">
-              <Label>Totl Pending Requests:</Label>
+        {isGettingRequestToMeFromOverallNetwork ? (
+          <ListSkeleton loading={true} />
+        ) : RecordRequestsForMeFromOverallNetwork.length > 0 ? (
+          <Box className="flex flex-col items-center justify-center border">
+            <Box className="flex w-full items-center justify-between rounded-b-lg border p-3 pr-8">
+              <Label>Total Pending Requests:</Label>
               <Label>{totalNumberOfRequestsInPendingQueue}</Label>
             </Box>
-            <Box className="lists">
-              {RecordRequestsForMeFromOverallNetwork.map((record) => {
-                return (
-                  <div
-                    className="flex justify-between"
-                    key={record.from.username}
-                  >
-                    <Box className="flex gap-2 border-4">
-                      <Avatar
-                        fallback={
-                          record.from.username?.[0].toUpperCase() ?? '?'
-                        }
-                        className="flex h-8 w-8 items-center justify-center bg-blue-200 text-blue-700"
-                      />
-                      <Label>{record.from.username}</Label>
-                    </Box>
-                    <Box className="flex items-center gap-3">
-                      <Button className="bg-blue-700 hover:bg-blue-600">
-                        Accept Request
-                      </Button>
-                      <Button variant="outline">Reject Request</Button>
-                    </Box>
-                  </div>
-                )
-              })}
+            <Box className="lists w-full px-2 py-4">
+              {RecordRequestsForMeFromOverallNetwork.map((record, index) => (
+                <Box
+                  className="mt-2 flex justify-between rounded-md border p-3"
+                  key={record.from.username}
+                >
+                  <Box className="flex gap-2">
+                    <Label>{index + 1}</Label>
+                    <Avatar
+                      fallback={record.from.username?.[0].toUpperCase() ?? '?'}
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-700"
+                    />
+                    <Label className="text-lg">{record.from.username}</Label>
+                  </Box>
+                  <Box className="flex items-center gap-3">
+                    <Button className="cursor-pointer bg-blue-700 hover:bg-blue-600">
+                      Accept Request
+                    </Button>
+                    <Button variant="outline" className="cursor-pointer">
+                      Reject Request
+                    </Button>
+                  </Box>
+                </Box>
+              ))}
             </Box>
           </Box>
+        ) : (
+          hasFetchedListDataForPendingReuqests && <NoData />
         )}
       </Box>
     </Box>
