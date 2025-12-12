@@ -74,4 +74,22 @@ const HEADER_LINKS = [
   },
 ]
 
-export { HEADER_DROPDOWN_LABELS, MOCK_CONTACTS, HEADER_LINKS }
+const NETWORK_BOARD_HEADER = {
+  NextHead: '',
+  ButtonOne: {
+    label: 'Pending Requests',
+    href: '/network',
+  },
+  ButtonTwo: {
+    label: 'All Friends',
+    href: '#',
+  },
+  lineWidth: 'w-110',
+}
+
+export {
+  HEADER_DROPDOWN_LABELS,
+  MOCK_CONTACTS,
+  HEADER_LINKS,
+  NETWORK_BOARD_HEADER,
+}

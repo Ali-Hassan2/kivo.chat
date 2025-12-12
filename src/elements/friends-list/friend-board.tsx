@@ -24,6 +24,9 @@ interface FriendsBoardProps {
   acceptPendingRequestFromOverallNetwork: (
     data: z.infer<typeof requestIdSchema>,
   ) => Promise<void>
+  rejectionRequest: (data: z.infer<typeof requestIdSchema>) => Promise<void>
+  isCancelingRequestForOverallNetwork: boolean
+  CancelingRequestForOverallNetworkResponse: AuthStatus
 }
 
 const FriendBoard = ({
@@ -34,6 +37,9 @@ const FriendBoard = ({
   AcceptinMessageFromOverallNetworkResponse,
   isAcceptingMessageFromOverallNetwork,
   acceptPendingRequestFromOverallNetwork,
+  rejectionRequest,
+  isCancelingRequestForOverallNetwork,
+  CancelingRequestForOverallNetworkResponse,
 }: FriendsBoardProps): React.JSX.Element => {
   useEffect(() => {
     if (AcceptinMessageFromOverallNetworkResponse.success) {

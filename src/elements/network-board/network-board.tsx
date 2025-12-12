@@ -9,6 +9,7 @@ import * as z from 'zod'
 import { BoardUpperHeader, PendingIcon } from '@/components'
 import { Button } from '@/components/ui/button'
 import { FRIENDS_NETWORK_BOARD, REQUEST_STATUS } from '@/constants'
+import { NETWORK_BOARD_HEADER } from '@/constants/objects-to-iterate'
 import { cancelRequestSchema, makeRequestGuard } from '@/guards'
 import { useRequestsToMe } from '@/hooks'
 import { getAllRequestToMe } from '@/services'
@@ -94,17 +95,13 @@ const NetworkBoard = ({
     <Box className="w-full">
       <Flex direction="column">
         <BoardUpperHeader
-          NextHead=""
+          NextHead={NETWORK_BOARD_HEADER.NextHead}
           ButtonOne={{
-            label: 'Pending Requests',
-            href: FRIENDS_NETWORK_BOARD,
+            ...NETWORK_BOARD_HEADER.ButtonOne,
             Icon: <PendingIcon />,
           }}
-          ButtonTwo={{
-            label: 'All Friends',
-            href: '#',
-          }}
-          lineWidth="w-40"
+          ButtonTwo={NETWORK_BOARD_HEADER.ButtonTwo}
+          lineWidth={NETWORK_BOARD_HEADER.lineWidth}
           totalPendingRequests={totalNumberOfRequestsInPendingQueue}
         />
         <Box className="">

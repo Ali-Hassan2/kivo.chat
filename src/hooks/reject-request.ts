@@ -57,6 +57,12 @@ const useRequestRejection = () => {
     }
     setIsCancelingRequestForOverallNetwork(false)
   }
+
+  return {
+    isCancelingRequestForOverallNetwork,
+    rejectionRequest,
+    CancelingRequestForOverallNetworkResponse,
+  }
 }
 
 export { useRequestRejection }
