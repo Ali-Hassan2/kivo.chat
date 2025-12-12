@@ -14,6 +14,7 @@ const RejectRequestForPendingOnOverallNetwork = async ({
   try {
     const response = await axios.post(
       `${API_ENDPOINTS.rejectPendingRequestOnNetwork}?requestId=${requestId}`,
+      { signal },
     )
     return response.data
   } catch (error: unknown) {
