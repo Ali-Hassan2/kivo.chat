@@ -13,6 +13,7 @@ const FriendsList = ({ height }: FriendsListProps) => {
     isGettingRequestToMeFromOverallNetwork,
     RecordRequestsForMeFromOverallNetwork,
     totalNumberOfRequestsInPendingQueue,
+    hasFetchedListDataForPendingReuqests,
     GetAllRequestsToMe,
   } = useRequestsToMe()
 
@@ -43,6 +44,9 @@ const FriendsList = ({ height }: FriendsListProps) => {
         }
         totalNumberOfRequestsInPendingQueue={
           totalNumberOfRequestsInPendingQueue
+        }
+        hasFetchedListDataForPendingReuqests={
+          hasFetchedListDataForPendingReuqests
         }
       />
     </div>
