@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Avatar, Box, Flex } from '@radix-ui/themes'
 import { Loader2, NetworkIcon } from 'lucide-react'
 import * as z from 'zod'
@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 import { NETWORK } from '@/constants'
 import { acceptingMessageGuard, requestIdSchema } from '@/guards'
 import { AuthStatus, GetAllRequest, requestToMe } from '@/types'
+import { showToast } from '@/utils'
 import { cn } from '@/utils/cn'
 import ListSkeleton from './skeleton'
 
@@ -34,6 +35,16 @@ const FriendBoard = ({
   isAcceptingMessageFromOverallNetwork,
   acceptPendingRequestFromOverallNetwork,
 }: FriendsBoardProps): React.JSX.Element => {
+  useEffect(() => {
+    if (AcceptinMessageFromOverallNetworkResponse.success) {
+      const successMessage = AcceptinMessageFromOverallNetworkResponse.success
+      showToast(successMessage, 'success')
+    }
+    if (AcceptinMessageFromOverallNetworkResponse.error) {
+      const errorMessage = AcceptinMessageFromOverallNetworkResponse.error
+      showToast(errorMessage, 'error')
+    }
+  }, [AcceptinMessageFromOverallNetworkResponse])
   return (
     <Box className="w-full">
       <BoardUpperHeader
