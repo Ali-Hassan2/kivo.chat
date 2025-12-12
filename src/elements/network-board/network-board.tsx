@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { Label } from '@radix-ui/react-label'
 import { Avatar, Box, Flex, Text } from '@radix-ui/themes'
 import { Loader2 } from 'lucide-react'
