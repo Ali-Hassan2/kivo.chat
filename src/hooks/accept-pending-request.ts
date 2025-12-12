@@ -1,13 +1,9 @@
 import React, { useRef, useState } from 'react'
 import { useToggle } from 'react-use'
 import * as z from 'zod'
-import { acceptingMessageGuard } from '@/guards'
+import { acceptingMessageGuard, requestIdSchema } from '@/guards'
 import { AcceptRequestFromOverallNetwork } from '@/services/accepting-requests-from-network'
 import { ApiResponse, AuthStatus } from '@/types'
-
-interface useAcceptingRequestProps {
-  data: z.infer<typeof acceptingMessageGuard>
-}
 
 const useAcceptingRequest = () => {
   const [
@@ -41,9 +37,9 @@ const useAcceptingRequest = () => {
     }))
   }
 
-  const acceptPendingRequestFromOverallNetwok = async ({
-    data,
-  }: useAcceptingRequestProps) => {
+  const acceptPendingRequestFromOverallNetwok = async (
+    data: z.infer<typeof requestIdSchema>,
+  ) => {
     setIsAcceptingMessagesFromOverallNetwork(true)
     if (controllerForAcceptingPendingRequestFromOverallNetwork.current) {
       controllerForAcceptingPendingRequestFromOverallNetwork.current.abort()
@@ -52,7 +48,7 @@ const useAcceptingRequest = () => {
     controllerForAcceptingPendingRequestFromOverallNetwork.current = controller
     const response = await AcceptRequestFromOverallNetwork({
       signal: controller.signal,
-      requestId: data.requestId,
+      requestId: data,
     })
     if (response.success) {
       setSuccess(response.message)

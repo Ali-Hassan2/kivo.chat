@@ -39,6 +39,7 @@ export interface GettingStatuses {
 }
 
 export interface requestToMe {
+  _id: string
   from: {
     username: string
   }

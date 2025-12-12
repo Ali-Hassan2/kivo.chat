@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react'
 import { FriendBoard, ProfileNetwork } from '@/elements'
-import { useNetworkCount, useRequestsToMe } from '@/hooks'
+import { useAcceptingRequest, useNetworkCount, useRequestsToMe } from '@/hooks'
 import { cn } from '@/lib/utils'
 
 interface FriendsListProps {
@@ -23,6 +23,12 @@ const FriendsList = ({ height }: FriendsListProps) => {
     userCountResponseStatusForNetwork,
     gettingUserNetworkCount,
   } = useNetworkCount()
+
+  const {
+    AcceptinMessageFromOverallNetworkResponse,
+    isAcceptingMessageFromOverallNetwork,
+    acceptPendingRequestFromOverallNetwok,
+  } = useAcceptingRequest()
 
   useEffect(() => {
     gettingUserNetworkCount()
@@ -47,6 +53,15 @@ const FriendsList = ({ height }: FriendsListProps) => {
         }
         hasFetchedListDataForPendingReuqests={
           hasFetchedListDataForPendingReuqests
+        }
+        AcceptinMessageFromOverallNetworkResponse={
+          AcceptinMessageFromOverallNetworkResponse
+        }
+        isAcceptingMessageFromOverallNetwork={
+          isAcceptingMessageFromOverallNetwork
+        }
+        acceptPendingRequestFromOverallNetwork={
+          acceptPendingRequestFromOverallNetwok
         }
       />
     </div>

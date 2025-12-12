@@ -34,6 +34,7 @@ async function POST(request: Request) {
         { status: 400 },
       )
     }
+    console.log('The id is:', parsed.data)
     const session = await getServerSession(authOptions)
     if (!session?.user?.username) {
       return NextResponse.json(

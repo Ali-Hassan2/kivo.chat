@@ -13,7 +13,7 @@ const AcceptRequestFromOverallNetwork = async ({
 }: AcceptingRequestFromOverallNetworkProps): Promise<ApiResponse> => {
   try {
     const response = await axios.post(
-      `${API_ENDPOINTS.acceptPendingRequestOnNetwork}?requesId=${requestId}`,
+      `${API_ENDPOINTS.acceptPendingRequestOnNetwork}?requestId=${requestId}`,
       {
         signal,
       },
