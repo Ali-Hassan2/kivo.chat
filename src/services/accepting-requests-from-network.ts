@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { API_ENDPOINTS } from '@/actions'
 import { ApiResponse } from '@/types'
 
@@ -16,5 +16,8 @@ const AcceptRequestFromOverallNetwork = async ({
       `${API_ENDPOINTS.acceptPendingRequestOnNetwork}?requesId=${requestId}`,
     )
     return response.data
-  } catch (error) {}
+  } catch (error: unknown) {
+    const axiosError = error as AxiosError<ApiResponse>
+    
+  }
 }
