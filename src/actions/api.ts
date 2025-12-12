@@ -10,6 +10,8 @@ const API_ENDPOINTS = {
   getAllRequestStatuses: '/api/release/get-all-requests-status',
   cancelRequestWhichIsInPendingState: '/api/request/ro/cancelrequest',
   getAllRequestsToMe: '/api/request/rs/tomerequests',
+  acceptPendingRequestOnNetwork: '/api/request/ro/acceptrequest',
+  rejectPendingRequestOnNetwork: '/api/request/ro/rejectrequest',
 }
 
 export { API_ENDPOINTS }

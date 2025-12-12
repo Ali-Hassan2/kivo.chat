@@ -43,7 +43,7 @@ class GETTINGUSERS {
     if (UserCheckResult) return UserCheckResult
 
     try {
-      const users = await UserModel.find({})
+      const users = await UserModel.find({}).lean()
       let count = 0
       for (let i = 0; i < users.length; i++) {
         count++
@@ -52,11 +52,15 @@ class GETTINGUSERS {
         return GETTINGUSERS.respond(false, 'No Users found', null, 400)
       }
       const user_id_str = user?._id
-      const filteredUsers = users.filter(
-        (uid) =>
-          (uid._id as Types.ObjectId).toString() !==
-          (user_id_str as Types.ObjectId).toString(),
-      )
+      const friendsIds = user?.friends.map((f: any) => f.toString())
+      const filteredUsers = users
+        .filter(
+          (uid) =>
+            (uid._id as Types.ObjectId).toString() !==
+              (user_id_str as Types.ObjectId).toString() &&
+            !friendsIds?.includes((uid._id as Types.ObjectId).toString()),
+        )
+        .map(({ friends, ...rest }) => ({ ...rest }))
       return GETTINGUSERS.respond(true, 'Users Fetched', filteredUsers, 200)
     } catch (error: unknown) {
       let errorMessage = 'Unknown Error'

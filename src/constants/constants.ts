@@ -1,6 +1,6 @@
 const REQUEST_STATUS = Object.freeze({
   PENDING: 'pending',
-  APPROVED: 'approved',
+  APPROVED: 'friends',
   REJECTED: 'rejected',
 } as const)
 

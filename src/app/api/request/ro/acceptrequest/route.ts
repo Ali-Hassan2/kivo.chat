@@ -8,6 +8,17 @@ import { connect_db } from '@/settings'
 import { authOptions } from '../../../auth/[...nextauth]/options'
 
 async function POST(request: Request) {
+  if (request.method !== 'POST') {
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Method not allowed',
+      },
+      {
+        status: 405,
+      },
+    )
+  }
   try {
     const { searchParams } = new URL(request.url)
     const requestId = searchParams.get('requestId') || ''
@@ -23,6 +34,7 @@ async function POST(request: Request) {
         { status: 400 },
       )
     }
+    console.log('The id is:', parsed.data)
     const session = await getServerSession(authOptions)
     if (!session?.user?.username) {
       return NextResponse.json(
@@ -90,8 +102,11 @@ async function POST(request: Request) {
     receiver.requests = receiver.requests.filter(
       (rId) => rId.toString() !== (requestDoc._id as Types.ObjectId).toString(),
     )
-    requestDoc.status = REQUEST_STATUS.APPROVED
-    await Promise.all([sender.save(), receiver.save(), requestDoc.save()])
+    await Promise.all([
+      sender.save(),
+      receiver.save(),
+      RequestModel.findByIdAndDelete(requestDoc._id),
+    ])
     return NextResponse.json(
       { success: true, message: 'Friend request accepted successfully.' },
       { status: 200 },
