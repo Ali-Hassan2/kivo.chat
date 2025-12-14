@@ -78,7 +78,20 @@ const NETWORK_BOARD_HEADER = {
   NextHead: '',
   ButtonOne: {
     label: 'Pending Requests',
-    href: '/network',
+    href: '/network-friends',
+  },
+  ButtonTwo: {
+    label: 'All Friends',
+    href: '#',
+  },
+  lineWidth: 'w-40',
+}
+
+const PENDING_REQUEST_BOARD = {
+  NextHead: '/Pending Requests',
+  ButtonOne: {
+    label: 'Network',
+    href: '/connection-network',
   },
   ButtonTwo: {
     label: 'All Friends',
@@ -92,4 +105,5 @@ export {
   MOCK_CONTACTS,
   HEADER_LINKS,
   NETWORK_BOARD_HEADER,
+  PENDING_REQUEST_BOARD,
 }
