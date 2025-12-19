@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react'
 import { Avatar, Box, Flex } from '@radix-ui/themes'
+import { Loader2 } from 'lucide-react'
 import * as z from 'zod'
 import { BlockIcon, BoardUpperHeader, PendingIcon } from '@/components'
 import { NetworkIcon } from '@/components/icons/network'
@@ -10,7 +11,6 @@ import { Label } from '@/components/ui/label'
 import { ALL_FRIENDS_NETWORK_BOARD } from '@/constants/objects-to-iterate'
 import { requestIdSchema } from '@/guards'
 import { AuthStatus, IGetFriends } from '@/types'
-import { Loader2 } from 'lucide-react'
 
 interface AllFriendProps {
   isGettingAllFriendsForOverallNetwork: boolean
@@ -74,11 +74,9 @@ const AllFriends = ({
                 <Box className="flex flex-1 items-center justify-end pr-4">
                   <Button className="cursor-pointer bg-blue-700">
                     {isUnfriendingRequest ? (
-                      <Loader2 className="animate-spin"/>
-                    ):(
-                      <Label>
-                        
-                      </Label>
+                      <Loader2 className="animate-spin" />
+                    ) : (
+                      <Label className="cursor-pointer">Unfriend</Label>
                     )}
                   </Button>
                 </Box>
