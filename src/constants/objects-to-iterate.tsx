@@ -10,8 +10,10 @@ import { NetworkIcon } from '@/components/icons/network'
 import { SupportIcon } from '@/components/icons/support'
 import {
   ABOUT_PAGE,
+  ALL_FRIENDS,
   CONTACT_PAGE,
   FRIENDS,
+  FRIENDS_NETWORK_BOARD,
   NETWORK,
   PERSONAL_BOARD,
 } from './page-urls'
@@ -82,7 +84,7 @@ const NETWORK_BOARD_HEADER = {
   },
   ButtonTwo: {
     label: 'All Friends',
-    href: '#',
+    href: ALL_FRIENDS,
   },
   lineWidth: 'w-40',
 }
@@ -95,7 +97,20 @@ const PENDING_REQUEST_BOARD = {
   },
   ButtonTwo: {
     label: 'All Friends',
-    href: '#',
+    href: ALL_FRIENDS,
+  },
+  lineWidth: 'w-110',
+}
+
+const ALL_FRIENDS_NETWORK_BOARD = {
+  NextHead: '/All Friends',
+  ButtonOne: {
+    label: 'Network',
+    href: NETWORK,
+  },
+  ButtonTwo: {
+    label: 'Pending Requests',
+    href: FRIENDS_NETWORK_BOARD,
   },
   lineWidth: 'w-110',
 }
@@ -106,4 +121,5 @@ export {
   HEADER_LINKS,
   NETWORK_BOARD_HEADER,
   PENDING_REQUEST_BOARD,
+  ALL_FRIENDS_NETWORK_BOARD,
 }

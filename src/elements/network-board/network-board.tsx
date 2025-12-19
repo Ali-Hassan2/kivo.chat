@@ -117,7 +117,6 @@ const NetworkBoard = ({
                 const userKey = record._id
                 const requestId = RequestMapForCancelingRequests[userKey]
                 const status = statusForRequests[userKey]
-                console.log('The requesssssssid', requestId)
                 return (
                   <div
                     key={record._id}

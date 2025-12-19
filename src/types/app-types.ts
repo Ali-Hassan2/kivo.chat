@@ -60,5 +60,5 @@ export interface IGetFriends {
 export interface GetAllFriends {
   success: boolean
   message: string
-  data?: IGetFriends[]
+  friends?: IGetFriends[]
 }
