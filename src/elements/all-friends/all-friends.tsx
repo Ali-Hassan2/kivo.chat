@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 import { ALL_FRIENDS_NETWORK_BOARD } from '@/constants/objects-to-iterate'
 import { requestIdSchema } from '@/guards'
 import { AuthStatus, IGetFriends } from '@/types'
+import { Loader2 } from 'lucide-react'
 
 interface AllFriendProps {
   isGettingAllFriendsForOverallNetwork: boolean
