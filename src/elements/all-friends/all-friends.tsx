@@ -35,6 +35,10 @@ const AllFriends = ({
   useEffect(() => {
     getAllFriendsForNetwork()
   }, [])
+
+  useEffect(()=>{
+    
+  })
   return (
     <Box className="w-full">
       <Flex direction="column">
