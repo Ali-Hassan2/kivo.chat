@@ -46,10 +46,10 @@ const AllFriends = ({
       const errorMessage = UnfriendSomeoneOverallNetworkResponse.error
       showToast(errorMessage, 'error')
     }
-    if(errorForGettingAllFriendsOverallNetwork){
-      showToast(error)
+    if (errorForGettingAllFriendsOverallNetwork) {
+      showToast(errorForGettingAllFriendsOverallNetwork, 'error')
     }
-  },[UnfriendSomeoneOverallNetworkResponse])
+  }, [UnfriendSomeoneOverallNetworkResponse])
   return (
     <Box className="w-full">
       <Flex direction="column">
@@ -87,7 +87,7 @@ const AllFriends = ({
                   </Box>
                 </Box>
                 <Box className="flex flex-1 items-center justify-end pr-4">
-                  <Button className="cursor-pointer bg-blue-700">
+                  <Button className="cursor-pointer bg-blue-700" onClick=((friendList._)=> unfriendSomeoneOnOverallNetwork())>
                     {isUnfriendingRequest ? (
                       <Loader2 className="animate-spin" />
                     ) : (
