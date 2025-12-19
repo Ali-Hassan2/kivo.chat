@@ -42,7 +42,10 @@ const AllFriends = ({
       const successMessage = UnfriendSomeoneOverallNetworkResponse.success
       showToast(successMessage, 'success')
     }
-    if(UnfriendSomeoneOverallNetworkResponse.error)
+    if (UnfriendSomeoneOverallNetworkResponse.error) {
+      const errorMessage = UnfriendSomeoneOverallNetworkResponse.error
+      showToast(errorMessage, 'error')
+    }
   })
   return (
     <Box className="w-full">
