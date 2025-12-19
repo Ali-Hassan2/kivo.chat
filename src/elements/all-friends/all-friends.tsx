@@ -101,7 +101,7 @@ const AllFriends = ({
                   </Button>
                 </Box>
               </Box>
-              // TODO: I have to add 
+              // TODO: I have to add pagination from next.js
             )
           })}
         </Box>
