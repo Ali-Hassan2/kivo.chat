@@ -37,7 +37,7 @@ const AllFriends = ({
   }, [])
 
   useEffect(()=>{
-    
+    if()
   })
   return (
     <Box className="w-full">
