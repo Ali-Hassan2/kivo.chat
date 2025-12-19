@@ -74,8 +74,12 @@ const AllFriends = ({
                 <Box className="flex flex-1 items-center justify-end pr-4">
                   <Button className="cursor-pointer bg-blue-700">
                     {isUnfriendingRequest ? (
-                      <Loader2
-                    ):()}
+                      <Loader2 className="animate-spin"/>
+                    ):(
+                      <Label>
+                        
+                      </Label>
+                    )}
                   </Button>
                 </Box>
               </Box>
