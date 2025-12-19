@@ -38,7 +38,8 @@ const AllFriends = ({
 
   useEffect(()=>{
     if(UnfriendSomeoneOverallNetworkResponse.success){
-      
+      const successMessage = UnfriendSomeoneOverallNetworkResponse.success
+      showToast()
     }
   })
   return (
