@@ -5,6 +5,7 @@ import { Box } from '@radix-ui/themes'
 import { AllFriends, ProfileNetwork } from '@/elements'
 import { useNetworkCount } from '@/hooks'
 import { useShowAllFriends } from '@/hooks/get-all-friends'
+import { useUnfriendSomeOneOverallNetwork } from '@/hooks/unfriend-someone'
 
 const AllFriendsView = () => {
   const {
@@ -20,6 +21,12 @@ const AllFriendsView = () => {
     errorForGettingAllFriendsOverallNetwork,
     getAllFriendsForNetwork,
   } = useShowAllFriends()
+
+  const {
+    isUnfriendingRequest,
+    UnfriendSomeoneOverallNetworkResponse,
+    unfriendSomeoneOnOverallNetwork,
+  } = useUnfriendSomeOneOverallNetwork()
 
   useEffect(() => {
     gettingUserNetworkCount()
@@ -40,6 +47,11 @@ const AllFriendsView = () => {
           errorForGettingAllFriendsOverallNetwork
         }
         getAllFriendsForNetwork={getAllFriendsForNetwork}
+        isUnfriendingRequest={isUnfriendingRequest}
+        UnfriendSomeoneOverallNetworkResponse={
+          UnfriendSomeoneOverallNetworkResponse
+        }
+        unfriendSomeoneOnOverallNetwork={unfriendSomeoneOnOverallNetwork}
       />
     </Box>
   )

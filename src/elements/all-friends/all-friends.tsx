@@ -2,24 +2,34 @@
 
 import React, { useEffect } from 'react'
 import { Avatar, Box, Flex } from '@radix-ui/themes'
+import * as z from 'zod'
 import { BlockIcon, BoardUpperHeader, PendingIcon } from '@/components'
 import { NetworkIcon } from '@/components/icons/network'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { ALL_FRIENDS_NETWORK_BOARD } from '@/constants/objects-to-iterate'
-import { IGetFriends } from '@/types'
+import { requestIdSchema } from '@/guards'
+import { AuthStatus, IGetFriends } from '@/types'
 
 interface AllFriendProps {
   isGettingAllFriendsForOverallNetwork: boolean
   AllFriendsListForOverallNetwork: IGetFriends[] | undefined
   errorForGettingAllFriendsOverallNetwork: string | null
   getAllFriendsForNetwork: () => void
+  isUnfriendingRequest: boolean
+  UnfriendSomeoneOverallNetworkResponse: AuthStatus
+  unfriendSomeoneOnOverallNetwork: (
+    data: z.infer<typeof requestIdSchema>,
+  ) => Promise<any> | void
 }
 const AllFriends = ({
   isGettingAllFriendsForOverallNetwork,
   AllFriendsListForOverallNetwork,
   errorForGettingAllFriendsOverallNetwork,
   getAllFriendsForNetwork,
+  isUnfriendingRequest,
+  UnfriendSomeoneOverallNetworkResponse,
+  unfriendSomeoneOnOverallNetwork,
 }: AllFriendProps) => {
   useEffect(() => {
     getAllFriendsForNetwork()

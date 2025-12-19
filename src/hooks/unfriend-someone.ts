@@ -49,7 +49,13 @@ const useUnfriendSomeOneOverallNetwork = () => {
         signal: controller.signal,
         userId: data,
       })
+      if (!response.success) {
+        setError(response.message)
+      } else {
+        setSuccess(response.message)
+      }
     } finally {
+      setIsUnfriendingRequest(false)
     }
   }
 
