@@ -8,6 +8,7 @@ import { BoardUpperHeader, NoData } from '@/components'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { NETWORK } from '@/constants'
+import { PENDING_REQUEST_BOARD } from '@/constants/objects-to-iterate'
 import { acceptingMessageGuard, requestIdSchema } from '@/guards'
 import { AuthStatus, GetAllRequest, requestToMe } from '@/types'
 import { showToast } from '@/utils'
@@ -50,14 +51,28 @@ const FriendBoard = ({
       const errorMessage = AcceptinMessageFromOverallNetworkResponse.error
       showToast(errorMessage, 'error')
     }
-  }, [AcceptinMessageFromOverallNetworkResponse])
+    if (CancelingRequestForOverallNetworkResponse.success) {
+      const successMessage = CancelingRequestForOverallNetworkResponse.success
+      showToast(successMessage, 'success')
+    }
+    if (CancelingRequestForOverallNetworkResponse.error) {
+      const errorMessage = CancelingRequestForOverallNetworkResponse.error
+      showToast(errorMessage, 'error')
+    }
+  }, [
+    AcceptinMessageFromOverallNetworkResponse,
+    CancelingRequestForOverallNetworkResponse,
+  ])
   return (
     <Box className="w-full">
       <BoardUpperHeader
-        NextHead="/Pending Requests"
-        ButtonOne={{ label: 'Network', href: NETWORK, Icon: <NetworkIcon /> }}
-        ButtonTwo={{ label: 'All Friends', href: '#' }}
-        lineWidth="w-110"
+        NextHead={PENDING_REQUEST_BOARD.NextHead}
+        ButtonOne={{
+          ...PENDING_REQUEST_BOARD.ButtonOne,
+          Icon: <NetworkIcon />,
+        }}
+        ButtonTwo={PENDING_REQUEST_BOARD.ButtonTwo}
+        lineWidth={PENDING_REQUEST_BOARD.lineWidth}
       />
       <Box
         className={cn(
@@ -99,8 +114,16 @@ const FriendBoard = ({
                         <Label className="cursor-pointer">Accept</Label>
                       )}
                     </Button>
-                    <Button variant="outline" className="cursor-pointer">
-                      Reject Request
+                    <Button
+                      variant="outline"
+                      className="cursor-pointer"
+                      onClick={() => rejectionRequest(record._id)}
+                    >
+                      {isCancelingRequestForOverallNetwork ? (
+                        <Loader2 className="animate-spin" />
+                      ) : (
+                        <Label className="cursor-pointer">Reject Request</Label>
+                      )}
                     </Button>
                   </Box>
                 </Box>

@@ -24,7 +24,6 @@ const ProfileNetwork = ({
 }: NetworkProfileProps) => {
   const user = useAuthRedirection()
   const username = user?.username
-  console.log('The users count:', userCountObtainedFromNetwork)
   return (
     <div
       className={cn(

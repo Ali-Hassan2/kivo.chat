@@ -1,3 +1,4 @@
 export * from './network'
 export * from './friends'
 export * from './friends-list'
+export * from './all-friends'
