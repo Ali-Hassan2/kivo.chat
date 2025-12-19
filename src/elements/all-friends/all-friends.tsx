@@ -47,7 +47,7 @@ const AllFriends = ({
       showToast(errorMessage, 'error')
     }
     if(errorForGettingAllFriendsOverallNetwork){
-      
+      showToast
     }
   },[UnfriendSomeoneOverallNetworkResponse])
   return (
