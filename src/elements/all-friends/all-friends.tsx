@@ -46,6 +46,9 @@ const AllFriends = ({
       const errorMessage = UnfriendSomeoneOverallNetworkResponse.error
       showToast(errorMessage, 'error')
     }
+    if(errorForGettingAllFriendsOverallNetwork){
+      
+    }
   },[UnfriendSomeoneOverallNetworkResponse])
   return (
     <Box className="w-full">
