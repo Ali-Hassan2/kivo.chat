@@ -62,7 +62,7 @@ async function POST(request: Request) {
       (id) => id.toString() !== requestId,
     )
     userToUnfriend.friends = userToUnfriend.friends.filter(
-      (id) => id.toString() !== currentUser._id.toString(),
+      (id) => id.toString() !== (currentUser._id as Types.ObjectId).toString(),
     )
     await currentUser.save()
     await userToUnfriend.save()
