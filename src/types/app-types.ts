@@ -51,3 +51,14 @@ export interface GetAllRequest {
   requestToMe?: requestToMe[]
   count?: number
 }
+
+export interface IGetFriends {
+  username: string
+  fullName: string
+  bio: string
+}
+export interface GetAllFriends {
+  success: boolean
+  message: string
+  data?: IGetFriends[]
+}

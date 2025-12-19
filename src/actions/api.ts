@@ -12,6 +12,7 @@ const API_ENDPOINTS = {
   getAllRequestsToMe: '/api/request/rs/tomerequests',
   acceptPendingRequestOnNetwork: '/api/request/ro/acceptrequest',
   rejectPendingRequestOnNetwork: '/api/request/ro/rejectrequest',
+  getAllFriendsForNetwork: '/api/friends/myfriends',
 }
 
 export { API_ENDPOINTS }

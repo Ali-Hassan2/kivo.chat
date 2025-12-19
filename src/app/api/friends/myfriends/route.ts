@@ -27,8 +27,8 @@ async function GET(request: Request) {
     await connect_db()
     const user = await UserModel.findById(session.user._id).populate({
       path: 'friends',
-      select: 'username',
-    })
+      select: 'username fullName bio',
+    }).lean()
     if (!user) {
       return NextResponse.json(
         { success: false, message: 'User does not exist.' },
