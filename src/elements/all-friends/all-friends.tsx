@@ -37,7 +37,9 @@ const AllFriends = ({
   }, [])
 
   useEffect(()=>{
-    if()
+    if(UnfriendSomeoneOverallNetworkResponse.success){
+      
+    }
   })
   return (
     <Box className="w-full">
