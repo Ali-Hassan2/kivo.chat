@@ -13,6 +13,7 @@ const API_ENDPOINTS = {
   acceptPendingRequestOnNetwork: '/api/request/ro/acceptrequest',
   rejectPendingRequestOnNetwork: '/api/request/ro/rejectrequest',
   getAllFriendsForNetwork: '/api/friends/myfriends',
+  unfriendSomeoneOverallNetwork: '/api/friends/unfriend',
 }
 
 export { API_ENDPOINTS }

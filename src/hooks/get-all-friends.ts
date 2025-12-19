@@ -9,7 +9,7 @@ const useShowAllFriends = () => {
     setIsGettingAllFriendsForOverallNetwork,
   ] = useToggle(false)
   const [AllFriendsListForOverallNetwork, setAllFriendsListForOverallNetwork] =
-    useState<IGetFriends[]>()
+    useState<IGetFriends[]>([])
 
   const [
     errorForGettingAllFriendsOverallNetwork,
@@ -33,7 +33,7 @@ const useShowAllFriends = () => {
       })
       if (response.success) {
         setErrorForGettingAllFriendsOverallNetwork('')
-        setAllFriendsListForOverallNetwork(response.friends)
+        setAllFriendsListForOverallNetwork(response.friends ?? [])
       }
     } finally {
       setIsGettingAllFriendsForOverallNetwork(false)
@@ -44,6 +44,7 @@ const useShowAllFriends = () => {
     isGettingAllFriendsForOverallNetwork,
     AllFriendsListForOverallNetwork,
     errorForGettingAllFriendsOverallNetwork,
+    getAllFriendsForNetwork,
   }
 }
 
