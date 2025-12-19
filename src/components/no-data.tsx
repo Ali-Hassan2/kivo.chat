@@ -3,6 +3,7 @@
 import React from 'react'
 import { EmptyIcon } from './icons/empty'
 import { RefreshIcon } from './icons/refresh'
+import { Button } from './ui/button'
 import {
   Empty,
   EmptyContent,
@@ -11,7 +12,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from './ui/empty'
-import { Button } from './ui/button'
 
 const NoData = () => {
   return (
