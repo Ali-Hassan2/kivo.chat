@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label'
 import { ALL_FRIENDS_NETWORK_BOARD } from '@/constants/objects-to-iterate'
 import { requestIdSchema } from '@/guards'
 import { AuthStatus, IGetFriends } from '@/types'
+import { showToast } from '@/utils'
 
 interface AllFriendProps {
   isGettingAllFriendsForOverallNetwork: boolean
@@ -36,11 +37,12 @@ const AllFriends = ({
     getAllFriendsForNetwork()
   }, [])
 
-  useEffect(()=>{
-    if(UnfriendSomeoneOverallNetworkResponse.success){
+  useEffect(() => {
+    if (UnfriendSomeoneOverallNetworkResponse.success) {
       const successMessage = UnfriendSomeoneOverallNetworkResponse.success
-      showToast()
+      showToast(successMessage, 'success')
     }
+    if(UnfriendSomeoneOverallNetworkResponse.error)
   })
   return (
     <Box className="w-full">
