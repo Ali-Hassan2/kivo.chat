@@ -72,7 +72,7 @@ const AllFriends = ({
                 </Box>
                 <Box className="flex flex-1 items-center justify-end pr-4">
                   <Button className="cursor-pointer bg-blue-700">
-                    Unfriend
+                    
                   </Button>
                 </Box>
               </Box>
