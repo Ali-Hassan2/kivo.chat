@@ -87,7 +87,7 @@ const AllFriends = ({
                   </Box>
                 </Box>
                 <Box className="flex flex-1 items-center justify-end pr-4">
-                  <Button className="cursor-pointer bg-blue-700" onClick=((friendList._)=> unfriendSomeoneOnOverallNetwork())>
+                  <Button className="cursor-pointer bg-blue-700" onClick={()=> unfriendSomeoneOnOverallNetwork()}>
                     {isUnfriendingRequest ? (
                       <Loader2 className="animate-spin" />
                     ) : (
