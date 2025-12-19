@@ -53,6 +53,7 @@ export interface GetAllRequest {
 }
 
 export interface IGetFriends {
+  _id: string
   username: string
   fullName: string
   bio: string

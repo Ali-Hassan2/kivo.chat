@@ -9,7 +9,7 @@ import { NetworkIcon } from '@/components/icons/network'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { ALL_FRIENDS_NETWORK_BOARD } from '@/constants/objects-to-iterate'
-import { requestIdSchema } from '@/guards'
+import { requestIdSchema, unfriendSchema } from '@/guards'
 import { AuthStatus, IGetFriends } from '@/types'
 import { showToast } from '@/utils'
 
@@ -21,7 +21,7 @@ interface AllFriendProps {
   isUnfriendingRequest: boolean
   UnfriendSomeoneOverallNetworkResponse: AuthStatus
   unfriendSomeoneOnOverallNetwork: (
-    data: z.infer<typeof requestIdSchema>,
+    data: z.infer<typeof unfriendSchema>,
   ) => Promise<any> | void
 }
 const AllFriends = ({
@@ -87,7 +87,12 @@ const AllFriends = ({
                   </Box>
                 </Box>
                 <Box className="flex flex-1 items-center justify-end pr-4">
-                  <Button className="cursor-pointer bg-blue-700" onClick={()=> unfriendSomeoneOnOverallNetwork()}>
+                  <Button
+                    className="cursor-pointer bg-blue-700"
+                    onClick={() =>
+                      unfriendSomeoneOnOverallNetwork(friendList._id)
+                    }
+                  >
                     {isUnfriendingRequest ? (
                       <Loader2 className="animate-spin" />
                     ) : (

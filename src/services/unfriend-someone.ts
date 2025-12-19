@@ -13,11 +13,12 @@ const UnfriendSomeone = async ({
 }: UnfriendSomeoneProps): Promise<ApiResponse> => {
   try {
     const response = await axios.post(
-      `${API_ENDPOINTS.unfriendSomeoneOverallNetwork}?requesId=${userId}`,
+      `${API_ENDPOINTS.unfriendSomeoneOverallNetwork}?requestId=${userId}`,
       {
         signal,
       },
     )
+    console.log('The user id for service is:', userId)
     return response.data
   } catch (error: unknown) {
     const axiosError = error as AxiosError<ApiResponse>

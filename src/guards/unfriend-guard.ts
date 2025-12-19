@@ -1,5 +1,5 @@
 import { z } from 'zod'
 
-const requestIdSchema = z.string()
+const unfriendSchema = z.string()
 
-export { requestIdSchema }
+export { unfriendSchema }
