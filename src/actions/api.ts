@@ -14,6 +14,7 @@ const API_ENDPOINTS = {
   rejectPendingRequestOnNetwork: '/api/request/ro/rejectrequest',
   getAllFriendsForNetwork: '/api/friends/myfriends',
   unfriendSomeoneOverallNetwork: '/api/friends/unfriend',
+  getAllBlocks: '/api/blocks/get-all-blocks',
 }
 
 export { API_ENDPOINTS }

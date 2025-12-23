@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
+import Link from 'next/link'
 import { Avatar, Box, Flex } from '@radix-ui/themes'
 import { Loader2 } from 'lucide-react'
 import * as z from 'zod'
@@ -8,6 +9,7 @@ import { BlockIcon, BoardUpperHeader, PendingIcon } from '@/components'
 import { NetworkIcon } from '@/components/icons/network'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { BLOCK_FRIENDS } from '@/constants'
 import { ALL_FRIENDS_NETWORK_BOARD } from '@/constants/objects-to-iterate'
 import { requestIdSchema, unfriendSchema } from '@/guards'
 import { AuthStatus, IGetFriends } from '@/types'
@@ -65,8 +67,10 @@ const AllFriends = ({
         <Box className="p-4">
           <Box className="flex items-center justify-end">
             <Button className="cursor-pointer bg-blue-700">
-              <BlockIcon />
-              View All Block Contacts
+              <Link href={BLOCK_FRIENDS} className="flex items-center gap-2">
+                <BlockIcon />
+                View All Block Contacts
+              </Link>
             </Button>
           </Box>
           {AllFriendsListForOverallNetwork?.map((friendList) => {
@@ -97,6 +101,18 @@ const AllFriends = ({
                       <Loader2 className="animate-spin" />
                     ) : (
                       <Label className="cursor-pointer">Unfriend</Label>
+                    )}
+                  </Button>
+                  <Button
+                    className="ml-2 cursor-pointer"
+                    onClick={() =>
+                      unfriendSomeoneOnOverallNetwork(friendList._id)
+                    }
+                  >
+                    {isUnfriendingRequest ? (
+                      <Loader2 className="animate-spin" />
+                    ) : (
+                      <Label className="cursor-pointer">Block</Label>
                     )}
                   </Button>
                 </Box>
