@@ -48,7 +48,7 @@ const useGetAllBlocskOverAllNetwork = () => {
       if (!response.success) {
         setError(response.message)
       } else {
-        setSuccess(resposne.message)
+        setSuccess(response.message)
       }
     } finally {
       setIsGettingBlocks(false)
@@ -56,6 +56,6 @@ const useGetAllBlocskOverAllNetwork = () => {
   }
 
   return {
-    
+
   }
 }

@@ -15,6 +15,7 @@ const API_ENDPOINTS = {
   getAllFriendsForNetwork: '/api/friends/myfriends',
   unfriendSomeoneOverallNetwork: '/api/friends/unfriend',
   getAllBlocks: '/api/blocks/get-all-blocks',
+  blockSomeone: '/api/block/block-someone',
 }
 
 export { API_ENDPOINTS }

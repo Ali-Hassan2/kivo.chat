@@ -75,7 +75,10 @@ const AllFriends = ({
           </Box>
           {AllFriendsListForOverallNetwork?.map((friendList) => {
             return (
-              <Box className="mt-2 flex w-full items-center rounded-md border p-2">
+              <Box
+                className="mt-2 flex w-full items-center rounded-md border p-2"
+                key={friendList._id}
+              >
                 <Box className="flex flex-1">
                   <Avatar
                     className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-300 text-white"
