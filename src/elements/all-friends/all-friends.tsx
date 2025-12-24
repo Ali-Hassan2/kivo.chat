@@ -25,6 +25,9 @@ interface AllFriendProps {
   unfriendSomeoneOnOverallNetwork: (
     data: z.infer<typeof unfriendSchema>,
   ) => Promise<any> | void
+  isBlockingSomeone: boolean
+  BlockSomeoneResponse: AuthStatus | null
+  doBlockSomeone: (data: z.infer<typeof requestIdSchema>) => Promise<any> | void
 }
 const AllFriends = ({
   isGettingAllFriendsForOverallNetwork,
@@ -34,6 +37,9 @@ const AllFriends = ({
   isUnfriendingRequest,
   UnfriendSomeoneOverallNetworkResponse,
   unfriendSomeoneOnOverallNetwork,
+  isBlockingSomeone,
+  BlockSomeoneResponse,
+  doBlockSomeone,
 }: AllFriendProps) => {
   useEffect(() => {
     getAllFriendsForNetwork()
@@ -52,6 +58,31 @@ const AllFriends = ({
       showToast(errorForGettingAllFriendsOverallNetwork, 'error')
     }
   }, [UnfriendSomeoneOverallNetworkResponse])
+
+  useEffect(() => {
+    if (BlockSomeoneResponse?.success) {
+      const successMessage = BlockSomeoneResponse?.success
+      showToast(successMessage, 'success')
+    }
+    if (BlockSomeoneResponse?.error) {
+      const errorMessage = BlockSomeoneResponse?.error
+      showToast(errorMessage, 'error')
+    }
+  }, [BlockSomeoneResponse])
+
+  const [unfriendUser, setUnfriendUser] = React.useState<string | null>(null)
+  const [blockingUser, setBlockingUser] = React.useState<string | null>(null)
+
+  const handleUnfriend = async (userId: string) => {
+    setUnfriendUser(userId)
+    await unfriendSomeoneOnOverallNetwork(userId)
+    setUnfriendUser(null)
+  }
+  const handleBlockedUser = async (userId: string) => {
+    setBlockingUser(userId)
+    await doBlockSomeone(userId)
+    setBlockingUser(null)
+  }
   return (
     <Box className="w-full">
       <Flex direction="column">
@@ -96,11 +127,10 @@ const AllFriends = ({
                 <Box className="flex flex-1 items-center justify-end pr-4">
                   <Button
                     className="cursor-pointer bg-blue-700"
-                    onClick={() =>
-                      unfriendSomeoneOnOverallNetwork(friendList._id)
-                    }
+                    onClick={() => handleUnfriend(friendList._id)}
+                    disabled={unfriendUser === friendList._id}
                   >
-                    {isUnfriendingRequest ? (
+                    {unfriendUser === friendList._id ? (
                       <Loader2 className="animate-spin" />
                     ) : (
                       <Label className="cursor-pointer">Unfriend</Label>
@@ -108,11 +138,10 @@ const AllFriends = ({
                   </Button>
                   <Button
                     className="ml-2 cursor-pointer"
-                    onClick={() =>
-                      unfriendSomeoneOnOverallNetwork(friendList._id)
-                    }
+                    onClick={() => handleBlockedUser(friendList._id)}
+                    disabled={blockingUser === friendList._id}
                   >
-                    {isUnfriendingRequest ? (
+                    {blockingUser === friendList._id ? (
                       <Loader2 className="animate-spin" />
                     ) : (
                       <Label className="cursor-pointer">Block</Label>

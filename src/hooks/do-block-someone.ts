@@ -45,10 +45,10 @@ const useBlockSomeone = () => {
         requestId: data,
         signal: controller.signal,
       })
-      if (!response.success) {
-        setError(response.message)
-      } else {
+      if (response.success) {
         setSuccess(response.message)
+      } else {
+        setError(response.message)
       }
     } finally {
       setIsBlockingSomeone(false)
