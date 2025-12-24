@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { Box } from '@radix-ui/themes'
 import { AllFriends, ProfileNetwork } from '@/elements'
-import { useNetworkCount } from '@/hooks'
+import { useBlockSomeone, useNetworkCount } from '@/hooks'
 import { useShowAllFriends } from '@/hooks/get-all-friends'
 import { useUnfriendSomeOneOverallNetwork } from '@/hooks/unfriend-someone'
 
@@ -14,6 +14,9 @@ const AllFriendsView = () => {
     userCountResponseStatusForNetwork,
     gettingUserNetworkCount,
   } = useNetworkCount()
+
+  const { isBlockingSomeone, BlockSomeoneResponse, doBlockSomeone } =
+    useBlockSomeone()
 
   const {
     isGettingAllFriendsForOverallNetwork,
@@ -52,6 +55,9 @@ const AllFriendsView = () => {
           UnfriendSomeoneOverallNetworkResponse
         }
         unfriendSomeoneOnOverallNetwork={unfriendSomeoneOnOverallNetwork}
+        isBlockingSomeone={isBlockingSomeone}
+        BlockSomeoneResponse={BlockSomeoneResponse}
+        doBlockSomeone={doBlockSomeone}
       />
     </Box>
   )

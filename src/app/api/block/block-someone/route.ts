@@ -47,6 +47,7 @@ async function POST(request: Request) {
         errors: parseResult.error.issues.map((err) => err?.message),
       })
     }
+    console.log('The requestId:', parseResult.data)
     const [user, blocked] = await Promise.all([
       UserModel.findById(uid),
       UserModel.findOne({ username: parseResult.data }),
