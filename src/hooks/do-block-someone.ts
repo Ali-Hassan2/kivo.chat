@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { useToggle } from 'react-use'
 import * as z from 'zod'
-import { requestIdSchema } from '@/guards'
+import { requestIdSchema, unfriendSchema } from '@/guards'
 import { blockSomeone } from '@/services'
 import { AuthStatus } from '@/types'
 
@@ -31,7 +31,7 @@ const useBlockSomeone = () => {
   const controllerForBlockingSomeoneOverallNetwork =
     useRef<AbortController | null>(null)
 
-  const doBlockSomeone = async (data: z.infer<typeof requestIdSchema>) => {
+  const doBlockSomeone = async (data: z.infer<typeof unfriendSchema>) => {
     setError('')
     setSuccess('')
     setIsBlockingSomeone(true)
@@ -42,7 +42,7 @@ const useBlockSomeone = () => {
     controllerForBlockingSomeoneOverallNetwork.current = controller
     try {
       const response = await blockSomeone({
-        requestId: data,
+        username: data,
         signal: controller.signal,
       })
       if (response.success) {

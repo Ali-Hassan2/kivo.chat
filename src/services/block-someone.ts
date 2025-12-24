@@ -4,15 +4,15 @@ import { ApiResponse } from '@/types'
 
 interface BlockSomeoneProps {
   signal: AbortSignal
-  requestId: string
+  username: string
 }
 const blockSomeone = async ({
   signal,
-  requestId,
+  username,
 }: BlockSomeoneProps): Promise<ApiResponse> => {
   try {
     const response = await axios.post(
-      `${API_ENDPOINTS.blockSomeone}?requestId=${requestId}`,
+      `${API_ENDPOINTS.blockSomeone}?username=${username}`,
       {
         signal,
       },

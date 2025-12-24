@@ -27,7 +27,7 @@ interface AllFriendProps {
   ) => Promise<any> | void
   isBlockingSomeone: boolean
   BlockSomeoneResponse: AuthStatus | null
-  doBlockSomeone: (data: z.infer<typeof requestIdSchema>) => Promise<any> | void
+  doBlockSomeone: (data: z.infer<typeof unfriendSchema>) => Promise<any> | void
 }
 const AllFriends = ({
   isGettingAllFriendsForOverallNetwork,
@@ -78,9 +78,9 @@ const AllFriends = ({
     await unfriendSomeoneOnOverallNetwork(userId)
     setUnfriendUser(null)
   }
-  const handleBlockedUser = async (userId: string) => {
-    setBlockingUser(userId)
-    await doBlockSomeone(userId)
+  const handleBlockedUser = async (username: string) => {
+    setBlockingUser(username)
+    await doBlockSomeone(username)
     setBlockingUser(null)
   }
   return (
@@ -138,7 +138,7 @@ const AllFriends = ({
                   </Button>
                   <Button
                     className="ml-2 cursor-pointer"
-                    onClick={() => handleBlockedUser(friendList._id)}
+                    onClick={() => handleBlockedUser(friendList.username)}
                     disabled={blockingUser === friendList._id}
                   >
                     {blockingUser === friendList._id ? (
