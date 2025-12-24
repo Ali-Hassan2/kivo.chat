@@ -63,3 +63,15 @@ export interface GetAllFriends {
   message: string
   friends?: IGetFriends[]
 }
+
+export interface IBlocks {
+  _id: string
+  username: string
+  fullName: string
+  bio: string
+}
+export interface GetBlockedUsers {
+  success: boolean
+  message: string
+  data?: IBlocks[]
+}
