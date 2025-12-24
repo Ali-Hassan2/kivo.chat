@@ -21,10 +21,12 @@ async function GET(request: Request) {
     }
     await connect_db()
     const uid = session?.user._id
-    const user = await UserModel.findById(uid).populate({
-      path: 'blocks',
-      select: 'username',
-    })
+    const user = await UserModel.findById(uid)
+      .populate({
+        path: 'blocks',
+        select: 'username fullName bio',
+      })
+      .lean()
     if (!user) {
       console.error('User not found in database')
       return NextResponse.json(
