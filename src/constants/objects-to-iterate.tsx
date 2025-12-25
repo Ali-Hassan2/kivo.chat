@@ -115,6 +115,19 @@ const ALL_FRIENDS_NETWORK_BOARD = {
   lineWidth: 'w-110',
 }
 
+const ALL_BLOCKED_FRIENDS_OVERALLNETWORK_BOARD = {
+  NextHead: '/All Blocked Users',
+  ButtonOne: {
+    label: 'All Friends',
+    href: ALL_FRIENDS,
+  },
+  ButtonTwo: {
+    label: 'Network',
+    href: NETWORK,
+  },
+  lineWidth: 'w-110',
+}
+
 export {
   HEADER_DROPDOWN_LABELS,
   MOCK_CONTACTS,
@@ -122,4 +135,5 @@ export {
   NETWORK_BOARD_HEADER,
   PENDING_REQUEST_BOARD,
   ALL_FRIENDS_NETWORK_BOARD,
+  ALL_BLOCKED_FRIENDS_OVERALLNETWORK_BOARD,
 }
