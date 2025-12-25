@@ -1,26 +1,61 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, Box, Flex } from '@radix-ui/themes'
+import * as z from 'zod'
 import { BoardUpperHeader, FriendsIcon, NoData } from '@/components'
 import { NetworkIcon } from '@/components/icons/network'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { ALL_BLOCKED_FRIENDS_OVERALLNETWORK_BOARD } from '@/constants/objects-to-iterate'
-import { IBlocks } from '@/types'
+import { blockingUser, unfriendSchema } from '@/guards'
+import { AuthStatus, IBlocks } from '@/types'
+import { showToast } from '@/utils'
 import ListForBlockedUsersSkeleton from './skeleton'
 
 interface BlockBoardProps {
   getBlocksUsersOverallNetwork: IBlocks[]
   errorMessageForGettingBlockedUsers: string | null
   isGettingBlockedUsers: boolean
+  isUnblockingSomeOneOverallNetwork: boolean
+  unblockingSomeoneResponse: AuthStatus
+  unblockSomeOneOverallNetwork: (
+    data: z.infer<typeof unfriendSchema>,
+  ) => Promise<any> | void
 }
 
 const BlockBoard = ({
   getBlocksUsersOverallNetwork,
   errorMessageForGettingBlockedUsers,
   isGettingBlockedUsers,
+  isUnblockingSomeOneOverallNetwork,
+  unblockingSomeoneResponse,
+  unblockSomeOneOverallNetwork,
 }: BlockBoardProps) => {
+  useEffect(() => {
+    if (errorMessageForGettingBlockedUsers) {
+      showToast(errorMessageForGettingBlockedUsers, 'error')
+    }
+  }, [errorMessageForGettingBlockedUsers])
+
+  useEffect(() => {
+    if (unblockingSomeoneResponse.success) {
+      const successMessage = unblockingSomeoneResponse.success
+      showToast(successMessage, 'success')
+    }
+    if (unblockingSomeoneResponse.error) {
+      const errorMessage = unblockingSomeoneResponse.error
+      showToast(errorMessage, 'error')
+    }
+  }, [unblockingSomeoneResponse])
+
+  const [unblockUser, setUnblockUser] = useState<string | null>('')
+
+  const handleUnblockUser = async (userId: string) => {
+    setUnblockUser(userId)
+    await unblockSomeOneOverallNetwork(userId)
+    setUnblockUser(null)
+  }
   return (
     <Box className="w-full">
       <Flex direction="column">
@@ -53,7 +88,13 @@ const BlockBoard = ({
                     </Box>
                   </Box>
                   <Box className="buttons mr-3 flex flex-1 items-center justify-end">
-                    <Button className="cursor-pointer">unblock</Button>
+                    <Button
+                      className="cursor-pointer"
+                      disabled={unblockUser === blkUser.username}
+                      onClick={() => handleUnblockUser(blkUser.username)}
+                    >
+                      unblock
+                    </Button>
                   </Box>
                 </Box>
               )

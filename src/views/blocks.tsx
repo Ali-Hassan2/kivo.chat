@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { Box } from '@radix-ui/themes'
 import { BlockBoard, ProfileNetwork } from '@/elements'
-import { useGetAllBlocks, useNetworkCount } from '@/hooks'
+import { useGetAllBlocks, useNetworkCount, useUnBlockSomeone } from '@/hooks'
 import { useAuthRedirection } from '@/utils'
 
 const BlocksView = () => {
@@ -22,6 +22,12 @@ const BlocksView = () => {
     isGettingBlockedUsers,
     gettingAllBlockedUsers,
   } = useGetAllBlocks()
+
+  const {
+    isUnblockingSomeOneOverallNetwork,
+    unblockingSomeoneResponse,
+    unblockSomeOneOverallNetwork,
+  } = useUnBlockSomeone()
 
   useEffect(() => {
     if (user) {
@@ -45,6 +51,9 @@ const BlocksView = () => {
         getBlocksUsersOverallNetwork={getBlocksUsersOverallNetwork}
         errorMessageForGettingBlockedUsers={errorMessageForGettingBlockedUsers}
         isGettingBlockedUsers={isGettingBlockedUsers}
+        isUnblockingSomeOneOverallNetwork={isUnblockingSomeOneOverallNetwork}
+        unblockingSomeoneResponse={unblockingSomeoneResponse}
+        unblockSomeOneOverallNetwork={unblockSomeOneOverallNetwork}
       />
     </Box>
   )
