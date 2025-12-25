@@ -63,7 +63,6 @@ export async function POST(request: Request) {
         $all: [user._id as Types.ObjectId, new Types.ObjectId(receiverId)],
       },
     })
-
     if (!conversation) {
       conversation = await ConversationModel.create({
         participants: [user._id, receiverId],

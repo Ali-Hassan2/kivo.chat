@@ -70,10 +70,8 @@ const AllFriends = ({
       showToast(errorMessage, 'error')
     }
   }, [BlockSomeoneResponse])
-
   const [unfriendUser, setUnfriendUser] = React.useState<string | null>(null)
   const [blockingUser, setBlockingUser] = React.useState<string | null>(null)
-
   const handleUnfriend = async (userId: string) => {
     setUnfriendUser(userId)
     await unfriendSomeoneOnOverallNetwork(userId)
@@ -153,7 +151,7 @@ const AllFriends = ({
                     </Button>
                   </Box>
                 </Box>
-                // TODO: I have to add pagination from next.js
+                // TODO: I have to add a button to start a conversation between the send and the receiver which is the listing user.
               )
             })
           ) : (
