@@ -1,9 +1,11 @@
 'use client'
 
 import React from 'react'
-import { Box, Flex } from '@radix-ui/themes'
+import { Avatar, Box, Flex } from '@radix-ui/themes'
 import { BoardUpperHeader, FriendsIcon, NoData } from '@/components'
 import { NetworkIcon } from '@/components/icons/network'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 import { ALL_BLOCKED_FRIENDS_OVERALLNETWORK_BOARD } from '@/constants/objects-to-iterate'
 import { IBlocks } from '@/types'
 import ListForBlockedUsersSkeleton from './skeleton'
@@ -34,13 +36,25 @@ const BlockBoard = ({
         {isGettingBlockedUsers ? (
           <ListForBlockedUsersSkeleton loading={isGettingBlockedUsers} />
         ) : getBlocksUsersOverallNetwork.length > 0 ? (
-          <Box className="w-full border-4 border-red-500">
+          <Box className="w-full p-3">
             {getBlocksUsersOverallNetwork.map((blkUser) => {
               return (
-                <Box>
-                  {blkUser.username}
-                  {blkUser.fullName}
-                  {blkUser.bio}
+                <Box className="flex w-full justify-between rounded-md bg-gray-100">
+                  <Box className="flex flex-1 items-center p-3">
+                    <Avatar
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-600"
+                      fallback={blkUser.username?.[0].toUpperCase() ?? '??'}
+                    />
+                    <Box className="mt-2 ml-2 flex flex-col gap-2">
+                      <Label>{blkUser.fullName}</Label>
+                      <Label className="font-normal text-gray-700">
+                        {blkUser.bio}
+                      </Label>
+                    </Box>
+                  </Box>
+                  <Box className="buttons mr-3 flex flex-1 items-center justify-end">
+                    <Button className="cursor-pointer">unblock</Button>
+                  </Box>
                 </Box>
               )
             })}
