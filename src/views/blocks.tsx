@@ -26,6 +26,7 @@ const BlocksView = () => {
   useEffect(() => {
     if (user) {
       gettingUserNetworkCount()
+      gettingAllBlockedUsers()
     }
   }, [user])
 
@@ -44,7 +45,6 @@ const BlocksView = () => {
         getBlocksUsersOverallNetwork={getBlocksUsersOverallNetwork}
         errorMessageForGettingBlockedUsers={errorMessageForGettingBlockedUsers}
         isGettingBlockedUsers={isGettingBlockedUsers}
-        gettingAllBlockedUsers={gettingAllBlockedUsers}
       />
     </Box>
   )
