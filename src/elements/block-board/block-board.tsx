@@ -18,7 +18,7 @@ interface BlockBoardProps {
   errorMessageForGettingBlockedUsers: string | null
   isGettingBlockedUsers: boolean
   isUnblockingSomeOneOverallNetwork: boolean
-  unblockingSomeoneResponse: AuthStatus
+  unblockingSomeoneResponse: AuthStatus | null
   unblockSomeOneOverallNetwork: (
     data: z.infer<typeof unfriendSchema>,
   ) => Promise<any> | void
@@ -39,11 +39,11 @@ const BlockBoard = ({
   }, [errorMessageForGettingBlockedUsers])
 
   useEffect(() => {
-    if (unblockingSomeoneResponse.success) {
+    if (unblockingSomeoneResponse?.success) {
       const successMessage = unblockingSomeoneResponse.success
       showToast(successMessage, 'success')
     }
-    if (unblockingSomeoneResponse.error) {
+    if (unblockingSomeoneResponse?.error) {
       const errorMessage = unblockingSomeoneResponse.error
       showToast(errorMessage, 'error')
     }
