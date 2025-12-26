@@ -127,6 +127,9 @@ const AllFriends = ({
                     </Box>
                   </Box>
                   <Box className="flex flex-1 items-center justify-end pr-4">
+                    <Button>
+                      <sendMess
+                      Send Message</Button>
                     <Button
                       className="cursor-pointer bg-blue-700"
                       onClick={() => handleUnfriend(friendList._id)}
@@ -151,6 +154,7 @@ const AllFriends = ({
                     </Button>
                   </Box>
                 </Box>
+
                 // TODO: I have to add a button to start a conversation between the send and the receiver which is the listing user.
               )
             })
