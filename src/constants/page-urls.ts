@@ -20,6 +20,10 @@ const ALL_FRIENDS = '/all-friends'
 
 const BLOCK_FRIENDS = '/blocks'
 
+const USER_PROFILE = '/profile'
+
+const USER_PROFILE_SETTINGS = '/profile/settings'
+
 const EXCLUDED_PAGES = ['/', '/auth', '/signup', '/verification-code']
 
 export {
@@ -35,4 +39,6 @@ export {
   FRIENDS_NETWORK_BOARD,
   ALL_FRIENDS,
   BLOCK_FRIENDS,
+  USER_PROFILE,
+  USER_PROFILE_SETTINGS,
 }

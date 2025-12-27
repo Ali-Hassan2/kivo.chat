@@ -16,13 +16,15 @@ import {
   FRIENDS_NETWORK_BOARD,
   NETWORK,
   PERSONAL_BOARD,
+  USER_PROFILE,
+  USER_PROFILE_SETTINGS,
 } from './page-urls'
 
 const HEADER_DROPDOWN_LABELS = [
   {
     label: 'Profile',
     icon: <ProfileIcon />,
-    href: '#',
+    href: USER_PROFILE,
   },
   {
     label: 'Friends',
@@ -36,7 +38,7 @@ const HEADER_DROPDOWN_LABELS = [
   {
     label: 'Settings',
     icon: <SettingIcon />,
-    href: '#',
+    href: USER_PROFILE_SETTINGS,
   },
 ]
 
