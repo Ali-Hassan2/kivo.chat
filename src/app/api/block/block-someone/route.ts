@@ -47,7 +47,6 @@ async function POST(request: Request) {
         errors: parseResult.error.issues.map((err) => err?.message),
       })
     }
-    console.log('The requestId:', parseResult.data)
     const [user, blocked] = await Promise.all([
       UserModel.findById(uid),
       UserModel.findOne({ username: parseResult.data }),
@@ -63,15 +62,15 @@ async function POST(request: Request) {
         },
       )
     }
-    const isFriend = user.friends.some(
-      (frnd) => frnd.toString() === (blocked._id as Types.ObjectId).toString(),
-    )
-    if (isFriend) {
-      user.friends = user.friends.filter(
-        (frnd) =>
-          frnd._id.toString() !== (blocked._id as Types.ObjectId).toString(),
-      )
-    }
+    // const isFriend = user.friends.some(
+    //   (frnd) => frnd.toString() === (blocked._id as Types.ObjectId).toString(),
+    // )
+    // if (isFriend) {
+    //   user.friends = user.friends.filter(
+    //     (frnd) =>
+    //       frnd._id.toString() !== (blocked._id as Types.ObjectId).toString(),
+    //   )
+    // }
     const isSame = uid.toString() === (blocked._id as Types.ObjectId).toString()
     if (isSame) {
       return NextResponse.json(
