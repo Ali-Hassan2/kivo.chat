@@ -90,16 +90,16 @@ async function POST(request: Request) {
         },
       )
     }
-    const isFriend = user.friends.some(
-      (frnd) =>
-        frnd.toString() === (unblocked._id as Types.ObjectId).toString(),
-    )
-    if (isFriend) {
-      return NextResponse.json({
-        success: false,
-        message: 'Cannot unblock your friend',
-      })
-    }
+    // const isFriend = user.friends.some(
+    //   (frnd) =>
+    //     frnd.toString() === (unblocked._id as Types.ObjectId).toString(),
+    // )
+    // if (isFriend) {
+    //   return NextResponse.json({
+    //     success: false,
+    //     message: 'Cannot unblock your friend',
+    //   })
+    // }
     user.blocks = user.blocks.filter(
       (fb) =>
         fb._id.toString() !== (unblocked._id as Types.ObjectId).toString(),

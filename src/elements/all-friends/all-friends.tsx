@@ -127,7 +127,7 @@ const AllFriends = ({
                     </Box>
                   </Box>
                   <Box className="flex flex-1 items-center justify-end pr-4">
-                    <Button>Send Message</Button>
+                    <Button className="mr-2">Send Message</Button>
                     <Button
                       className="cursor-pointer bg-blue-700"
                       onClick={() => handleUnfriend(friendList._id)}
