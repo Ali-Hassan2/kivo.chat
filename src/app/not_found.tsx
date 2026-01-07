@@ -21,7 +21,7 @@ export default function NotFound() {
           404
         </Text>
         <Box className="my-6 h-px bg-gray-300" />
-        <Text as="h2" className="text-2xl font-semibold text-gray-800">
+        <Text className="text-2xl font-semibold text-gray-800">
           Page not found
         </Text>
         <Text as="p" className="mt-3 text-gray-600">
