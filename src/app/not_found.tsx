@@ -13,7 +13,6 @@ export default function NotFound() {
       className="min-h-screen bg-gray-50 px-6"
     >
       <Box className="w-full max-w-md text-center">
-        {/* 404 */}
         <Text
           as="h1"
           className="text-7xl font-extrabold tracking-tight text-gray-900"
