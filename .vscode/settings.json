@@ -1,5 +1,5 @@
 {
-  "workbench.colorTheme": "cursor-dark",
+  "workbench.colorTheme": "cursor-less-dark",
   "workbench.colorCustomizations": {
     "editor.background": "#171616",
     "editorGutter.background": "#171616",

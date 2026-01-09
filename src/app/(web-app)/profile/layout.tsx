@@ -6,7 +6,7 @@ import { Sidebar } from '@/components'
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Box className="flex h-screen w-full">
+    <Box className="flex h-screen">
       <Box className="shrink-0">
         <Sidebar />
       </Box>
