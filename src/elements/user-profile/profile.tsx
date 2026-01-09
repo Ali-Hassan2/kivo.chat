@@ -30,17 +30,17 @@ const ProfileBoard = ({
   isTogglingIsAcceptingMessages,
 }: profileBoardProps) => {
   const user = useAuthRedirection()
-  const handleSubmit = async (data: z.infer<typeof accmSchema>) => {
-    await onSubmit(data)
-  }
-
   useEffect(() => {
     if (isAcceptingMessagesResponseOverallNetwork.success) {
       const successMessage = isAcceptingMessagesResponseOverallNetwork.success
-      showToast(successMessage, 'success')
+      if (successMessage.length > 0) {
+        showToast(successMessage, 'success')
+      }
     } else {
       const errorMessage = isAcceptingMessagesResponseOverallNetwork.error
-      showToast(errorMessage, 'error')
+      if (errorMessage.length !== 0) {
+        showToast(errorMessage, 'error')
+      }
     }
   }, [isAcceptingMessagesResponseOverallNetwork])
   return (

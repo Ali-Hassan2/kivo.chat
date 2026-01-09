@@ -18,7 +18,10 @@ const API_ENDPOINTS = {
   blockSomeone: '/api/block/block-someone',
   unBlockSomeOneOverallNetwork: '/api/block/unblock',
   sendMessageToYourFriendsOnOverallNetwork: '/api/messages/sendmessage',
-  changeModeToToggleTheAcceptingMessagesOverallNetwork:'/api/is-accepting-messages/mode/toggle'
+  changeModeToToggleTheAcceptingMessagesOverallNetwork:
+    '/api/is-accepting-messages/mode/toggle',
+  changeModeToToggleTheShowingIdentity:
+    '/api/is-showing-identity/mode/toggle-radio',
 }
 
 export { API_ENDPOINTS }
