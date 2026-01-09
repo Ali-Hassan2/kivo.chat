@@ -38,6 +38,7 @@ const useAcceptingMessagesMode = () => {
   const changeModeToAcceptingMessages = async (
     data: z.infer<typeof accmSchema>,
   ) => {
+    console.log('The data accm is :', data.accm)
     setSuccess('')
     setError('')
     setIsTogglingIsAcceptingMessages(true)
@@ -49,7 +50,7 @@ const useAcceptingMessagesMode = () => {
 
     try {
       const response = await modeIsAcceptingMessages({
-        accm: data,
+        accm: data.accm,
         signal: controller.signal,
       })
       if (response.success) {

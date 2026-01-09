@@ -1,5 +1,7 @@
 import * as z from 'zod'
 
-const accmSchema = z.boolean()
+const accmSchema = z.object({
+  accm: z.boolean(),
+})
 
-export {accmSchema}
+export { accmSchema }

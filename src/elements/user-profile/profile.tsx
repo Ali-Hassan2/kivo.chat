@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box } from '@radix-ui/themes'
 import { Text } from '@radix-ui/themes/components/callout'
 import { UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
 import { SwitchDemo } from '@/components'
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
 import { accmSchema } from '@/guards'
 import { AuthStatus } from '@/types'
-import { useAuthRedirection } from '@/utils'
+import { showToast, useAuthRedirection } from '@/utils'
 
 interface profileBoardProps {
   form: UseFormReturn<z.infer<typeof accmSchema>>
@@ -27,6 +33,16 @@ const ProfileBoard = ({
   const handleSubmit = async (data: z.infer<typeof accmSchema>) => {
     await onSubmit(data)
   }
+
+  useEffect(() => {
+    if (isAcceptingMessagesResponseOverallNetwork.success) {
+      const successMessage = isAcceptingMessagesResponseOverallNetwork.success
+      showToast(successMessage, 'success')
+    } else {
+      const errorMessage = isAcceptingMessagesResponseOverallNetwork.error
+      showToast(errorMessage, 'error')
+    }
+  }, [isAcceptingMessagesResponseOverallNetwork])
   return (
     <Box className="flex flex-col items-center justify-center">
       <Box className="section flex w-full items-center justify-start border-b p-8">
@@ -41,15 +57,30 @@ const ProfileBoard = ({
           </Text>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form>
               <FormField
                 name="accm"
                 control={form.control}
                 render={({ field }) => {
                   return (
                     <FormItem>
+                      <FormLabel>
+                        {field.value
+                          ? 'Accepting Messages'
+                          : 'Not Accepting Messages'}
+                      </FormLabel>
                       <FormControl>
-                        <SwitchDemo {...form} />
+                        <SwitchDemo
+                          checked={field.value}
+                          onCheckedChange={(value) => {
+                            field.onChange(value)
+                            console.log('The field value is:', value)
+                            onSubmit({
+                              accm: value,
+                            })
+                          }}
+                          disabled={isTogglingIsAcceptingMessages}
+                        />
                       </FormControl>
                     </FormItem>
                   )
@@ -57,7 +88,6 @@ const ProfileBoard = ({
               />
             </form>
           </Form>
-          <SwitchDemo />
         </Box>
       </Box>
     </Box>

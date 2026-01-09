@@ -28,6 +28,7 @@ async function POST(request: Request) {
         { status: 400 },
       )
     }
+
     const uid = session.user._id
     const newFlag = body.accm
     const user = await UserModel.findById(uid)
