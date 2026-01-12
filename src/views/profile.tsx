@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import ProfileBoard from '@/elements/user-profile/profile'
 import { accmSchema } from '@/guards'
-import { useAcceptingMessagesMode } from '@/hooks'
+import { useAcceptingMessagesMode, useIsShowingIdentity } from '@/hooks'
 
 const ProfileView = () => {
   const {
@@ -15,6 +15,11 @@ const ProfileView = () => {
     isTogglingIsAcceptingMessages,
     changeModeToAcceptingMessages,
   } = useAcceptingMessagesMode()
+
+  const {
+        isShowingIdentityResponse,
+    isChangingModeForIdentity,
+  } = useIsShowingIdentity()
 
   const form = useForm<z.infer<typeof accmSchema>>({
     resolver: zodResolver(accmSchema),
@@ -25,10 +30,14 @@ const ProfileView = () => {
 
   return (
     <Box className="borde-red-500 h-full w-[83vw] border p-2">
-      <ProfileBoard form={form}
-       isAcceptingMessagesResponseOverallNetwork={isAcceptingMessagesResponseOverallNetwork}
-    isTogglingIsAcceptingMessages={isTogglingIsAcceptingMessages}
-    onSubmit={changeModeToAcceptingMessages}/>
+      <ProfileBoard
+        form={form}
+        isAcceptingMessagesResponseOverallNetwork={
+          isAcceptingMessagesResponseOverallNetwork
+        }
+        isTogglingIsAcceptingMessages={isTogglingIsAcceptingMessages}
+        onSubmit={changeModeToAcceptingMessages}
+      />
     </Box>
   )
 }

@@ -50,12 +50,11 @@ const ProfileBoard = ({
           Welcome, {user?.fullName} to your Kivo Profile.
         </Label>
       </Box>
-      <Box className="flex w-full flex-col items-center justify-center">
-        <Box className="flex w-full items-center justify-between px-8 pt-2">
+      <Box className="flex w-full flex-col items-center justify-center p-4">
+        <Box className="flex w-full items-center justify-between rounded-lg px-8 p-8 shadow-lg">
           <Text className="text-2xl font-semibold">
             Change is accepting Messages
           </Text>
-
           <Form {...form}>
             <form>
               <FormField
@@ -64,11 +63,48 @@ const ProfileBoard = ({
                 render={({ field }) => {
                   return (
                     <FormItem>
-                      <FormLabel>
+                      {/* <FormLabel>
                         {field.value
                           ? 'Accepting Messages'
                           : 'Not Accepting Messages'}
-                      </FormLabel>
+                      </FormLabel> */}
+                      <FormControl>
+                        <SwitchDemo
+                          checked={field.value}
+                          onCheckedChange={(value) => {
+                            field.onChange(value)
+                            console.log('The field value is:', value)
+                            onSubmit({
+                              accm: value,
+                            })
+                          }}
+                          disabled={isTogglingIsAcceptingMessages}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )
+                }}
+              />
+            </form>
+          </Form>
+        </Box>
+              <Box className="flex w-full items-center justify-between rounded-lg px-8 p-8 shadow-lg">
+          <Text className="text-2xl font-semibold">
+            Showing Identity
+          </Text>
+          <Form {...form}>
+            <form>
+              <FormField
+                name="accm"
+                control={form.control}
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      {/* <FormLabel>
+                        {field.value
+                          ? 'Accepting Messages'
+                          : 'Not Accepting Messages'}
+                      </FormLabel> */}
                       <FormControl>
                         <SwitchDemo
                           checked={field.value}
