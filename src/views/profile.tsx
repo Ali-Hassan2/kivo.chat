@@ -6,7 +6,7 @@ import { Box } from '@radix-ui/themes'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import ProfileBoard from '@/elements/user-profile/profile'
-import { accmSchema } from '@/guards'
+import { accmSchema, flagSchema } from '@/guards'
 import { useAcceptingMessagesMode, useIsShowingIdentity } from '@/hooks'
 
 const ProfileView = () => {
@@ -16,15 +16,20 @@ const ProfileView = () => {
     changeModeToAcceptingMessages,
   } = useAcceptingMessagesMode()
 
-  const {
-        isShowingIdentityResponse,
-    isChangingModeForIdentity,
-  } = useIsShowingIdentity()
+  const { isShowingIdentityResponse, isChangingModeForIdentity } =
+    useIsShowingIdentity()
 
   const form = useForm<z.infer<typeof accmSchema>>({
     resolver: zodResolver(accmSchema),
     defaultValues: {
       accm: false,
+    },
+  })
+
+  const formForIsShowingIdentity = useForm<z.infer<typeof flagSchema>>({
+    resolver: zodResolver(flagSchema),
+    defaultValues: {
+      flag: false,
     },
   })
 
@@ -37,6 +42,9 @@ const ProfileView = () => {
         }
         isTogglingIsAcceptingMessages={isTogglingIsAcceptingMessages}
         onSubmit={changeModeToAcceptingMessages}
+        formForIsShowingIdentity={formForIsShowingIdentity}
+        isShowingIdentityResponse={isShowingIdentityResponse}
+        isChangingModeForIdentity={isChangingModeForIdentity}
       />
     </Box>
   )

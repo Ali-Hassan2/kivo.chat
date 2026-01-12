@@ -12,7 +12,7 @@ import {
   FormLabel,
 } from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
-import { accmSchema } from '@/guards'
+import { accmSchema, flagSchema } from '@/guards'
 import { AuthStatus } from '@/types'
 import { showToast, useAuthRedirection } from '@/utils'
 
@@ -21,6 +21,9 @@ interface profileBoardProps {
   onSubmit: (data: z.infer<typeof accmSchema>) => void
   isAcceptingMessagesResponseOverallNetwork: AuthStatus
   isTogglingIsAcceptingMessages: boolean
+  formForIsShowingIdentity: UseFormReturn<z.infer<typeof flagSchema>>
+  isShowingIdentityResponse: AuthStatus
+  isChangingModeForIdentity: boolean
 }
 
 const ProfileBoard = ({
@@ -28,6 +31,9 @@ const ProfileBoard = ({
   onSubmit,
   isAcceptingMessagesResponseOverallNetwork,
   isTogglingIsAcceptingMessages,
+  formForIsShowingIdentity,
+  isShowingIdentityResponse,
+  isChangingModeForIdentity,
 }: profileBoardProps) => {
   const user = useAuthRedirection()
   useEffect(() => {
@@ -51,7 +57,7 @@ const ProfileBoard = ({
         </Label>
       </Box>
       <Box className="flex w-full flex-col items-center justify-center p-4">
-        <Box className="flex w-full items-center justify-between rounded-lg px-8 p-8 shadow-lg">
+        <Box className="flex w-full items-center justify-between rounded-lg p-8 px-8 shadow-lg">
           <Text className="text-2xl font-semibold">
             Change is accepting Messages
           </Text>
@@ -87,41 +93,22 @@ const ProfileBoard = ({
               />
             </form>
           </Form>
-        </Box>
-              <Box className="flex w-full items-center justify-between rounded-lg px-8 p-8 shadow-lg">
-          <Text className="text-2xl font-semibold">
-            Showing Identity
-          </Text>
-          <Form {...form}>
+
+          <Form {...formForIsShowingIdentity}>
             <form>
               <FormField
-                name="accm"
-                control={form.control}
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      {/* <FormLabel>
-                        {field.value
-                          ? 'Accepting Messages'
-                          : 'Not Accepting Messages'}
-                      </FormLabel> */}
-                      <FormControl>
-                        <SwitchDemo
-                          checked={field.value}
-                          onCheckedChange={(value) => {
-                            field.onChange(value)
-                            console.log('The field value is:', value)
-                            onSubmit({
-                              accm: value,
-                            })
-                          }}
-                          disabled={isTogglingIsAcceptingMessages}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )
-                }}
-              />
+              name="flag"
+              control={formForIsShowingIdentity.control}
+              render={({field})=>{
+                return (
+                  <FormItem>
+                    <Form
+                  </FormItem>
+                )
+              }}
+              >
+
+              </FormField>
             </form>
           </Form>
         </Box>
