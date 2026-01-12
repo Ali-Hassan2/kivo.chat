@@ -58,6 +58,7 @@ const useIsShowingIdentity = () => {
   return {
     isShowingIdentityResponse,
     isChangingModeForIdentity,
+    changeModeForNewIdentity,
   }
 }
 

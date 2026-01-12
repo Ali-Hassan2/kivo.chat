@@ -24,6 +24,7 @@ interface profileBoardProps {
   formForIsShowingIdentity: UseFormReturn<z.infer<typeof flagSchema>>
   isShowingIdentityResponse: AuthStatus
   isChangingModeForIdentity: boolean
+  changeModeForNewIdentity: (data: z.infer<typeof flagSchema>) => void
 }
 
 const ProfileBoard = ({
@@ -34,6 +35,7 @@ const ProfileBoard = ({
   formForIsShowingIdentity,
   isShowingIdentityResponse,
   isChangingModeForIdentity,
+  changeModeForNewIdentity,
 }: profileBoardProps) => {
   const user = useAuthRedirection()
   useEffect(() => {
@@ -49,6 +51,20 @@ const ProfileBoard = ({
       }
     }
   }, [isAcceptingMessagesResponseOverallNetwork])
+
+  useEffect(() => {
+    if (isShowingIdentityResponse.success) {
+      const successMessage = isShowingIdentityResponse.success
+      if (successMessage.length !== 0) {
+        showToast(successMessage, 'success')
+      }
+    } else {
+      const errorMessage = isShowingIdentityResponse.error
+      if (errorMessage.length !== 0) {
+        showToast(errorMessage, 'error')
+      }
+    }
+  }, [isShowingIdentityResponse])
   return (
     <Box className="flex flex-col items-center justify-center">
       <Box className="section flex w-full items-center justify-start border-b p-8">
@@ -97,18 +113,27 @@ const ProfileBoard = ({
           <Form {...formForIsShowingIdentity}>
             <form>
               <FormField
-              name="flag"
-              control={formForIsShowingIdentity.control}
-              render={({field})=>{
-                return (
-                  <FormItem>
-                    <Form
-                  </FormItem>
-                )
-              }}
-              >
-
-              </FormField>
+                name="flag"
+                control={formForIsShowingIdentity.control}
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormControl>
+                        <SwitchDemo
+                          checked={field.value}
+                          onCheckedChange={(value) => {
+                            field.onChange(value)
+                            changeModeForNewIdentity({
+                              flag: value,
+                            })
+                          }}
+                          disabled={isChangingModeForIdentity}
+                        ></SwitchDemo>
+                      </FormControl>
+                    </FormItem>
+                  )
+                }}
+              ></FormField>
             </form>
           </Form>
         </Box>

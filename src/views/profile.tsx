@@ -16,8 +16,11 @@ const ProfileView = () => {
     changeModeToAcceptingMessages,
   } = useAcceptingMessagesMode()
 
-  const { isShowingIdentityResponse, isChangingModeForIdentity } =
-    useIsShowingIdentity()
+  const {
+    isShowingIdentityResponse,
+    isChangingModeForIdentity,
+    changeModeForNewIdentity,
+  } = useIsShowingIdentity()
 
   const form = useForm<z.infer<typeof accmSchema>>({
     resolver: zodResolver(accmSchema),
@@ -45,6 +48,7 @@ const ProfileView = () => {
         formForIsShowingIdentity={formForIsShowingIdentity}
         isShowingIdentityResponse={isShowingIdentityResponse}
         isChangingModeForIdentity={isChangingModeForIdentity}
+        changeModeForNewIdentity={changeModeForNewIdentity}
       />
     </Box>
   )
