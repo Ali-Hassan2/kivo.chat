@@ -1,0 +1,15 @@
+Task 1:
+    please add the services for the modes:
+        1: First to toggle is accepting message on overall network.
+        2: Second to check what is the current status for is accepting messages mode.
+
+    plaese add the services for the modes:
+        1: First to toggle is showing identity.
+        2: Second to check what is the current status for is showing identity.
+
+
+Task2:
+    please add the hooks for the modes:
+        1: First add a hook to get the response whether the success or error response from service to specific states using AuthStatus
+    please add the hooks for the modes:
+        1: Please add the specific hook for service is showing identity or not.
