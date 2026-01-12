@@ -12,7 +12,7 @@ import {
   FormLabel,
 } from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
-import { accmSchema } from '@/guards'
+import { accmSchema, flagSchema } from '@/guards'
 import { AuthStatus } from '@/types'
 import { showToast, useAuthRedirection } from '@/utils'
 
@@ -21,6 +21,10 @@ interface profileBoardProps {
   onSubmit: (data: z.infer<typeof accmSchema>) => void
   isAcceptingMessagesResponseOverallNetwork: AuthStatus
   isTogglingIsAcceptingMessages: boolean
+  formForIsShowingIdentity: UseFormReturn<z.infer<typeof flagSchema>>
+  isShowingIdentityResponse: AuthStatus
+  isChangingModeForIdentity: boolean
+  changeModeForNewIdentity: (data: z.infer<typeof flagSchema>) => void
 }
 
 const ProfileBoard = ({
@@ -28,6 +32,10 @@ const ProfileBoard = ({
   onSubmit,
   isAcceptingMessagesResponseOverallNetwork,
   isTogglingIsAcceptingMessages,
+  formForIsShowingIdentity,
+  isShowingIdentityResponse,
+  isChangingModeForIdentity,
+  changeModeForNewIdentity,
 }: profileBoardProps) => {
   const user = useAuthRedirection()
   useEffect(() => {
@@ -43,6 +51,20 @@ const ProfileBoard = ({
       }
     }
   }, [isAcceptingMessagesResponseOverallNetwork])
+
+  useEffect(() => {
+    if (isShowingIdentityResponse.success) {
+      const successMessage = isShowingIdentityResponse.success
+      if (successMessage.length !== 0) {
+        showToast(successMessage, 'success')
+      }
+    } else {
+      const errorMessage = isShowingIdentityResponse.error
+      if (errorMessage.length !== 0) {
+        showToast(errorMessage, 'error')
+      }
+    }
+  }, [isShowingIdentityResponse])
   return (
     <Box className="flex flex-col items-center justify-center">
       <Box className="section flex w-full items-center justify-start border-b p-8">
@@ -50,12 +72,11 @@ const ProfileBoard = ({
           Welcome, {user?.fullName} to your Kivo Profile.
         </Label>
       </Box>
-      <Box className="flex w-full flex-col items-center justify-center">
-        <Box className="flex w-full items-center justify-between px-8 pt-2">
+      <Box className="flex w-full flex-col items-center justify-center p-4">
+        <Box className="flex w-full items-center justify-between rounded-lg p-8 px-8 shadow-lg">
           <Text className="text-2xl font-semibold">
             Change is accepting Messages
           </Text>
-
           <Form {...form}>
             <form>
               <FormField
@@ -64,11 +85,11 @@ const ProfileBoard = ({
                 render={({ field }) => {
                   return (
                     <FormItem>
-                      <FormLabel>
+                      {/* <FormLabel>
                         {field.value
                           ? 'Accepting Messages'
                           : 'Not Accepting Messages'}
-                      </FormLabel>
+                      </FormLabel> */}
                       <FormControl>
                         <SwitchDemo
                           checked={field.value}
@@ -86,6 +107,33 @@ const ProfileBoard = ({
                   )
                 }}
               />
+            </form>
+          </Form>
+
+          <Form {...formForIsShowingIdentity}>
+            <form>
+              <FormField
+                name="flag"
+                control={formForIsShowingIdentity.control}
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormControl>
+                        <SwitchDemo
+                          checked={field.value}
+                          onCheckedChange={(value) => {
+                            field.onChange(value)
+                            changeModeForNewIdentity({
+                              flag: value,
+                            })
+                          }}
+                          disabled={isChangingModeForIdentity}
+                        ></SwitchDemo>
+                      </FormControl>
+                    </FormItem>
+                  )
+                }}
+              ></FormField>
             </form>
           </Form>
         </Box>
