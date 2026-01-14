@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import { API_ENDPOINTS } from '@/actions'
-import { ApiResponse } from '@/types'
+import { ApiResponse, isAcceptingMessagesResponse } from '@/types'
 
 interface StatusProps {
   signal: AbortSignal
@@ -8,7 +8,7 @@ interface StatusProps {
 
 const getStatusForIsAcceptingMessages = async ({
   signal,
-}: StatusProps): Promise<ApiResponse> => {
+}: StatusProps): Promise<isAcceptingMessagesResponse> => {
   try {
     const response = await axios.get(
       API_ENDPOINTS.getCurrentModeForGettingStatusIsAcceptingMessages,
@@ -19,11 +19,12 @@ const getStatusForIsAcceptingMessages = async ({
 
     return response.data
   } catch (error: unknown) {
-    const axiosError = error as AxiosError<ApiResponse>
+    const axiosError = error as AxiosError<isAcceptingMessagesResponse>
     if (axiosError.code === 'ERR_CANCELLED') {
       return {
         success: false,
         message: 'Request cancelled',
+        mode: false,
       }
     }
     if (axiosError.response) {
@@ -32,6 +33,7 @@ const getStatusForIsAcceptingMessages = async ({
     return {
       success: false,
       message: 'Network eError',
+      mode: false,
     }
   }
 }

@@ -81,3 +81,5 @@ interface isAcceptingMessagesResponse {
   message: string
   mode: boolean
 }
+
+export type { isAcceptingMessagesResponse }
