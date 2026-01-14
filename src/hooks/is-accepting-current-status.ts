@@ -1,19 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useToggle } from 'react-use'
 import { getStatusForIsAcceptingMessages } from '@/services'
 
-const useGetCurrentIsAcceptingMessagesStatus = async () => {
+const useGetCurrentIsAcceptingMessagesStatus = () => {
   const [
     CurrentStatusForIsAcceptingMessages,
     setCurrentStatusForIsAcceptingMessages,
-  ] = React.useState<boolean>(false)
+  ] = useState<boolean>(false)
   const [
     isLoadingGettingStatusCurrentForIsAcceptingMessages,
     setIsLoadingGettingStatusCurrentForIsAcceptingMessages,
   ] = useToggle(false)
   const controlllerForGettingCurrentStatus =
     React.useRef<AbortController | null>(null)
-  const useGetCurrentStatusForIsAcceptingMessages = async () => {
+
+  const getCurrentStatus = async () => {
     setIsLoadingGettingStatusCurrentForIsAcceptingMessages(true)
     if (controlllerForGettingCurrentStatus.current) {
       controlllerForGettingCurrentStatus.current.abort()
@@ -35,7 +36,7 @@ const useGetCurrentIsAcceptingMessagesStatus = async () => {
   return {
     CurrentStatusForIsAcceptingMessages,
     isLoadingGettingStatusCurrentForIsAcceptingMessages,
-    useGetCurrentStatusForIsAcceptingMessages,
+    getCurrentStatus,
   }
 }
 

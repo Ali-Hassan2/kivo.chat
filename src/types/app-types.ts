@@ -76,10 +76,10 @@ export interface GetBlockedUsers {
   data?: IBlocks[]
 }
 
-interface isAcceptingMessagesResponse {
+interface ModeResponsForOverallNetwork {
   success: boolean
   message: string
   mode: boolean
 }
 
-export type { isAcceptingMessagesResponse }
+export type { ModeResponsForOverallNetwork }

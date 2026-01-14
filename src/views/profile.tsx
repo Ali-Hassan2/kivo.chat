@@ -1,13 +1,18 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box } from '@radix-ui/themes'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import ProfileBoard from '@/elements/user-profile/profile'
 import { accmSchema, flagSchema } from '@/guards'
-import { useAcceptingMessagesMode, useIsShowingIdentity } from '@/hooks'
+import {
+  useAcceptingMessagesMode,
+  useGetCurrentIsAcceptingMessagesStatus,
+  useIdentityStatus,
+  useIsShowingIdentity,
+} from '@/hooks'
 
 const ProfileView = () => {
   const {
@@ -22,6 +27,18 @@ const ProfileView = () => {
     changeModeForNewIdentity,
   } = useIsShowingIdentity()
 
+  const {
+    modeForGettingCurrentIdentityStatus,
+    isLoadingForGettingCurrentIdentityStatus,
+    getCurrnetIdentityStatus,
+  } = useIdentityStatus()
+
+  // const {
+  //   CurrentStatusForIsAcceptingMessages,
+  //   isLoadingGettingStatusCurrentForIsAcceptingMessages,
+  //   getCurrentStatus,
+  // } = useGetCurrentIsAcceptingMessagesStatus()
+
   const form = useForm<z.infer<typeof accmSchema>>({
     resolver: zodResolver(accmSchema),
     defaultValues: {
@@ -35,6 +52,15 @@ const ProfileView = () => {
       flag: false,
     },
   })
+
+  useEffect(() => {
+    getCurrnetIdentityStatus()
+  }, [])
+
+  console.log(
+    'The current status for showing identity is:',
+    modeForGettingCurrentIdentityStatus,
+  )
 
   return (
     <Box className="borde-red-500 h-full w-[83vw] border p-2">

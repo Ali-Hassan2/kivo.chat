@@ -24,6 +24,8 @@ const API_ENDPOINTS = {
     '/api/is-showing-identity/mode/toggle-radio',
   getCurrentModeForGettingStatusIsAcceptingMessages:
     '/api/is-accepting-messages/mode/check',
+  getCurrentStatuForShowingIdentity:
+    '/api/is-showing-identity/mode/check-radio',
 }
 
 export { API_ENDPOINTS }
