@@ -109,7 +109,10 @@ const ProfileBoard = ({
               />
             </form>
           </Form>
+        </Box>
 
+        <Box className="flex w-full items-center justify-between rounded-lg p-8 px-8 shadow-lg">
+          <Text className="text-2xl font-semibold">Is Showing Identity</Text>
           <Form {...formForIsShowingIdentity}>
             <form>
               <FormField
