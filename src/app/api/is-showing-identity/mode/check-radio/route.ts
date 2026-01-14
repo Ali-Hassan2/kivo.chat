@@ -46,14 +46,11 @@ async function GET(request: Request) {
       )
     }
     const currentMode = user.isShowingIdentity
-    const formatted_Structure = {
-      name: user.username,
-      status: currentMode,
-    }
+
     return NextResponse.json({
       success: true,
       message: 'Mode fetched',
-      data: formatted_Structure,
+      mode: currentMode,
     })
   } catch (error: unknown) {
     let errorMessage = 'Unknown Error'
