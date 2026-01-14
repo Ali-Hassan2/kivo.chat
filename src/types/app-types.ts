@@ -75,3 +75,9 @@ export interface GetBlockedUsers {
   message: string
   data?: IBlocks[]
 }
+
+interface isAcceptingMessagesResponse {
+  success: boolean
+  message: string
+  mode: boolean
+}
