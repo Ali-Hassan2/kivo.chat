@@ -4,7 +4,7 @@ import { Text } from '@radix-ui/themes/components/callout'
 import { UseFormReturn } from 'react-hook-form'
 import { useToggle } from 'react-use'
 import * as z from 'zod'
-import { ArrowDownIcon, InfoIcon, SwitchDemo } from '@/components'
+import { ArrowDownIcon, ExpandedBox, InfoIcon, SwitchDemo } from '@/components'
 import {
   Form,
   FormControl,
@@ -121,93 +121,64 @@ const ProfileBoard = ({
           'duration:200 mt-8 flex w-full flex-col items-center justify-center transition-all',
         )}
       >
-        <Box
-          className={cn(
-            'duration:300 ease relative h-22 w-full rounded-lg bg-black bg-gray-300 transition-all',
-            setExpandDetailMenu ? 'h-59' : 'h-28',
-          )}
-        >
-          <Box
-            className={cn(
-              'duration:300 absolute left-0 flex w-full rounded-lg bg-yellow-200 p-8 py-22 shadow-lg transition-all',
-              setExpandDetailMenu
-                ? 'flex h-57 flex-col items-start justify-between pt-4'
-                : 'flex h-20 flex-col items-center justify-between pt-4',
-            )}
-          >
-            <Box className="header mt-2 flex w-full items-center justify-between">
-              <Text className="text-2xl font-semibold">
-                Change is accepting Messages
+        <ExpandedBox
+          title="Accepting Messages"
+          Details={
+            <>
+              <Text size="3" className="font-semibold">
+                Accepting Messages Mode
               </Text>
-              <Box className={cn('flex gap-2')}>
-                <Form {...form}>
-                  <form>
-                    <FormField
-                      name="accm"
-                      control={form.control}
-                      render={({ field }) => {
-                        return (
-                          <FormItem>
-                            {/* <FormLabel>
+
+              <Text size="2" color="gray" className="mt-2 leading-relaxed">
+                When enabled, anyone can send you messages. Your inbox is open.
+              </Text>
+
+              <Text size="2" color="gray" className="mt-2 leading-relaxed">
+                When disabled, your inbox is closed until re-enabled.
+              </Text>
+            </>
+          }
+        >
+          <Form {...form}>
+            <form>
+              <FormField
+                name="accm"
+                control={form.control}
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      {/* <FormLabel>
                         {field.value
                           ? 'Accepting Messages'
                           : 'Not Accepting Messages'}
                       </FormLabel> */}
-                            <FormControl>
-                              <Box className="mt-4">
-                                <SwitchDemo
-                                  checked={field.value}
-                                  onCheckedChange={(value) => {
-                                    field.onChange(value)
-                                    console.log('The field value is:', value)
-                                    onSubmit({
-                                      accm: value,
-                                    })
-                                  }}
-                                  disabled={isTogglingIsAcceptingMessages}
-                                />
-                              </Box>
-                            </FormControl>
-                          </FormItem>
-                        )
-                      }}
-                    />
-                  </form>
-                </Form>
-                <Box
-                  className="relative bottom-1 flex h-14 cursor-pointer items-center justify-center gap-3 rounded-sm bg-yellow-500 px-5 shadow-lg"
-                  onClick={toggleExpandMenu}
-                >
-                  <Text className="text-lg font-semibold">Details</Text>
-
-                  <InfoIcon />
-                </Box>
-              </Box>
-            </Box>
-            {setExpandDetailMenu && renderText && (
-              <Box className="mt-4 ml-1 w-full rounded-md py-4 transition-all duration-300">
-                <Text size="3" className="font-semibold">
-                  Accepting Messages Mode
-                </Text>
-
-                <Text size="2" color="gray" className="mt-2 leading-relaxed">
-                  When enabled, anyone can send you messages. Your inbox is
-                  open, allowing seamless communication.
-                </Text>
-
-                <Text size="2" color="gray" className="mt-2 leading-relaxed">
-                  When disabled, your inbox is closed. You will not receive
-                  messages until you turn this mode back on.
-                </Text>
-              </Box>
-            )}
-          </Box>
-        </Box>
+                      <FormControl>
+                        <Box className="mt-4">
+                          <SwitchDemo
+                            checked={field.value}
+                            onCheckedChange={(value) => {
+                              field.onChange(value)
+                              console.log('The field value is:', value)
+                              onSubmit({
+                                accm: value,
+                              })
+                            }}
+                            disabled={isTogglingIsAcceptingMessages}
+                          />
+                        </Box>
+                      </FormControl>
+                    </FormItem>
+                  )
+                }}
+              />
+            </form>
+          </Form>
+        </ExpandedBox>
         <Box className="relative mt-10 w-full">
           <Box className="h-20 w-full rounded-lg bg-gray-300" />
           <Box
             className={cn(
-              'absolute bottom-2 left-0 flex w-full items-center justify-between rounded-lg bg-yellow-200 p-8 shadow-lg',
+              'absolute bottom-2 left-0 flex w-full justify-between rounded-lg bg-yellow-200 p-8 shadow-lg',
             )}
           >
             <Text className="text-2xl font-semibold">Is Showing Identity</Text>
