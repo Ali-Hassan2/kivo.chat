@@ -2,11 +2,7 @@
 
 import { useSearchParams } from 'next/navigation'
 
-interface QueryParamsProps {
-  key: string
-  defaultValue?: string
-}
-const QueryParams = ({ key, defaultValue = '' }: QueryParamsProps) => {
+const QueryParams = (key = '', defaultValue = '') => {
   const searchParams = useSearchParams()
   const value = searchParams.get(key)
   return value ?? defaultValue

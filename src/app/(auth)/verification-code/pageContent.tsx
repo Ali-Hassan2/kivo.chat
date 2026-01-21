@@ -17,11 +17,7 @@ import { useVerification } from '@/hooks/verification.hook'
 import { QueryParams } from '@/utils'
 
 export default function PageContent() {
-  const username = QueryParams({
-    key: QUERY_PARAMS.USERNAME,
-    defaultValue: QUERY_PARAMS.DEFAULT,
-  })
-
+  const username = QueryParams(QUERY_PARAMS.USERNAME, QUERY_PARAMS.DEFAULT)
   const form = useForm<z.infer<typeof verifyCodeSchema>>({
     resolver: zodResolver(verifyCodeSchema),
     defaultValues: {
