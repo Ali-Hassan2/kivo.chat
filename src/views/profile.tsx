@@ -33,11 +33,11 @@ const ProfileView = () => {
     getCurrnetIdentityStatus,
   } = useIdentityStatus()
 
-  // const {
-  //   CurrentStatusForIsAcceptingMessages,
-  //   isLoadingGettingStatusCurrentForIsAcceptingMessages,
-  //   getCurrentStatus,
-  // } = useGetCurrentIsAcceptingMessagesStatus()
+  const {
+    CurrentStatusForIsAcceptingMessages,
+    isLoadingGettingStatusCurrentForIsAcceptingMessages,
+    getCurrentStatus,
+  } = useGetCurrentIsAcceptingMessagesStatus()
 
   const form = useForm<z.infer<typeof accmSchema>>({
     resolver: zodResolver(accmSchema),
@@ -55,15 +55,11 @@ const ProfileView = () => {
 
   useEffect(() => {
     getCurrnetIdentityStatus()
+    getCurrentStatus()
   }, [])
 
-  console.log(
-    'The current status for showing identity is:',
-    modeForGettingCurrentIdentityStatus,
-  )
-
   return (
-    <Box className="borde-red-500 h-full w-[83vw] border p-2">
+    <Box className="borde-red-500 h-full w-[83vw] border bg-sky-100 p-2">
       <ProfileBoard
         form={form}
         isAcceptingMessagesResponseOverallNetwork={
@@ -75,6 +71,18 @@ const ProfileView = () => {
         isShowingIdentityResponse={isShowingIdentityResponse}
         isChangingModeForIdentity={isChangingModeForIdentity}
         changeModeForNewIdentity={changeModeForNewIdentity}
+        modeForGettingCurrentIdentityStatus={
+          modeForGettingCurrentIdentityStatus
+        }
+        isLoadingForGettingCurrentIdentityStatus={
+          isLoadingForGettingCurrentIdentityStatus
+        }
+        CurrentStatusForIsAcceptingMessages={
+          CurrentStatusForIsAcceptingMessages
+        }
+        isLoadingGettingStatusCurrentForIsAcceptingMessages={
+          isLoadingGettingStatusCurrentForIsAcceptingMessages
+        }
       />
     </Box>
   )
