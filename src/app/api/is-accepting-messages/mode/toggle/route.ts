@@ -38,16 +38,6 @@ async function POST(request: Request) {
         { status: 404 },
       )
     }
-    if (user.isAcceptingMessages === newFlag) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Already flagged',
-          flag: user.isAcceptingMessages,
-        },
-        { status: 400 },
-      )
-    }
     const updatedUser = await UserModel.findByIdAndUpdate(
       uid,
       { isAcceptingMessages: newFlag },

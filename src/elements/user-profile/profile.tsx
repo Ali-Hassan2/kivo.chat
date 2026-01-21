@@ -78,7 +78,10 @@ const ProfileBoard = ({
   ])
 
   useEffect(() => {
-    if (typeof modeForGettingCurrentIdentityStatus === 'boolean') {
+    if (
+      isInitialLoad.current &&
+      typeof modeForGettingCurrentIdentityStatus === 'boolean'
+    ) {
       formForIsShowingIdentity.setValue(
         'flag',
         modeForGettingCurrentIdentityStatus,
@@ -87,6 +90,7 @@ const ProfileBoard = ({
           shouldTouch: false,
         },
       )
+      isInitialLoad.current = false
     }
     if (isShowingIdentityResponse.success) {
       const successMessage = isShowingIdentityResponse.success
@@ -179,7 +183,6 @@ const ProfileBoard = ({
             </form>
           </Form>
         </ExpandedBox>
-
         <ExpandedBox
           title="Showing Identity"
           Details={
@@ -209,17 +212,19 @@ const ProfileBoard = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <SwitchDemo
-                        checked={field.value}
-                        onCheckedChange={(value) => {
-                          field.onChange(value)
-                          changeModeForNewIdentity({ flag: value })
-                        }}
-                        disabled={
-                          isChangingModeForIdentity &&
-                          isLoadingForGettingCurrentIdentityStatus
-                        }
-                      />
+                      <Box className="mt-4">
+                        <SwitchDemo
+                          checked={field.value}
+                          onCheckedChange={(value) => {
+                            field.onChange(value)
+                            changeModeForNewIdentity({ flag: value })
+                          }}
+                          disabled={
+                            isChangingModeForIdentity &&
+                            isLoadingForGettingCurrentIdentityStatus
+                          }
+                        />
+                      </Box>
                     </FormControl>
                   </FormItem>
                 )}
