@@ -24,6 +24,16 @@ const SEARCH_NOT_FOUND_MESSAGE = 'No Result Found.'
 
 const EXCLUDED_LAYOUT_PAGES = ['/signup', '/signin', '/not_found']
 
+const flagText1 = `When enabled, your identity is visible to people who interact
+                with you. Others can see who you are while engaging with your
+                profile.`
+
+const flagText2 = `When disabled, your identity remains hidden. You can interact
+                anonymously without revealing personal information.`
+
+const accmText1 = `When enabled, anyone can send you messages. Your inbox is open.`
+
+const accmText2 = `When disabled, your inbox is closed until re-enabled.`
 export {
   REQUEST_STATUS,
   CHAT_ENGINE,
@@ -32,4 +42,8 @@ export {
   USERNAME_UNIQUENESS_SUCCESS,
   QUERY_PARAMS,
   SEARCH_NOT_FOUND_MESSAGE,
+  accmText1,
+  accmText2,
+  flagText1,
+  flagText2,
 }

@@ -42,4 +42,4 @@ const useIdentityStatus = () => {
   }
 }
 
-export {useIdentityStatus}
+export { useIdentityStatus }

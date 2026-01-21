@@ -15,7 +15,7 @@ import { AuthForm } from '@/elements'
 import { signInGuard } from '@/guards'
 import { useAuth } from '@/hooks/auth.hook'
 
-const page = () => {
+export default function AuthPage() {
   const form = useForm<z.infer<typeof signInGuard>>({
     resolver: zodResolver(signInGuard),
     defaultValues: {
@@ -33,10 +33,12 @@ const page = () => {
   } = useAuth()
 
   useEffect(() => {
-    const savedAuthMember = localStorage.getItem('remebered')
-    if (savedAuthMember) {
-      form.setValue('identifier', savedAuthMember)
-      form.setValue('rememberMe', false)
+    if (typeof window !== 'undefined') {
+      const savedAuthMember = localStorage.getItem('remebered')
+      if (savedAuthMember) {
+        form.setValue('identifier', savedAuthMember)
+        form.setValue('rememberMe', false)
+      }
     }
   }, [form])
 
@@ -62,5 +64,3 @@ const page = () => {
     </div>
   )
 }
-
-export default page

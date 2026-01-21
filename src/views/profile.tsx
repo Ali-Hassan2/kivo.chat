@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Box } from '@radix-ui/themes'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import ProfileBoard from '@/elements/user-profile/profile'
+import { ProfileBoard } from '@/elements'
 import { accmSchema, flagSchema } from '@/guards'
 import {
   useAcceptingMessagesMode,
