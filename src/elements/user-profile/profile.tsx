@@ -13,6 +13,7 @@ import {
   FormLabel,
 } from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
+import { accmText1, accmText2, flagText1, flagText2 } from '@/constants'
 import { accmSchema, flagSchema } from '@/guards'
 import { AuthStatus } from '@/types'
 import { showToast, useAuthRedirection } from '@/utils'
@@ -137,13 +138,11 @@ const ProfileBoard = ({
               <Text size="3" className="font-semibold">
                 Accepting Messages Mode
               </Text>
-
               <Text size="2" color="gray" className="mt-2 leading-relaxed">
-                When enabled, anyone can send you messages. Your inbox is open.
+                {accmText1}
               </Text>
-
               <Text size="2" color="gray" className="mt-2 leading-relaxed">
-                When disabled, your inbox is closed until re-enabled.
+                {accmText2}
               </Text>
             </>
           }
@@ -190,16 +189,11 @@ const ProfileBoard = ({
               <Text size="3" className="font-semibold">
                 Showing Identity Mode
               </Text>
-
               <Text size="2" color="gray" className="mt-2 leading-relaxed">
-                When enabled, your identity is visible to people who interact
-                with you. Others can see who you are while engaging with your
-                profile.
+                {flagText1}
               </Text>
-
               <Text size="2" color="gray" className="mt-2 leading-relaxed">
-                When disabled, your identity remains hidden. You can interact
-                anonymously without revealing personal information.
+                {flagText2}
               </Text>
             </>
           }
