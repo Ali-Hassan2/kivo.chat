@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Box } from '@radix-ui/themes'
 import { Text } from '@radix-ui/themes/components/callout'
 import { UseFormReturn } from 'react-hook-form'
@@ -48,12 +48,17 @@ const ProfileBoard = ({
   isLoadingGettingStatusCurrentForIsAcceptingMessages,
 }: profileBoardProps) => {
   const user = useAuthRedirection()
+  const isInitialLoad = useRef(true)
   useEffect(() => {
-    if (typeof CurrentStatusForIsAcceptingMessages === 'boolean') {
+    if (
+      isInitialLoad.current &&
+      typeof CurrentStatusForIsAcceptingMessages === 'boolean'
+    ) {
       form.setValue('accm', CurrentStatusForIsAcceptingMessages, {
         shouldDirty: false,
         shouldTouch: false,
       })
+      isInitialLoad.current = false
     }
     if (isAcceptingMessagesResponseOverallNetwork.success) {
       const successMessage = isAcceptingMessagesResponseOverallNetwork.success
@@ -118,7 +123,7 @@ const ProfileBoard = ({
       </Box>
       <Box
         className={cn(
-          'duration:200 mt-8 flex w-full flex-col items-center justify-center transition-all',
+          'duration:200 mt-8 flex w-full flex-col items-center justify-center gap-3 transition-all',
         )}
       >
         <ExpandedBox
@@ -174,44 +179,57 @@ const ProfileBoard = ({
             </form>
           </Form>
         </ExpandedBox>
-        <Box className="relative mt-10 w-full">
-          <Box className="h-20 w-full rounded-lg bg-gray-300" />
-          <Box
-            className={cn(
-              'absolute bottom-2 left-0 flex w-full justify-between rounded-lg bg-yellow-200 p-8 shadow-lg',
-            )}
-          >
-            <Text className="text-2xl font-semibold">Is Showing Identity</Text>
-            <Form {...formForIsShowingIdentity}>
-              <form>
-                <FormField
-                  name="flag"
-                  control={formForIsShowingIdentity.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <SwitchDemo
-                          checked={field.value}
-                          onCheckedChange={(value) => {
-                            field.onChange(value)
-                            changeModeForNewIdentity({ flag: value })
-                          }}
-                          disabled={
-                            isChangingModeForIdentity &&
-                            isLoadingForGettingCurrentIdentityStatus
-                          }
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </form>
-            </Form>
-          </Box>
-        </Box>
+
+        <ExpandedBox
+          title="Showing Identity"
+          Details={
+            <>
+              <Text size="3" className="font-semibold">
+                Showing Identity Mode
+              </Text>
+
+              <Text size="2" color="gray" className="mt-2 leading-relaxed">
+                When enabled, your identity is visible to people who interact
+                with you. Others can see who you are while engaging with your
+                profile.
+              </Text>
+
+              <Text size="2" color="gray" className="mt-2 leading-relaxed">
+                When disabled, your identity remains hidden. You can interact
+                anonymously without revealing personal information.
+              </Text>
+            </>
+          }
+        >
+          <Form {...formForIsShowingIdentity}>
+            <form>
+              <FormField
+                name="flag"
+                control={formForIsShowingIdentity.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <SwitchDemo
+                        checked={field.value}
+                        onCheckedChange={(value) => {
+                          field.onChange(value)
+                          changeModeForNewIdentity({ flag: value })
+                        }}
+                        disabled={
+                          isChangingModeForIdentity &&
+                          isLoadingForGettingCurrentIdentityStatus
+                        }
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </form>
+          </Form>
+        </ExpandedBox>
       </Box>
     </Box>
   )
 }
 
-export default ProfileBoard
+export { ProfileBoard }

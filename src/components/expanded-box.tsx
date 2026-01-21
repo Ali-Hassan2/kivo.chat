@@ -43,7 +43,7 @@ const ExpandedBox = ({ title, Details, children }: ExpandedBox) => {
           <Box className={cn('flex gap-2')}>
             {children}
             <Box
-              className="relative bottom-1 flex h-14 cursor-pointer items-center justify-center gap-3 rounded-sm bg-yellow-300 px-5 shadow-lg"
+              className="relative bottom-1 flex h-14 cursor-pointer items-center justify-center gap-3 rounded-sm bg-yellow-400 px-5 shadow-lg"
               onClick={toggleExpandMenu}
             >
               <Text className="text-lg font-semibold">Details</Text>
