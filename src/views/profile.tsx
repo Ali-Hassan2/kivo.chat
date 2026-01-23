@@ -59,7 +59,7 @@ const ProfileView = () => {
   }, [])
 
   return (
-    <Box className="borde-red-500 h-full w-[85vw] border bg-sky-100 p-2">
+    <Box className="borde-red-500 h-full w-[83vw] border bg-sky-100 p-2">
       <ProfileBoard
         form={form}
         isAcceptingMessagesResponseOverallNetwork={

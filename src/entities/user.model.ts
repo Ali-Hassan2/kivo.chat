@@ -16,7 +16,6 @@ export interface IUser extends Document {
   friends: Types.ObjectId[]
   requests: Types.ObjectId[]
   blocks: Types.ObjectId[]
-  activeFakeProfileId: string
   pfp?: {
     url: string
     public_id: string
@@ -63,9 +62,6 @@ const UserSchema: Schema<IUser> = new Schema(
     isVerifiedUser: {
       type: Boolean,
       default: false,
-    },
-    activeFakeProfileId: {
-      type: String,
     },
     fullName: {
       type: String,
