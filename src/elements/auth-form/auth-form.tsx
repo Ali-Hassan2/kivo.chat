@@ -34,9 +34,9 @@ const AuthForm = ({
   authProcessResponseStatus,
   authProcessLoadingState,
 }: authFormProps) => {
-  const { navigateTo } = useNavigation()
   useEffect(() => {
     if (authProcessResponseStatus.success) {
+      const { navigateTo } = useNavigation()
       const successMessage = authProcessResponseStatus.success
       showToast(successMessage, 'success')
       setTimeout(() => {
