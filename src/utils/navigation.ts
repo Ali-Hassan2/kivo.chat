@@ -1,13 +1,11 @@
 'use client'
 
-import { useRouter } from 'nextjs-toploader/app'
+import { useRouter } from 'next/navigation'
 
 const useNavigation = () => {
   const router = useRouter()
+
   const navigateTo = (path: string) => {
-    if (typeof window === 'undefined') {
-      return
-    }
     router.replace(path)
   }
 
