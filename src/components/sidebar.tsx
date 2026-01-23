@@ -7,8 +7,8 @@ import { HEADER_DROPDOWN_LABELS } from '@/constants/objects-to-iterate'
 
 const Sidebar = () => {
   return (
-    <Box className="flex h-full w-60 flex-col border-4">
-      <Box className="flex h-20 items-center justify-start border pl-4">
+    <Box className="flex h-full w-60 flex-col">
+      <Box className="flex h-20 items-center justify-start pl-4">
         <Label className="w-full text-2xl font-bold">Kivo.chat</Label>
       </Box>
       <Box className="flex flex-1 flex-col items-center gap-2 px-3 pt-2">
