@@ -7,7 +7,8 @@ const usernameGuard = z
     message: 'Username should not have special characters.',
   })
   .min(4, { message: 'Username should be at least 4 characters long.' })
-const emailGuard = z.email({ message: 'Invalid email.' })
+const emailGuard = z.string()
+
 const passwordGuard = z
   .string()
   .min(4, { message: 'Password must be at least 4 characters long.' })

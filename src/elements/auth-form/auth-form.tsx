@@ -47,7 +47,7 @@ const AuthForm = ({
       const errorMessage = authProcessResponseStatus.error
       showToast(errorMessage, 'error')
     }
-  }, [authProcessResponseStatus])
+  }, [authProcessResponseStatus, navigateTo])
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>

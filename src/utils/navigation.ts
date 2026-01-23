@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'nextjs-toploader/app'
+import { useRouter } from 'next/navigation'
 
 const useNavigation = () => {
   const router = useRouter()
