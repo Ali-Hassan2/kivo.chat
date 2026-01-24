@@ -1,4 +1,4 @@
-import * as z from 'zod'
+import { z } from 'zod'
 
 const fullNameSchema = z.string({
   message: 'Must be a string value',
