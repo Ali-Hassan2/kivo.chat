@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server'
+import { Types } from 'mongoose'
 import { string } from 'zod'
+import { UserModel } from '@/entities'
+import { IdentityModel } from '@/entities/identity-profiles'
 import { fakeProfileSchema } from '@/guards/fake-profile.guard'
 import { getCurrentUser } from '@/helpers'
 
@@ -33,7 +36,7 @@ class NEW_FAKE_PROFILE {
         405,
       )
     }
-    return body
+    return parsedBody.data
   }
 
   static async userValidation(user: any) {
@@ -63,15 +66,39 @@ class NEW_FAKE_PROFILE {
     }
     console.log('The body is:', body)
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: 'lets check body',
-        body: body,
-      },
-      {
-        status: 200,
-      },
+    const new_username = body.username
+    const new_email = body.email
+
+    const existingProfile = await IdentityModel.findOne({
+      $or: [{ email: new_email }, { username: new_username }],
+    })
+
+    if (existingProfile) {
+      return NEW_FAKE_PROFILE.respond(
+        false,
+        'Please use unique email and username.',
+        null,
+        400,
+      )
+    }
+
+    const userId = user!._id
+    const newProfile = await IdentityModel.create({
+      username: new_username,
+      fullName: body.fullName,
+      email: new_email,
+      bio: body.bio,
+      userId: userId,
+    })
+    if (user) {
+      user.activeFakeProfileId = (newProfile._id as Types.ObjectId).toString()
+      await user.save()
+    }
+    return NEW_FAKE_PROFILE.respond(
+      true,
+      'Fake profile created',
+      newProfile,
+      200,
     )
   }
 }
