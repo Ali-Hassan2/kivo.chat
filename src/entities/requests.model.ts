@@ -18,7 +18,7 @@ const RequestSchema: Schema<IRequest> = new Schema(
     to: {
       type: Types.ObjectId,
       ref: 'User',
-      required: true, 
+      required: true,
     },
     status: {
       type: String,

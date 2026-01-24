@@ -27,6 +27,7 @@ const mock_users = [
     blocks: [],
     createdAt: '2025-10-25T09:03:55.989440Z',
     updatedAt: '2025-10-25T09:03:55.989441Z',
+    activeFakeProfileId: null,
     __v: 0,
   },
   {
@@ -48,6 +49,7 @@ const mock_users = [
     blocks: [],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    activeFakeProfileId: null,
     __v: 0,
   },
   {
@@ -70,6 +72,7 @@ const mock_users = [
     blocks: [],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    activeFakeProfileId: null,
     __v: 0,
   },
   {
@@ -92,6 +95,7 @@ const mock_users = [
     blocks: [],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    activeFakeProfileId: null,
     __v: 0,
   },
 
@@ -413,6 +417,7 @@ async function seedDatabase() {
       username: String,
       email: String,
       password: String,
+      activeFakeProfileId: mongoose.Types.ObjectId,
       fullName: String,
       bio: String,
       isVerifiedUser: Boolean,

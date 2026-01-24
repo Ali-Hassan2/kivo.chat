@@ -83,15 +83,16 @@ class NEW_FAKE_PROFILE {
     }
 
     const userId = user!._id
+    console.log('The user id is:', userId)
     const newProfile = await IdentityModel.create({
       username: new_username,
       fullName: body.fullName,
       email: new_email,
       bio: body.bio,
-      userId: userId,
+      user: userId,
     })
     if (user) {
-      user.activeFakeProfileId = (newProfile._id as Types.ObjectId).toString()
+      user.activeFakeProfileId = newProfile._id as Types.ObjectId
       await user.save()
     }
     return NEW_FAKE_PROFILE.respond(

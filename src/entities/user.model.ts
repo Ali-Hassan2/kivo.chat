@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import mongoose, { Document, Schema, Types } from 'mongoose'
+import { IIdentityProfiles } from './identity-profiles'
 
 export interface IUser extends Document {
   username: string
@@ -16,7 +17,7 @@ export interface IUser extends Document {
   friends: Types.ObjectId[]
   requests: Types.ObjectId[]
   blocks: Types.ObjectId[]
-  activeFakeProfileId: string
+  activeFakeProfileId: Types.ObjectId | IIdentityProfiles
   pfp?: {
     url: string
     public_id: string
@@ -65,7 +66,8 @@ const UserSchema: Schema<IUser> = new Schema(
       default: false,
     },
     activeFakeProfileId: {
-      type: String,
+      type: Types.ObjectId,
+      ref: 'Identity',
     },
     fullName: {
       type: String,
