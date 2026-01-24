@@ -26,7 +26,7 @@ class NEW_FAKE_PROFILE {
     const body = await request.json()
     const parsedBody = fakeProfileSchema.safeParse(body)
     if (!parsedBody.success) {
-      this.respond(
+      return this.respond(
         false,
         'Body is not valid',
         parsedBody.error.issues.map((i) => i.message),
@@ -53,13 +53,26 @@ class NEW_FAKE_PROFILE {
       return methodCheck
     }
     const user = await getCurrentUser()
-    const userCheckResult = NEW_FAKE_PROFILE.userValidation(user)
+    const userCheckResult = await NEW_FAKE_PROFILE.userValidation(user)
     if (userCheckResult) {
       return userCheckResult
     }
     const body = await NEW_FAKE_PROFILE.getBodyFiltered(request)
-
+    if (body instanceof NextResponse) {
+      return body
+    }
     console.log('The body is:', body)
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'lets check body',
+        body: body,
+      },
+      {
+        status: 200,
+      },
+    )
   }
 }
 
