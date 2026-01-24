@@ -83,7 +83,6 @@ class NEW_FAKE_PROFILE {
     }
 
     const userId = user!._id
-    console.log('The user id is:', userId)
     const newProfile = await IdentityModel.create({
       username: new_username,
       fullName: body.fullName,

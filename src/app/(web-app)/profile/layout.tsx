@@ -4,15 +4,15 @@ import React from 'react'
 import { Box } from '@radix-ui/themes'
 import { Sidebar } from '@/components'
 
-const layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Box className="flex h-screen">
-      <Box className="shrink-0">
+    <Box className="flex min-h-screen bg-sky-100">
+      <Box className="fixed top-0 left-0 h-screen w-60 flex-shrink-0">
         <Sidebar />
       </Box>
-      <main>{children}</main>
+      <Box className="ml-60 flex-1 overflow-auto">{children}</Box>
     </Box>
   )
 }
 
-export default layout
+export default Layout

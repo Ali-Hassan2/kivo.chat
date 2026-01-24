@@ -122,7 +122,7 @@ const ProfileBoard = ({
     }
   }, [setExpandDetailMenu])
   return (
-    <Box className="flex flex-col items-center justify-center bg-sky-100">
+    <Box className="flex flex-col items-center justify-center">
       <Box className="section flex w-full items-center justify-start border-b border-black/20 py-8 pl-1">
         <Label className="text-5xl font-bold">Welcome, {user?.fullName}</Label>
       </Box>
@@ -146,6 +146,8 @@ const ProfileBoard = ({
               </Text>
             </>
           }
+          variant="accm"
+          user={user}
         >
           <Form {...form}>
             <form>
@@ -197,6 +199,8 @@ const ProfileBoard = ({
               </Text>
             </>
           }
+          variant="identity"
+          user={user}
         >
           <Form {...formForIsShowingIdentity}>
             <form>
