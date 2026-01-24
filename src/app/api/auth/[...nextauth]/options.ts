@@ -33,6 +33,7 @@ const authOptions: NextAuthOptions = {
         if (!isPasswordMatch) return null
         return {
           id: user.id.toString(),
+          email: user.email,
           username: user.username,
           isVerifiedUser: user.isVerifiedUser,
           fullName: user.fullName,
@@ -54,7 +55,7 @@ const authOptions: NextAuthOptions = {
         token.username = user.username
         token.isVerified = (user as any).isVerifiedUser ?? true
         token.fullName = user.fullName
-        token.bio = user.bio
+        ;((token.bio = user.bio), (token.email = user.email))
       }
       return token
     },
@@ -65,6 +66,7 @@ const authOptions: NextAuthOptions = {
         isVerified: token.isVerified as boolean,
         fullName: token.fullName as string,
         bio: token.bio as string,
+        email: token.email as string,
       }
       return session
     },
