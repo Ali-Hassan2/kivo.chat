@@ -26,6 +26,7 @@ const API_ENDPOINTS = {
     '/api/is-accepting-messages/mode/check',
   getCurrentStatuForShowingIdentity:
     '/api/is-showing-identity/mode/check-radio',
+  getProfileCount: '/api/Identity-profile/get-profile-count',
 }
 
 export { API_ENDPOINTS }
