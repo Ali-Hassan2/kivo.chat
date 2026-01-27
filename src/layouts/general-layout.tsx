@@ -11,6 +11,7 @@ const GeneralLayout = ({ children }: Readonly<PropsWithChildren>) => {
   if (EXCLUDED_PAGES.includes(pathName)) {
     return <>{children}</>
   }
+
   return (
     <Flex className="h-screen w-[100vw]">
       <Header bgColor="bg-white" />

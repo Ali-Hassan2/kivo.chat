@@ -56,13 +56,13 @@ const AuthForm = ({
           control={form.control}
           render={({ field }) => {
             return (
-              <FormItem className="flex flex-col gap-4">
-                <FormLabel className="">Email/Username</FormLabel>
+              <FormItem className="flex flex-col gap-4 bg-transparent">
+                <FormLabel className="">Username</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Identifier here...."
+                    placeholder=""
                     {...field}
-                    className={cn('bg-transparent')}
+                    className={cn('border-2 bg-transparent outline-none')}
                   />
                 </FormControl>
                 <FormMessage />
@@ -78,11 +78,7 @@ const AuthForm = ({
               <FormItem>
                 <FormLabel className="mt-3">Password</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="password here..."
-                    {...field}
-                    className=""
-                  />
+                  <Input placeholder="" {...field} className="border-2" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -113,10 +109,10 @@ const AuthForm = ({
         <Button
           type="submit"
           disabled={authProcessLoadingState}
-          className="mt-4 w-full cursor-pointer rounded-3xl py-5"
+          className="mt-4 w-full cursor-pointer rounded-3xl border border-sky-500 bg-sky-100 py-5 text-black hover:bg-sky-100"
         >
           {authProcessLoadingState ? (
-            <Loader2 className="animate-spin" />
+            <Loader2 className="h-16 w-16 animate-spin text-yellow-500" />
           ) : (
             <Label>Login</Label>
           )}

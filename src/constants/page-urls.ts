@@ -24,7 +24,13 @@ const USER_PROFILE = '/profile'
 
 const USER_PROFILE_SETTINGS = '/profile/settings'
 
-const EXCLUDED_PAGES = ['/', '/auth', '/signup', '/verification-code']
+const EXCLUDED_PAGES = [
+  '/',
+  '/auth',
+  '/signup',
+  '/verification-code',
+  '/profile',
+]
 
 export {
   VERIFICATION_CODE,
