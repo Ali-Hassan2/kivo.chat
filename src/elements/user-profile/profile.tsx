@@ -15,7 +15,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { accmText1, accmText2, flagText1, flagText2 } from '@/constants'
 import { accmSchema, flagSchema } from '@/guards'
-import { AuthStatus } from '@/types'
+import { AuthStatus, CountData } from '@/types'
 import { showToast, useAuthRedirection } from '@/utils'
 import { cn } from '@/utils/cn'
 
@@ -32,6 +32,9 @@ interface profileBoardProps {
   isLoadingForGettingCurrentIdentityStatus: boolean
   CurrentStatusForIsAcceptingMessages: boolean
   isLoadingGettingStatusCurrentForIsAcceptingMessages: boolean
+  countData: CountData | null
+  isGettingCountData: boolean
+  getCountDataProfileAction: () => void
 }
 
 const ProfileBoard = ({
@@ -47,6 +50,9 @@ const ProfileBoard = ({
   isLoadingForGettingCurrentIdentityStatus,
   CurrentStatusForIsAcceptingMessages,
   isLoadingGettingStatusCurrentForIsAcceptingMessages,
+  countData,
+  isGettingCountData,
+  getCountDataProfileAction,
 }: profileBoardProps) => {
   const user = useAuthRedirection()
   const isInitialLoad = useRef(true)
@@ -132,6 +138,9 @@ const ProfileBoard = ({
         )}
       >
         <ExpandedBox
+          countData={countData}
+          isGettingCountData={isGettingCountData}
+          getCountDataProfileAction={getCountDataProfileAction}
           title="Accepting Messages"
           Details={
             <>
@@ -185,6 +194,9 @@ const ProfileBoard = ({
           </Form>
         </ExpandedBox>
         <ExpandedBox
+          countData={countData}
+          isGettingCountData={isGettingCountData}
+          getCountDataProfileAction={getCountDataProfileAction}
           title="Showing Identity"
           Details={
             <>

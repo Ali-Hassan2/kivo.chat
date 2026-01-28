@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { useToggle } from 'react-use'
-import { getProfileCount } from '@/services/get-profile-count'
 import { CountData } from '@/types'
+import { getProfileCount } from '@/services'
 
 const useGetProfileCountForNewOne = () => {
   const [countData, setCountData] = useState<CountData | null>()
