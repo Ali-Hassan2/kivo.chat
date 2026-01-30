@@ -11,7 +11,7 @@ const useGetProfileCountForNewOne = () => {
 
   const getCountProfileAction = async () => {
     setIsGettingCountData(true)
-    await new Promise((resolve) => setTimeout(resolve, 5000))
+    await new Promise((resolve) => setTimeout(resolve, 3000))
     if (controllerForGettingProfileCount.current) {
       controllerForGettingProfileCount.current.abort()
     }
