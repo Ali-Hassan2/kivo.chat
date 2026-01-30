@@ -10,6 +10,8 @@ const ProfileCreationSkeleton = ({
   items,
   loading,
 }: ProfileCreationSkeletonProps) => {
+  console.log('The items are:', items)
+  console.log('The loading state is:', loading)
   return (
     <SkeletonWrapper loading={loading}>
       {items.map(() => {

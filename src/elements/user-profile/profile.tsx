@@ -34,7 +34,7 @@ interface profileBoardProps {
   isLoadingGettingStatusCurrentForIsAcceptingMessages: boolean
   countData: CountData | null
   isGettingCountData: boolean
-  getCountDataProfileAction: () => void
+  getCountProfileAction: () => Promise<void>
 }
 
 const ProfileBoard = ({
@@ -52,7 +52,7 @@ const ProfileBoard = ({
   isLoadingGettingStatusCurrentForIsAcceptingMessages,
   countData,
   isGettingCountData,
-  getCountDataProfileAction,
+  getCountProfileAction,
 }: profileBoardProps) => {
   const user = useAuthRedirection()
   const isInitialLoad = useRef(true)
@@ -116,6 +116,8 @@ const ProfileBoard = ({
     formForIsShowingIdentity,
   ])
 
+  console.log('The count data is:', countData)
+
   const [setExpandDetailMenu, toggleExpandMenu] = useToggle(false)
   const [renderText, setRenderText] = useToggle(false)
 
@@ -140,7 +142,7 @@ const ProfileBoard = ({
         <ExpandedBox
           countData={countData}
           isGettingCountData={isGettingCountData}
-          getCountDataProfileAction={getCountDataProfileAction}
+          getCountProfileAction={getCountProfileAction}
           title="Accepting Messages"
           Details={
             <>
@@ -196,8 +198,8 @@ const ProfileBoard = ({
         <ExpandedBox
           countData={countData}
           isGettingCountData={isGettingCountData}
-          getCountDataProfileAction={getCountDataProfileAction}
           title="Showing Identity"
+          getCountProfileAction={getCountProfileAction}
           Details={
             <>
               <Text size="3" className="font-semibold">

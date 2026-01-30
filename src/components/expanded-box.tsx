@@ -4,9 +4,9 @@ import { useToggle } from 'react-use'
 import { CountData } from '@/types'
 import { cn } from '@/utils/cn'
 import { InfoIcon } from './icons/info'
+import { ProfileCreationSkeleton } from './profile-creation-loading-skeleton'
 import { RealIdentityBox } from './real-profile-box'
 import { Button } from './ui/button'
-import { ProfileCreationSkeleton } from './profile-creation-loading-skeleton'
 
 interface ExpandedBox {
   title: string
@@ -16,7 +16,7 @@ interface ExpandedBox {
   user: any
   countData: CountData | null
   isGettingCountData: boolean
-  getCountDataProfileAction: () => Promise<any> | void
+  getCountProfileAction?: () => Promise<void>
 }
 
 const ExpandedBox = ({
@@ -27,7 +27,7 @@ const ExpandedBox = ({
   user,
   countData,
   isGettingCountData,
-  getCountDataProfileAction,
+  getCountProfileAction,
 }: ExpandedBox) => {
   const [expanded, toggleExpanded] = useToggle(false)
   const [renderText, setRenderText] = useToggle(false)
@@ -43,6 +43,7 @@ const ExpandedBox = ({
     }
   }, [expanded])
 
+  console.log('The is Getting ------------', isGettingCountData)
   return (
     <Box
       className={cn(
@@ -89,26 +90,40 @@ const ExpandedBox = ({
                 <Box className="mt-3 flex items-start justify-end">
                   <Button
                     className="cursor-pointer bg-blue-800 py-7 hover:bg-blue-900"
-                    onClick={() => {
-                      getCountDataProfileAction(),
-                      toggleExpandForCreatingNewIdentity(),
+                    onClick={async () => {
+                      console.log(
+                        'Is Getting count data value',
+                        isGettingCountData,
+                      )
+                      console.log('The function', getCountProfileAction)
+                      toggleExpandForCreatingNewIdentity()
+                      if (getCountProfileAction) await getCountProfileAction()
                     }}
-                    disabled={expandForCreatingNewIdentity && isGettingCountData}
+                    disabled={
+                      isGettingCountData || expandForCreatingNewIdentity
+                    }
                   >
                     Add Other Profiles
                   </Button>
                 </Box>
-                {expandForCreatingNewIdentity && (
+                {expandForCreatingNewIdentity ? (
                   isGettingCountData ? (
-                    <ProfileCreationSkeleton loading={isGettingCountData} items={[1]}/>
-                  ):(
-
-                  <Box className="duration:300 mt-4 flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-8 transition-all ease-in-out">
-                    <Text className="border-b border-black/40 pb-6 text-3xl font-bold">
-                      Create Your Profile: {countData?.new_count}
-                    </Text>
-                  </Box>
+                    <ProfileCreationSkeleton
+                      loading={isGettingCountData}
+                      items={[1]}
+                    />
+                  ) : (
+                    <Box className="duration:300 mt-4 flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-8 transition-all ease-in-out">
+                      <Text className="border-b border-black/40 pb-6 text-3xl font-bold">
+                        Create Your Profile: {countData?.new_count}
+                      </Text>
+                    </Box>
                   )
+                ) : (
+                  <ProfileCreationSkeleton
+                    loading={isGettingCountData}
+                    items={[1]}
+                  />
                 )}
               </Box>
             )}
