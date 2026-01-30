@@ -10,6 +10,7 @@ import { accmSchema, flagSchema } from '@/guards'
 import {
   useAcceptingMessagesMode,
   useGetCurrentIsAcceptingMessagesStatus,
+  useGetProfileCountForNewOne,
   useIdentityStatus,
   useIsShowingIdentity,
 } from '@/hooks'
@@ -38,6 +39,9 @@ const ProfileView = () => {
     isLoadingGettingStatusCurrentForIsAcceptingMessages,
     getCurrentStatus,
   } = useGetCurrentIsAcceptingMessagesStatus()
+
+  const { countData, isGettingCountData, getCountProfileAction } =
+    useGetProfileCountForNewOne()
 
   const form = useForm<z.infer<typeof accmSchema>>({
     resolver: zodResolver(accmSchema),
@@ -83,6 +87,9 @@ const ProfileView = () => {
         isLoadingGettingStatusCurrentForIsAcceptingMessages={
           isLoadingGettingStatusCurrentForIsAcceptingMessages
         }
+        countData={countData}
+        isGettingCountData={isGettingCountData}
+        getCountProfileAction={getCountProfileAction}
       />
     </Box>
   )

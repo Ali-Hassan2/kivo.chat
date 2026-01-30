@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import { Box, Text } from '@radix-ui/themes'
 import { useToggle } from 'react-use'
+import { CountData } from '@/types'
 import { cn } from '@/utils/cn'
 import { InfoIcon } from './icons/info'
+import { ProfileCreationSkeleton } from './profile-creation-loading-skeleton'
 import { RealIdentityBox } from './real-profile-box'
 import { Button } from './ui/button'
 
@@ -12,6 +14,9 @@ interface ExpandedBox {
   children: React.ReactNode
   variant: string
   user: any
+  countData: CountData | null
+  isGettingCountData: boolean
+  getCountProfileAction?: () => Promise<void>
 }
 
 const ExpandedBox = ({
@@ -20,6 +25,9 @@ const ExpandedBox = ({
   children,
   variant,
   user,
+  countData,
+  isGettingCountData,
+  getCountProfileAction,
 }: ExpandedBox) => {
   const [expanded, toggleExpanded] = useToggle(false)
   const [renderText, setRenderText] = useToggle(false)
@@ -35,6 +43,7 @@ const ExpandedBox = ({
     }
   }, [expanded])
 
+  console.log('The is Getting ------------', isGettingCountData)
   return (
     <Box
       className={cn(
@@ -81,18 +90,41 @@ const ExpandedBox = ({
                 <Box className="mt-3 flex items-start justify-end">
                   <Button
                     className="cursor-pointer bg-blue-800 py-7 hover:bg-blue-900"
-                    onClick={toggleExpandForCreatingNewIdentity}
-                    disabled={expandForCreatingNewIdentity}
+                    onClick={async () => {
+                      toggleExpandForCreatingNewIdentity()
+                      if (getCountProfileAction) await getCountProfileAction()
+                    }}
+                    disabled={
+                      isGettingCountData || expandForCreatingNewIdentity
+                    }
                   >
                     Add Other Profiles
                   </Button>
                 </Box>
-                {expandForCreatingNewIdentity && (
-                  <Box className="duration:300 mt-4 flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-8 transition-all ease-in-out">
-                    <Text className="border-b border-black/40 pb-6 text-3xl font-bold">
-                      Create Your Profile:
-                    </Text>
-                  </Box>
+                {expandForCreatingNewIdentity ? (
+                  isGettingCountData ? (
+                    <ProfileCreationSkeleton
+                      loading={isGettingCountData}
+                      items={[1]}
+                    />
+                  ) : (
+                    <>
+                      <Box className="w h-20 w-fit rounded-lg bg-sky-300">
+                        <Box className="w-77 rounded-lg bg-gray-100 p-4">
+                          <Text className="text-4xl font-bold">
+                            Total Profiles: {countData?.current_count}
+                          </Text>
+                        </Box>
+                      </Box>
+                      <Box className="duration:300 mt-4 flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-8 transition-all ease-in-out">
+                        <Text className="border-b border-black/40 pb-6 text-2xl font-bold">
+                          Create Your Profile: {countData?.new_count}
+                        </Text>
+                      </Box>
+                    </>
+                  )
+                ) : (
+                  ''
                 )}
               </Box>
             )}

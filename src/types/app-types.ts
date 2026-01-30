@@ -82,7 +82,7 @@ interface ModeResponsForOverallNetwork {
   mode: boolean
 }
 
-interface CountData {
+export interface CountData {
   current_count: number
   new_count: number
 }
