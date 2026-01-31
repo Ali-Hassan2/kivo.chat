@@ -39,10 +39,13 @@ class GETPROFILECOUNT {
 
       const currentCount = profiles
       const newCount = currentCount + 1
-
+      if (userFromSession?.activeFakeProfileId)
+        userFromSession.activeFakeProfileId = null as any
+      const isOriginal = userFromSession?.activeFakeProfileId ? false : true
       return GETPROFILECOUNT.respond(true, 'Count retrieved', {
         current_count: currentCount,
         new_count: newCount,
+        isOriginal: isOriginal,
       })
     } catch (error) {
       console.error(error)

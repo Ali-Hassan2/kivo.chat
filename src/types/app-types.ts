@@ -85,6 +85,7 @@ interface ModeResponsForOverallNetwork {
 export interface CountData {
   current_count: number
   new_count: number
+  isOriginal: boolean
 }
 
 export interface ProfileCountResposne {
