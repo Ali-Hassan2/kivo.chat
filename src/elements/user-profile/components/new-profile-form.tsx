@@ -1,7 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Text } from '@radix-ui/themes'
+import { Loader2 } from 'lucide-react'
 import { UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
 import { Button } from '@/components/ui/button'
@@ -14,13 +15,38 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { anotherIdentitySchema } from '@/guards'
-import { CountData } from '@/types'
+import { AuthStatus, CountData } from '@/types'
+import { showToast } from '@/utils'
 
 interface NewProfileBoxProps {
   countData: CountData | null
   form: UseFormReturn<z.infer<typeof anotherIdentitySchema>>
+  isCreatingNewProfile: boolean
+  newProfileCreationResponse: AuthStatus
+  createNewProfile: (data: z.infer<typeof anotherIdentitySchema>) => void
 }
-const NewProfileBox = ({ form, countData }: NewProfileBoxProps) => {
+const NewProfileBox = ({
+  form,
+  countData,
+  isCreatingNewProfile,
+  newProfileCreationResponse,
+  createNewProfile,
+}: NewProfileBoxProps) => {
+  useEffect(() => {
+    if (
+      newProfileCreationResponse.success &&
+      newProfileCreationResponse.success.length > 0
+    ) {
+      showToast(newProfileCreationResponse.success, 'success')
+    }
+    if (
+      newProfileCreationResponse.error &&
+      newProfileCreationResponse.error.length > 0
+    ) {
+      showToast(newProfileCreationResponse.error, 'error')
+    }
+  }, [newProfileCreationResponse])
+
   return (
     <Box>
       <Box className="w h-20 w-fit rounded-lg bg-sky-300">
@@ -36,7 +62,7 @@ const NewProfileBox = ({ form, countData }: NewProfileBoxProps) => {
         </Text>
         <Box>
           <Form {...form}>
-            <form>
+            <form onSubmit={form.handleSubmit(createNewProfile)}>
               {' '}
               {/* //TODO: form.handleSubmit */}
               <FormField
@@ -99,8 +125,13 @@ const NewProfileBox = ({ form, countData }: NewProfileBoxProps) => {
                 <Button
                   className="cursor-pointer border-2 border-blue-500 bg-transparent p-6 text-lg text-black shadow-lg hover:border-blue-700 hover:bg-blue-700 hover:text-white"
                   type="submit"
+                  disabled={isCreatingNewProfile}
                 >
-                  Create
+                  {isCreatingNewProfile ? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    'Create'
+                  )}
                 </Button>
               </Box>
             </form>

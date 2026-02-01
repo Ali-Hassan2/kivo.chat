@@ -19,7 +19,7 @@ const createNewProfileFake = async ({
 }: CreateNewProfileProps): Promise<ApiResponse> => {
   try {
     const response = await axios.post(
-      `${API_ENDPOINTS}`,
+      `${API_ENDPOINTS.createNewProfileFake}`,
       {
         username,
         fullName,
@@ -33,7 +33,7 @@ const createNewProfileFake = async ({
     return response.data
   } catch (error: unknown) {
     const axiosError = error as AxiosError<ApiResponse>
-    if (axiosError.code === 'ERR_CANCELLED') {
+    if (axiosError.code === 'ERR_CANCELED') {
       return {
         success: false,
         message: 'Request Cancelled',
