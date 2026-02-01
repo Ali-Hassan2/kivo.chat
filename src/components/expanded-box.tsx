@@ -1,6 +1,12 @@
 import { useEffect } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Text } from '@radix-ui/themes'
+import { useForm } from 'react-hook-form'
 import { useToggle } from 'react-use'
+import * as z from 'zod'
+import { NewProfileBox } from '@/elements/user-profile/components'
+import { anotherIdentitySchema } from '@/guards'
+import { useCreateNewProfile, useGetAllProfiles } from '@/hooks'
 import { CountData } from '@/types'
 import { cn } from '@/utils/cn'
 import { InfoIcon } from './icons/info'
@@ -29,6 +35,12 @@ const ExpandedBox = ({
   isGettingCountData,
   getCountProfileAction,
 }: ExpandedBox) => {
+  const { isCreatingNewProfile, newProfileCreationResponse, createNewProfile } =
+    useCreateNewProfile()
+    const {    isGettingProfilesData,
+    errorMessageInGettingProfilesData,
+    profilesData,
+    getAllProfilesForNetwork,} = useGetAllProfiles()
   const [expanded, toggleExpanded] = useToggle(false)
   const [renderText, setRenderText] = useToggle(false)
   const [expandForCreatingNewIdentity, toggleExpandForCreatingNewIdentity] =
@@ -43,7 +55,15 @@ const ExpandedBox = ({
     }
   }, [expanded])
 
-  console.log('The is Getting ------------', isGettingCountData)
+  const form = useForm<z.infer<typeof anotherIdentitySchema>>({
+    resolver: zodResolver(anotherIdentitySchema),
+    defaultValues: {
+      username: '',
+      fullName: '',
+      email: '',
+      bio: '',
+    },
+  })
   return (
     <Box
       className={cn(
@@ -86,10 +106,11 @@ const ExpandedBox = ({
                   username={user?.username}
                   email={user?.email}
                   bio={user?.bio}
+                  countData={countData}
                 />
                 <Box className="mt-3 flex items-start justify-end">
                   <Button
-                    className="cursor-pointer bg-blue-800 py-7 hover:bg-blue-900"
+                    className="cursor-pointer bg-blue-800 py-7 shadow-lg hover:bg-blue-900"
                     onClick={async () => {
                       toggleExpandForCreatingNewIdentity()
                       if (getCountProfileAction) await getCountProfileAction()
@@ -109,18 +130,13 @@ const ExpandedBox = ({
                     />
                   ) : (
                     <>
-                      <Box className="w h-20 w-fit rounded-lg bg-sky-300">
-                        <Box className="w-77 rounded-lg bg-gray-100 p-4">
-                          <Text className="text-4xl font-bold">
-                            Total Profiles: {countData?.current_count}
-                          </Text>
-                        </Box>
-                      </Box>
-                      <Box className="duration:300 mt-4 flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-8 transition-all ease-in-out">
-                        <Text className="border-b border-black/40 pb-6 text-2xl font-bold">
-                          Create Your Profile: {countData?.new_count}
-                        </Text>
-                      </Box>
+                      <NewProfileBox
+                        countData={countData}
+                        form={form}
+                        isCreatingNewProfile={isCreatingNewProfile}
+                        newProfileCreationResponse={newProfileCreationResponse}
+                        createNewProfile={createNewProfile}
+                      />
                     </>
                   )
                 ) : (

@@ -116,8 +116,6 @@ const ProfileBoard = ({
     formForIsShowingIdentity,
   ])
 
-  console.log('The count data is:', countData)
-
   const [setExpandDetailMenu, toggleExpandMenu] = useToggle(false)
   const [renderText, setRenderText] = useToggle(false)
 

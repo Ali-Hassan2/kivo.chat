@@ -85,6 +85,7 @@ interface ModeResponsForOverallNetwork {
 export interface CountData {
   current_count: number
   new_count: number
+  isOriginal: boolean
 }
 
 export interface ProfileCountResposne {
@@ -93,4 +94,18 @@ export interface ProfileCountResposne {
   data?: CountData
 }
 
-export type { ModeResponsForOverallNetwork }
+export interface ProfilesShape {
+  _id: string
+  fullName: string
+  username: string
+  email: string
+  bio: string
+}
+
+interface ProfileGettingResponse {
+  success: boolean
+  message: string
+  data: ProfilesShape[]
+}
+
+export type { ModeResponsForOverallNetwork, ProfileGettingResponse }
