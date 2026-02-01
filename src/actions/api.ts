@@ -27,6 +27,7 @@ const API_ENDPOINTS = {
   getCurrentStatuForShowingIdentity:
     '/api/is-showing-identity/mode/check-radio',
   getProfileCount: '/api/Identity-profile/get-profile-count',
+  createNewProfileFake: '/api/Identity-profile/new-profile',
 }
 
 export { API_ENDPOINTS }
