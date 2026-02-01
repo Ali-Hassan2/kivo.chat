@@ -31,7 +31,7 @@ class GET_ALL_FAKE_PROFILES {
     if (!user) {
       return this.respond(false, 'user not found.', null, 400)
     }
-    return user
+    return null
   }
 
   async handle(request: Request) {
@@ -45,8 +45,9 @@ class GET_ALL_FAKE_PROFILES {
       if (userCheckResult) {
         return userCheckResult
       }
+
       const profilesData = await IdentityModel.find({
-        where: { user: userCheckResult?._id },
+        user: user?._id,
       })
       if (profilesData.length > 0) {
         return GET_ALL_FAKE_PROFILES.respond(
@@ -56,6 +57,12 @@ class GET_ALL_FAKE_PROFILES {
           200,
         )
       }
+      return GET_ALL_FAKE_PROFILES.respond(
+        false,
+        'There are no Profiles',
+        null,
+        400,
+      )
     } catch (error: unknown) {
       console.log('The error is', error)
       return GET_ALL_FAKE_PROFILES.respond(
