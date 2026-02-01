@@ -35,7 +35,6 @@ const ContactBoard = () => {
       setNoResultMessageToDisplayWhenSearchYieldsNoResults('')
     }
   }, [filteredContactListBasedOnSearchQuery])
-
   return (
     <div
       className={cn(

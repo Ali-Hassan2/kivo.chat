@@ -15,6 +15,7 @@ import {
 
 const NoData = () => {
   return (
+    // TODO: please add a rounded shape circle behind the no data logo
     <Empty className="">
       <EmptyHeader>
         <EmptyMedia variant="icon">
