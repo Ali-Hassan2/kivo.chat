@@ -13,7 +13,7 @@ const useGetAllProfiles = () => {
   const [
     errorMessageInGettingProfilesData,
     setErrorMessageInGettingProfilesData,
-  ] = React.useState<string | null>(null)
+  ] = React.useState<string>('')
 
   const controllerForGettingTheProfilesDataForOverallNetwork =
     React.useRef<AbortController | null>(null)
