@@ -123,7 +123,7 @@ const NewProfileBox = ({
               />
               <Box className="mt-4 flex w-full justify-end">
                 <Button
-                  className="cursor-pointer border-2 border-blue-500 bg-transparent p-6 text-lg text-black shadow-lg hover:border-blue-700 hover:bg-blue-700 hover:text-white"
+                  className="cursor-pointer rounded-md rounded-none border-2 border-gray-900 bg-transparent p-6 text-lg text-black shadow-lg hover:border-blue-700 hover:bg-blue-700 hover:text-white"
                   type="submit"
                   disabled={isCreatingNewProfile}
                 >

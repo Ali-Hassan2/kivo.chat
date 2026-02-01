@@ -64,11 +64,8 @@ class NEW_FAKE_PROFILE {
     if (body instanceof NextResponse) {
       return body
     }
-    console.log('The body is:', body)
-
     const new_username = body.username
     const new_email = body.email
-
     const existingProfile = await IdentityModel.findOne({
       $or: [{ email: new_email }, { username: new_username }],
     })
