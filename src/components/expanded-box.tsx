@@ -6,7 +6,7 @@ import { useToggle } from 'react-use'
 import * as z from 'zod'
 import { NewProfileBox } from '@/elements/user-profile/components'
 import { anotherIdentitySchema } from '@/guards'
-import { useCreateNewProfile } from '@/hooks'
+import { useCreateNewProfile, useGetAllProfiles } from '@/hooks'
 import { CountData } from '@/types'
 import { cn } from '@/utils/cn'
 import { InfoIcon } from './icons/info'
@@ -37,6 +37,10 @@ const ExpandedBox = ({
 }: ExpandedBox) => {
   const { isCreatingNewProfile, newProfileCreationResponse, createNewProfile } =
     useCreateNewProfile()
+    const {    isGettingProfilesData,
+    errorMessageInGettingProfilesData,
+    profilesData,
+    getAllProfilesForNetwork,} = useGetAllProfiles()
   const [expanded, toggleExpanded] = useToggle(false)
   const [renderText, setRenderText] = useToggle(false)
   const [expandForCreatingNewIdentity, toggleExpandForCreatingNewIdentity] =
