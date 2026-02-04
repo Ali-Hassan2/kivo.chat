@@ -50,7 +50,6 @@ const ExpandedBox = ({
   const [expandForCreatingNewIdentity, toggleExpandForCreatingNewIdentity] =
     useToggle(false)
   useEffect(() => {
-    getAllProfilesForNetwork()
     if (expanded) {
       const timer = setTimeout(() => setRenderText(true), 100)
       return () => clearTimeout(timer)
@@ -58,6 +57,9 @@ const ExpandedBox = ({
       setRenderText(false)
     }
   }, [expanded])
+  useEffect(() => {
+    getAllProfilesForNetwork()
+  })
 
   useEffect(() => {
     if (errorMessageInGettingProfilesData?.length > 0) {

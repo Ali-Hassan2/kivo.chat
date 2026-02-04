@@ -1,11 +1,7 @@
 import React from 'react'
 import { useToggle } from 'react-use'
 import { getAllProfilesForOverallNetwork } from '@/services'
-import {
-  ProfileCountResposne,
-  ProfileGettingResponse,
-  ProfilesShape,
-} from '@/types'
+import { ProfileGettingResponse, ProfilesShape } from '@/types'
 
 const useGetAllProfiles = () => {
   const [profilesData, setProfilesData] = React.useState<ProfilesShape[]>([])
@@ -19,17 +15,19 @@ const useGetAllProfiles = () => {
     React.useRef<AbortController | null>(null)
 
   const getAllProfilesForNetwork = async () => {
+    if (controllerForGettingTheProfilesDataForOverallNetwork.current)
+      controllerForGettingTheProfilesDataForOverallNetwork.current.abort()
+
+    const controller = new AbortController()
+    controllerForGettingTheProfilesDataForOverallNetwork.current = controller
     try {
       toggleGettingProfilesData(true)
       setErrorMessageInGettingProfilesData('')
-      if (controllerForGettingTheProfilesDataForOverallNetwork.current)
-        controllerForGettingTheProfilesDataForOverallNetwork.current.abort()
-
-      const controller = new AbortController()
-      controllerForGettingTheProfilesDataForOverallNetwork.current = controller
       const response = await getAllProfilesForOverallNetwork({
         signal: controller.signal,
       })
+
+      console.log('The resposne data for profiles is:', response)
       if (!response.success) {
         setErrorMessageInGettingProfilesData(response.message)
       } else {

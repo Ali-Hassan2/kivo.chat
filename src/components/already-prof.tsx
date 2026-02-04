@@ -1,6 +1,6 @@
 'use client'
 
-import { Box } from '@radix-ui/themes'
+import { Box, Text } from '@radix-ui/themes'
 import { Item } from '@radix-ui/themes/components/checkbox-group'
 import { ProfilesShape } from '@/types'
 
@@ -13,7 +13,10 @@ const AlreadyProfiles = ({ profiles }: AlreadyProfilesProps) => {
     <Box>
       {profiles.map((item, index) => {
         return (
-          <Box className="relative bottom-2 flex translate-x-2 flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-8 transition-all duration-300 ease-in-out">
+          <Box
+            key={index}
+            className="relative bottom-2 flex translate-x-2 flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-8 transition-all duration-300 ease-in-out"
+          >
             <Text className="border-b border-black/40 pb-6 text-3xl font-bold">
               User Original Identity
             </Text>
