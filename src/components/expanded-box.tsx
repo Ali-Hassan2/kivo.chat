@@ -65,7 +65,7 @@ const ExpandedBox = ({
     if (errorMessageInGettingProfilesData?.length > 0) {
       showToast(errorMessageInGettingProfilesData)
     }
-  })
+  }, [])
 
   const form = useForm<z.infer<typeof anotherIdentitySchema>>({
     resolver: zodResolver(anotherIdentitySchema),
