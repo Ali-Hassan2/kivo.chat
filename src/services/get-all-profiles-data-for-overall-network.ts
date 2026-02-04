@@ -23,7 +23,9 @@ const getAllProfilesForOverallNetwork = async ({
       return {
         success: false,
         message: 'Request cancelled',
-        data: [],
+        data: {
+          profiles: [],
+        },
       }
     }
     if (axiosError.response) {
@@ -32,7 +34,9 @@ const getAllProfilesForOverallNetwork = async ({
     return {
       success: false,
       message: 'Network Error',
-      data: [],
+      data: {
+        profiles: [],
+      },
     }
   }
 }

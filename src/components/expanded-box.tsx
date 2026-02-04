@@ -8,7 +8,9 @@ import { NewProfileBox } from '@/elements/user-profile/components'
 import { anotherIdentitySchema } from '@/guards'
 import { useCreateNewProfile, useGetAllProfiles } from '@/hooks'
 import { CountData } from '@/types'
+import { showToast } from '@/utils'
 import { cn } from '@/utils/cn'
+import { AlreadyProfiles } from './already-prof'
 import { InfoIcon } from './icons/info'
 import { ProfileCreationSkeleton } from './profile-creation-loading-skeleton'
 import { RealIdentityBox } from './real-profile-box'
@@ -37,15 +39,16 @@ const ExpandedBox = ({
 }: ExpandedBox) => {
   const { isCreatingNewProfile, newProfileCreationResponse, createNewProfile } =
     useCreateNewProfile()
-    const {    isGettingProfilesData,
+  const {
+    isGettingProfilesData,
     errorMessageInGettingProfilesData,
     profilesData,
-    getAllProfilesForNetwork,} = useGetAllProfiles()
+    getAllProfilesForNetwork,
+  } = useGetAllProfiles()
   const [expanded, toggleExpanded] = useToggle(false)
   const [renderText, setRenderText] = useToggle(false)
   const [expandForCreatingNewIdentity, toggleExpandForCreatingNewIdentity] =
     useToggle(false)
-
   useEffect(() => {
     if (expanded) {
       const timer = setTimeout(() => setRenderText(true), 100)
@@ -54,6 +57,15 @@ const ExpandedBox = ({
       setRenderText(false)
     }
   }, [expanded])
+  useEffect(() => {
+    getAllProfilesForNetwork()
+  }, [])
+
+  useEffect(() => {
+    if (errorMessageInGettingProfilesData?.length > 0) {
+      showToast(errorMessageInGettingProfilesData)
+    }
+  }, [])
 
   const form = useForm<z.infer<typeof anotherIdentitySchema>>({
     resolver: zodResolver(anotherIdentitySchema),
@@ -108,6 +120,15 @@ const ExpandedBox = ({
                   bio={user?.bio}
                   countData={countData}
                 />
+                {isGettingProfilesData ? (
+                  <ProfileCreationSkeleton
+                    loading={isGettingProfilesData}
+                    items={[1]}
+                  />
+                ) : (
+                  <AlreadyProfiles profiles={profilesData} />
+                )}
+
                 <Box className="mt-3 flex items-start justify-end">
                   <Button
                     className="cursor-pointer bg-blue-800 py-7 shadow-lg hover:bg-blue-900"

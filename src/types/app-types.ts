@@ -105,7 +105,9 @@ export interface ProfilesShape {
 interface ProfileGettingResponse {
   success: boolean
   message: string
-  data: ProfilesShape[]
+  data: {
+    profiles: ProfilesShape[]
+  }
 }
 
 export type { ModeResponsForOverallNetwork, ProfileGettingResponse }

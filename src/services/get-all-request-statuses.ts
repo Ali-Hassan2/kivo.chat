@@ -13,7 +13,6 @@ const GettingAllRequestStatuses = async ({
     const response = await axios.get(API_ENDPOINTS.getAllRequestStatuses, {
       signal,
     })
-    console.log('The response data', response.data)
     return response.data
   } catch (error: unknown) {
     const axiosError = error as AxiosError<GettingStatuses>
