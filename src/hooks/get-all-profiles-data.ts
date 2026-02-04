@@ -31,7 +31,7 @@ const useGetAllProfiles = () => {
       if (!response.success) {
         setErrorMessageInGettingProfilesData(response.message)
       } else {
-        setProfilesData(response?.data)
+        setProfilesData(response?.data.profiles)
       }
     } finally {
       toggleGettingProfilesData(false)
