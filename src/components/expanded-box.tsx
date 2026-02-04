@@ -59,7 +59,7 @@ const ExpandedBox = ({
   }, [expanded])
   useEffect(() => {
     getAllProfilesForNetwork()
-  })
+  }, [])
 
   useEffect(() => {
     if (errorMessageInGettingProfilesData?.length > 0) {
