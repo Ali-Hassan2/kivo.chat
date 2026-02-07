@@ -7,6 +7,7 @@ export interface IIdentityProfiles extends Document {
   email: string
   bio: string
   user: Types.ObjectId | IUser
+  iterNumber: number
 }
 
 const IdentitySchema: Schema<IIdentityProfiles> = new Schema({
@@ -28,6 +29,10 @@ const IdentitySchema: Schema<IIdentityProfiles> = new Schema({
   user: {
     type: Types.ObjectId,
     ref: 'User',
+  },
+  iterNumber: {
+    type: Number,
+    default: 0,
   },
 })
 

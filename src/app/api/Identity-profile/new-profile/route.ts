@@ -80,13 +80,19 @@ class NEW_FAKE_PROFILE {
     }
 
     const userId = user!._id
+    const iterNumber = await IdentityModel.countDocuments({
+      user: userId,
+    })
+    const newCount = iterNumber + 1
     const newProfile = await IdentityModel.create({
       username: new_username,
       fullName: body.fullName,
       email: new_email,
       bio: body.bio,
       user: userId,
+      iterNuber: newCount,
     })
+
     if (user) {
       user.activeFakeProfileId = newProfile._id as Types.ObjectId
       await user.save()
