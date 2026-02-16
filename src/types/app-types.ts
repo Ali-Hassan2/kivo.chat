@@ -136,7 +136,7 @@ interface ConversationsContacts {
 interface ContactsFromConversations {
   success: boolean
   message: string
-  data: ConversationsContacts[]
+  data?: ConversationsContacts[]
 }
 
 export type {
