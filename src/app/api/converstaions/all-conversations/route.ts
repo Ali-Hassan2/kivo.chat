@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { ConversationModel } from '@/entities'
 import { getCurrentUser } from '@/helpers'
-import { Conversation } from '@/views/conversation'
 
 class GETALLCONVERSTAIONS {
   static respond(
@@ -36,38 +35,30 @@ class GETALLCONVERSTAIONS {
 
   async handle(request: Request) {
     try {
-      const methodCheckResut = GETALLCONVERSTAIONS.MethodCheck(request)
-      if (methodCheckResut) {
-        return methodCheckResut
-      }
+      const methodCheckResult = await GETALLCONVERSTAIONS.MethodCheck(request)
+      if (methodCheckResult) return methodCheckResult
+
       const user = await getCurrentUser()
       const userCheckResult = GETALLCONVERSTAIONS.checkUser(user)
-      if (userCheckResult) {
-        return userCheckResult
-      }
+      if (userCheckResult) return userCheckResult
+
       const allConversations = await ConversationModel.find({
         participants: user?._id,
-      })
+      }).populate('lastMessage')
 
-      if (allConversations) {
-        return GETALLCONVERSTAIONS.respond(
-          true,
-          'Converastions Loaded.',
-          { conversations: allConversations },
-          200,
-        )
-      }
       return GETALLCONVERSTAIONS.respond(
-        false,
-        'There are no conversations',
-        null,
-        400,
+        true,
+        'Conversations Loaded.',
+        { conversations: allConversations },
+        200,
       )
     } catch (error: unknown) {
       return GETALLCONVERSTAIONS.respond(
         false,
         'Internal Server Error',
-        { error: error },
+        {
+          error: error instanceof Error ? error.message : 'Unknown error',
+        },
         500,
       )
     }
