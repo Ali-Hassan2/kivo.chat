@@ -30,6 +30,8 @@ const API_ENDPOINTS = {
   createNewProfileFake: '/api/Identity-profile/new-profile',
   getAllAnonProfilesForOverallNetwork:
     '/api/Identity-profile/get-all-anon-profiles',
+  getAllConversationsAtInitialLoadForContacts:
+    '/api/messages/load/conversations',
 }
 
 export { API_ENDPOINTS }

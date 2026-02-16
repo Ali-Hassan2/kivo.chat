@@ -110,4 +110,37 @@ interface ProfileGettingResponse {
   }
 }
 
-export type { ModeResponsForOverallNetwork, ProfileGettingResponse }
+interface Participants {
+  _id: string
+  username: string
+  fullName: string
+}
+
+interface LastMessageFromConversation {
+  _id: string
+  sender: string
+  receiver: string
+  content: string
+  conversation: string
+  readBy: string[]
+  attachments: string[]
+}
+
+interface ConversationsContacts {
+  _id: string
+  participants: Participants[]
+  lastMessage: LastMessageFromConversation | null
+  unreadCount: number
+}
+
+interface ContactsFromConversations {
+  success: boolean
+  message: string
+  data: ConversationsContacts[]
+}
+
+export type {
+  ModeResponsForOverallNetwork,
+  ProfileGettingResponse,
+  ContactsFromConversations,
+}
