@@ -9,7 +9,6 @@ const getAllContactsConversations = () => {
   >([])
   const [isGettingCoversations, toggleIsGettingConversations] = useToggle(false)
   const [errorMessage, setErrorMessage] = useState<string | null>('')
-
   const controllerForGettingConversations = useRef<AbortController | null>(null)
 
   const getAllConversations = async () => {
