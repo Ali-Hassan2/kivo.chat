@@ -6,6 +6,8 @@ import { Search } from '@/components'
 import { Label } from '@/components/ui/label'
 import { SEARCH_NOT_FOUND_MESSAGE } from '@/constants'
 import { MOCK_CONTACTS } from '@/constants/objects-to-iterate'
+import { getAllContactsConversations } from '@/hooks'
+import { useAuthRedirection } from '@/utils'
 import { cn } from '@/utils/cn'
 
 const ContactBoard = () => {
@@ -17,14 +19,38 @@ const ContactBoard = () => {
     noResultMessageToDisplayWhenSearchYieldsNoResults,
     setNoResultMessageToDisplayWhenSearchYieldsNoResults,
   ] = useState<string>('')
+  const {
+    initialConversations,
+    isGettingCoversations,
+    errorMessage,
+    getAllConversations,
+  } = getAllContactsConversations()
 
-  const filteredContactListBasedOnSearchQuery = useMemo(() => {
-    return MOCK_CONTACTS.filter((contact) =>
-      contact.FullName.toLowerCase().includes(
-        queryFullNameToGetFromSearchResult.toLowerCase(),
-      ),
+  useEffect(() => {
+    getAllConversations()
+  }, [])
+
+  const allParticipants = useMemo(() => {
+    return initialConversations.flatMap(
+      (conversation) => conversation.participants,
     )
-  }, [queryFullNameToGetFromSearchResult])
+  }, [initialConversations])
+
+  const allLastMessages = useMemo(() => {
+    return initialConversations.map((conversation) => conversation.lastMessage)
+  }, [initialConversations])
+
+  const user = useAuthRedirection()
+  const username = user?.username
+  const filteredContactListBasedOnSearchQuery = useMemo(() => {
+    return allParticipants.filter(
+      (participant) =>
+        participant.username !== username &&
+        participant.fullName
+          .toLowerCase()
+          .includes(queryFullNameToGetFromSearchResult.toLowerCase()),
+    )
+  }, [allParticipants, queryFullNameToGetFromSearchResult])
 
   useEffect(() => {
     if (filteredContactListBasedOnSearchQuery.length === 0) {
@@ -35,6 +61,7 @@ const ContactBoard = () => {
       setNoResultMessageToDisplayWhenSearchYieldsNoResults('')
     }
   }, [filteredContactListBasedOnSearchQuery])
+
   return (
     <div
       className={cn(
@@ -48,18 +75,25 @@ const ContactBoard = () => {
         </p>
       )}
       <div className="flex flex-col gap-3 px-2 pb-4">
-        {filteredContactListBasedOnSearchQuery.map((contact) => (
-          <div
-            className="flex cursor-pointer gap-3 rounded-md p-2 hover:bg-gray-100"
-            key={contact.FullName}
-          >
-            <Avatar
-              fallback={contact.FullName?.[0]?.toUpperCase() ?? '?'}
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-700"
-            />
-            <Label className="text-black">{contact.FullName}</Label>
-          </div>
-        ))}
+        {filteredContactListBasedOnSearchQuery.map((contact) => {
+          const conversation = initialConversations.find((conversation) => {
+            return conversation.participants.some((p) => p._id === contact._id)
+          })
+          const lastMessage = conversation?.lastMessage?.content
+          return (
+            <div
+              className="flex cursor-pointer gap-3 rounded-md p-2 hover:bg-gray-100"
+              key={contact.fullName}
+            >
+              <Avatar
+                fallback={contact.fullName?.[0]?.toUpperCase() ?? '?'}
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-700"
+              />
+              <Label className="text-black">{contact.fullName}</Label>
+              <Label className="text-black">{lastMessage}</Label>
+            </div>
+          )
+        })}
       </div>
     </div>
   )

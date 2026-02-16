@@ -126,7 +126,7 @@ interface LastMessageFromConversation {
   attachments: string[]
 }
 
-interface ConversationsContacts {
+export interface ConversationsContacts {
   _id: string
   participants: Participants[]
   lastMessage: LastMessageFromConversation | null
