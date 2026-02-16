@@ -1,8 +1,0 @@
-Task1:
-    Make some friends for username Daud.
-Task2:
-    - Show all the friends list on the main page sidebar
-    - Maintain the search and filter feature
-Task3: 
-    - create specific conversation rooms with the selected memeber.
-    - create client sockets to perform real time chatting.
