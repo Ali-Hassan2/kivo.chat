@@ -46,7 +46,7 @@ const Header = ({ bgColor }: HeaderProps) => {
     <div
       className={cn(
         bgColor ?? 'white',
-        'sticky flex h-auto w-full flex-col items-center justify-between md:flex-row z-100',
+        'sticky z-100 flex h-auto w-full flex-col items-center justify-between md:flex-row',
       )}
     >
       <div className="flex h-full w-full flex-1 items-center justify-evenly py-4 pl-4 font-bold md:w-auto md:pl-12">
