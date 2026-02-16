@@ -44,7 +44,7 @@ const AllFriends = ({
 }: AllFriendProps) => {
   useEffect(() => {
     getAllFriendsForNetwork()
-  }, [getAllFriendsForNetwork])
+  }, [])
 
   useEffect(() => {
     if (UnfriendSomeoneOverallNetworkResponse.success) {
