@@ -1,7 +1,8 @@
 import React from 'react'
+import { ConversationBoard } from '@/elements'
 
 const Conversation = () => {
-  return <div>Conversation</div>
+  return <ConversationBoard />
 }
 
 export { Conversation }

@@ -139,8 +139,19 @@ interface ContactsFromConversations {
   data?: ConversationsContacts[]
 }
 
+export interface MessagesData {
+  sender: string
+  content: string
+  readBy: string[]
+}
+interface MessagesFromConversations {
+  success: boolean
+  message: string
+  data?: MessagesData[]
+}
 export type {
   ModeResponsForOverallNetwork,
   ProfileGettingResponse,
   ContactsFromConversations,
+  MessagesFromConversations,
 }
