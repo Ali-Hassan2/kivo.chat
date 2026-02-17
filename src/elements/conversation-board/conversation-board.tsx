@@ -25,14 +25,14 @@ const ConversationBoard = ({
   const receiverId = QueryParams('receiverId')
   useEffect(() => {
     if (receiverId) {
-      getAllMessagesFromConversationsHook(receiverId)
+      getAllMessagesFromConversationsHook({ receiverId })
     }
-  }, [receiverId,getAllMessagesFromConversationsHook])
+  }, [receiverId, getAllMessagesFromConversationsHook])
   return (
     <div className="flex flex-col">
       Here we will talk to each {receiverId}
-      {MessagesDataFromConversations.map((message,index) => {
-        return <Box key={}>{message.content}</Box>
+      {MessagesDataFromConversations.map((message, index) => {
+        return <Box key={index}>{message.content}</Box>
       })}
     </div>
   )
