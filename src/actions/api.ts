@@ -32,6 +32,8 @@ const API_ENDPOINTS = {
     '/api/Identity-profile/get-all-anon-profiles',
   getAllConversationsAtInitialLoadForContacts:
     '/api/messages/load/conversations',
+  getAllMessagesFromConversations:
+    '/api/messages/load/messages-in-conversations',
 }
 
 export { API_ENDPOINTS }
