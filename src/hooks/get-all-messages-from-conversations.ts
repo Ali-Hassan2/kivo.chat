@@ -37,10 +37,18 @@ const useGetAllMessagesFromConversations = () => {
       if (response.success && response.data) {
         setMessagesDataFromConversations(response.data)
       } else {
-        setErrorMessagesFromConversation(false)
+        setErrorMessagesFromConversation(response.message)
       }
     } finally {
-        
+      toggleIsGettingMessagesDataFromConversations(false)
     }
   }
+  return {
+    MessagesDataFromConversations,
+    isGettingMessagesDataFromConversations,
+    errorMessageForGettingMessagesFromConverastions,
+    getAllMessagesFromConversationsHook,
+  }
 }
+
+export { useGetAllMessagesFromConversations }
