@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { Avatar } from '@radix-ui/themes'
+import { Avatar, Box } from '@radix-ui/themes'
 import { Search } from '@/components'
 import { Label } from '@/components/ui/label'
 import { SEARCH_NOT_FOUND_MESSAGE } from '@/constants'
@@ -74,7 +74,7 @@ const ContactBoard = () => {
           {noResultMessageToDisplayWhenSearchYieldsNoResults}
         </p>
       )}
-      <div className="flex flex-col gap-3 px-2 pb-4">
+      <div className="flex cursor-pointer flex-col gap-3 px-2 pb-4">
         {filteredContactListBasedOnSearchQuery.map((contact) => {
           const conversation = initialConversations.find((conversation) => {
             return conversation.participants.some((p) => p._id === contact._id)
@@ -82,15 +82,24 @@ const ContactBoard = () => {
           const lastMessage = conversation?.lastMessage?.content
           return (
             <div
-              className="flex cursor-pointer gap-3 rounded-md p-2 hover:bg-gray-100"
+              className="flex cursor-pointer gap-3 rounded-md border-b p-2 hover:bg-gray-100"
               key={contact.fullName}
             >
-              <Avatar
-                fallback={contact.fullName?.[0]?.toUpperCase() ?? '?'}
-                className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-700"
-              />
-              <Label className="text-black">{contact.fullName}</Label>
-              <Label className="text-black">{lastMessage}</Label>
+              <Box>
+                <Avatar
+                  fallback={contact.fullName?.[0]?.toUpperCase() ?? '?'}
+                  className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-blue-200 text-blue-700"
+                />
+              </Box>
+              <Box className="flex cursor-pointer flex-col">
+                <Label className="mt-2 cursor-pointer text-black">
+                  {contact.fullName}
+                </Label>
+
+                <Label className="mt-2 max-w-[222px] cursor-pointer truncate font-normal text-black">
+                  {lastMessage}
+                </Label>
+              </Box>
             </div>
           )
         })}
