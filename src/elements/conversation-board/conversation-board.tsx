@@ -27,12 +27,12 @@ const ConversationBoard = ({
     if (receiverId) {
       getAllMessagesFromConversationsHook(receiverId)
     }
-  }, [receiverId])
+  }, [receiverId,getAllMessagesFromConversationsHook])
   return (
     <div className="flex flex-col">
       Here we will talk to each {receiverId}
-      {MessagesDataFromConversations.map((message) => {
-        return <Box>{message.content}</Box>
+      {MessagesDataFromConversations.map((message,index) => {
+        return <Box key={}>{message.content}</Box>
       })}
     </div>
   )
