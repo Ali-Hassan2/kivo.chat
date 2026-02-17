@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label'
 import { SEARCH_NOT_FOUND_MESSAGE } from '@/constants'
 import { MOCK_CONTACTS } from '@/constants/objects-to-iterate'
 import { getAllContactsConversations } from '@/hooks'
-import { useAuthRedirection } from '@/utils'
+import { useAuthRedirection, useNavigation } from '@/utils'
 import { cn } from '@/utils/cn'
 
 const ContactBoard = () => {
@@ -62,6 +62,7 @@ const ContactBoard = () => {
     }
   }, [filteredContactListBasedOnSearchQuery])
 
+  const { navigateTo } = useNavigation()
   return (
     <div
       className={cn(
@@ -84,6 +85,9 @@ const ContactBoard = () => {
             <div
               className="flex cursor-pointer gap-3 rounded-md border-b p-2 hover:bg-gray-100"
               key={contact.fullName}
+              onClick={() =>
+                navigateTo(`/personal-dashboard?receiverId=${contact._id}`)
+              }
             >
               <Box>
                 <Avatar

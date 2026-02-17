@@ -1,16 +1,41 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Box } from '@radix-ui/themes'
+import * as z from 'zod'
+import { receiverIdSchema } from '@/guards'
+import { MessagesData } from '@/types'
+import { QueryParams } from '@/utils'
 
-interface ConversationBoardProps{
-      MessagesDataFromConversations,
-    isGettingMessagesDataFromConversations,
-    errorMessageForGettingMessagesFromConverastions,
-    getAllMessagesFromConversationsHook,
+interface ConversationBoardProps {
+  MessagesDataFromConversations: MessagesData[]
+  isGettingMessagesDataFromConversations: boolean
+  errorMessageForGettingMessagesFromConverastions: string | null
+  getAllMessagesFromConversationsHook: (
+    data: z.infer<typeof receiverIdSchema>,
+  ) => void
 }
 
-const ConversationBoard = () => {
-  return <div>Here we will talk to each other</div>
+const ConversationBoard = ({
+  MessagesDataFromConversations,
+  isGettingMessagesDataFromConversations,
+  errorMessageForGettingMessagesFromConverastions,
+  getAllMessagesFromConversationsHook,
+}: ConversationBoardProps) => {
+  const receiverId = QueryParams('receiverId')
+  useEffect(() => {
+    if (receiverId) {
+      getAllMessagesFromConversationsHook(receiverId)
+    }
+  }, [receiverId])
+  return (
+    <div className="flex flex-col">
+      Here we will talk to each {receiverId}
+      {MessagesDataFromConversations.map((message) => {
+        return <Box>{message.content}</Box>
+      })}
+    </div>
+  )
 }
 
 export { ConversationBoard }
