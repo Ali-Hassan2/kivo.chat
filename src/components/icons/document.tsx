@@ -10,6 +10,7 @@ const DocumentIcon = () => {
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
+      
       className="lucide lucide-clipboard-plus-icon lucide-clipboard-plus"
     >
       <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
