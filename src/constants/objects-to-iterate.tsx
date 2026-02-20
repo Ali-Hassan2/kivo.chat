@@ -1,6 +1,9 @@
 import {
   AboutUsIcon,
+  AllFriends,
+  BlockIcon,
   DashboardIcon,
+  DocumentIcon,
   FriendsIcon,
   NotificationIcon,
   ProfileIcon,
@@ -130,6 +133,24 @@ const ALL_BLOCKED_FRIENDS_OVERALLNETWORK_BOARD = {
   lineWidth: 'w-110',
 }
 
+const HomeBoxes = [
+  {
+    label: 'Send Document',
+    icon: <DocumentIcon />,
+    backgroundColor: 'bg-blue-100',
+  },
+  {
+    label: 'Contacts',
+    icon: <AllFriends />,
+    backgroundColor: 'bg-green-100',
+  },
+  {
+    label: 'Blocked',
+    icon: <BlockIcon />,
+    backgroundColor: 'bg-purple-100',
+  },
+]
+
 export {
   HEADER_DROPDOWN_LABELS,
   MOCK_CONTACTS,
@@ -138,4 +159,5 @@ export {
   PENDING_REQUEST_BOARD,
   ALL_FRIENDS_NETWORK_BOARD,
   ALL_BLOCKED_FRIENDS_OVERALLNETWORK_BOARD,
+  HomeBoxes,
 }

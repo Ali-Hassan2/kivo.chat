@@ -8,6 +8,7 @@ import { receiverIdSchema } from '@/guards'
 import { MessagesData } from '@/types'
 import { QueryParams } from '@/utils'
 import { cn } from '@/utils/cn'
+import { HomeBoxes } from '@/constants'
 
 interface ConversationBoardProps {
   MessagesDataFromConversations: MessagesData[]
@@ -31,23 +32,6 @@ const ConversationBoard = ({
     }
   }, [receiverId])
 
-  const homeBoxes = [
-    {
-      label: 'Send Document',
-      icon: <DocumentIcon />,
-      backgroundColor: 'bg-blue-100',
-    },
-    {
-      label: 'Contacts',
-      icon: <AllFriends />,
-      backgroundColor: 'bg-green-100',
-    },
-    {
-      label: 'Blocked',
-      icon: <BlockIcon />,
-      backgroundColor: 'bg-purple-100',
-    },
-  ]
   return (
     <div className="flex flex-col">
       <Box className="flex h-[90vh] w-full flex-col items-center justify-center">
@@ -55,7 +39,7 @@ const ConversationBoard = ({
           <ChatIcon />
         </Box>
         <Box className={cn('flex gap-4 pt-8')}>
-          {homeBoxes.map((box, index) => {
+          {HomeBoxes.map((box, index) => {
             return (
               <Box
                 key={index}

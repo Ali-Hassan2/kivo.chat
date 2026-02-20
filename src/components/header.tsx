@@ -49,8 +49,8 @@ const Header = ({ bgColor }: HeaderProps) => {
         'sticky z-100 flex h-auto w-full flex-col items-center justify-between md:flex-row',
       )}
     >
-      <div className="flex h-full w-full flex-1 items-center justify-evenly py-4 pl-4 font-bold md:w-auto md:pl-12">
-        <Label className="-ml-4 text-3xl font-bold md:text-4xl">K.</Label>
+      <div className="-ml-22 flex h-full w-full flex-1 items-center justify-evenly py-4 pl-4 font-bold md:w-auto md:pl-12">
+        <Label className="text-3xl font-bold md:text-4xl">K.</Label>
         <Box className="flex max-w-[65%] items-center gap-2 text-sm sm:max-w-[75%] md:max-w-full md:text-base">
           <Box className="h-4 w-4">
             <Image
