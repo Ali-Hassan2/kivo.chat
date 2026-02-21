@@ -1,0 +1,141 @@
+'use client'
+
+import React, { useEffect } from 'react'
+import { Avatar, Box, Flex } from '@radix-ui/themes'
+import { Loader2, NetworkIcon } from 'lucide-react'
+import * as z from 'zod'
+import { BoardUpperHeader, NoData } from '@/components'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { NETWORK } from '@/constants'
+import { PENDING_REQUEST_BOARD } from '@/constants/objects-to-iterate'
+import { acceptingMessageGuard, requestIdSchema } from '@/guards'
+import { AuthStatus, GetAllRequest, requestToMe } from '@/types'
+import { showToast } from '@/utils'
+import { cn } from '@/utils/cn'
+import ListSkeleton from './skeleton'
+
+interface FriendsBoardProps {
+  isGettingRequestToMeFromOverallNetwork: boolean
+  RecordRequestsForMeFromOverallNetwork: requestToMe[]
+  totalNumberOfRequestsInPendingQueue: number
+  hasFetchedListDataForPendingReuqests: boolean
+  AcceptinMessageFromOverallNetworkResponse: AuthStatus
+  isAcceptingMessageFromOverallNetwork: boolean
+  acceptPendingRequestFromOverallNetwork: (
+    data: z.infer<typeof requestIdSchema>,
+  ) => Promise<void>
+  rejectionRequest: (data: z.infer<typeof requestIdSchema>) => Promise<void>
+  isCancelingRequestForOverallNetwork: boolean
+  CancelingRequestForOverallNetworkResponse: AuthStatus
+}
+
+const FriendBoard = ({
+  isGettingRequestToMeFromOverallNetwork,
+  RecordRequestsForMeFromOverallNetwork,
+  totalNumberOfRequestsInPendingQueue,
+  hasFetchedListDataForPendingReuqests,
+  AcceptinMessageFromOverallNetworkResponse,
+  isAcceptingMessageFromOverallNetwork,
+  acceptPendingRequestFromOverallNetwork,
+  rejectionRequest,
+  isCancelingRequestForOverallNetwork,
+  CancelingRequestForOverallNetworkResponse,
+}: FriendsBoardProps): React.JSX.Element => {
+  useEffect(() => {
+    if (AcceptinMessageFromOverallNetworkResponse.success) {
+      const successMessage = AcceptinMessageFromOverallNetworkResponse.success
+      showToast(successMessage, 'success')
+    }
+    if (AcceptinMessageFromOverallNetworkResponse.error) {
+      const errorMessage = AcceptinMessageFromOverallNetworkResponse.error
+      showToast(errorMessage, 'error')
+    }
+    if (CancelingRequestForOverallNetworkResponse.success) {
+      const successMessage = CancelingRequestForOverallNetworkResponse.success
+      showToast(successMessage, 'success')
+    }
+    if (CancelingRequestForOverallNetworkResponse.error) {
+      const errorMessage = CancelingRequestForOverallNetworkResponse.error
+      showToast(errorMessage, 'error')
+    }
+  }, [
+    AcceptinMessageFromOverallNetworkResponse,
+    CancelingRequestForOverallNetworkResponse,
+  ])
+  return (
+    <Box className="w-full">
+      <BoardUpperHeader
+        NextHead={PENDING_REQUEST_BOARD.NextHead}
+        ButtonOne={{
+          ...PENDING_REQUEST_BOARD.ButtonOne,
+          Icon: <NetworkIcon />,
+        }}
+        ButtonTwo={PENDING_REQUEST_BOARD.ButtonTwo}
+        lineWidth={PENDING_REQUEST_BOARD.lineWidth}
+      />
+      <Box
+        className={cn(
+          RecordRequestsForMeFromOverallNetwork.length === 0 ? 'pt-20' : '',
+        )}
+      >
+        {isGettingRequestToMeFromOverallNetwork ? (
+          <ListSkeleton loading={true} />
+        ) : RecordRequestsForMeFromOverallNetwork.length > 0 ? (
+          <Box className="flex flex-col items-center justify-center border">
+            <Box className="flex w-full items-center justify-between rounded-b-lg border p-3 pr-8">
+              <Label>Total Pending Requests:</Label>
+              <Label>{totalNumberOfRequestsInPendingQueue}</Label>
+            </Box>
+            <Box className="lists w-full px-2 py-4">
+              {RecordRequestsForMeFromOverallNetwork.map((record, index) => (
+                <Box
+                  className="mt-2 flex justify-between rounded-md border p-3"
+                  key={record.from.username}
+                >
+                  <Box className="flex gap-2">
+                    <Label>{index + 1}</Label>
+                    <Avatar
+                      fallback={record.from.username?.[0].toUpperCase() ?? '?'}
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-200 text-blue-700"
+                    />
+                    <Label className="text-lg">{record.from.username}</Label>
+                  </Box>
+                  <Box className="flex items-center gap-3">
+                    <Button
+                      className="cursor-pointer bg-blue-700 hover:bg-blue-600"
+                      onClick={() =>
+                        acceptPendingRequestFromOverallNetwork(record._id)
+                      }
+                    >
+                      {isAcceptingMessageFromOverallNetwork ? (
+                        <Loader2 className="animate-spin" />
+                      ) : (
+                        <Label className="cursor-pointer">Accept</Label>
+                      )}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="cursor-pointer"
+                      onClick={() => rejectionRequest(record._id)}
+                    >
+                      {isCancelingRequestForOverallNetwork ? (
+                        <Loader2 className="animate-spin" />
+                      ) : (
+                        <Label className="cursor-pointer">Reject Request</Label>
+                      )}
+                    </Button>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        ) : (
+          hasFetchedListDataForPendingReuqests && <NoData />
+        )}
+      </Box>
+    </Box>
+  )
+}
+
+export { FriendBoard }

@@ -1,0 +1,23 @@
+name: Deploy Preview
+
+on:
+  pull_request:
+    branches: [dev]
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generating Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nextjs-build
+          path: .next/
+
+      - name: Deploy to Release
+        run: |
+          npx vercel --token=${{ secrets.VERCEL_TOKEN }} --prod=false --confirm

@@ -1,0 +1,7 @@
+Task1:
+    Please setup conversation board so sender messages are on right side with blue theme.
+    Receivers messages should be on the left side with white theme.
+
+Task2:
+    Add Message Send Input field with lucide send button
+    Test Across different users.

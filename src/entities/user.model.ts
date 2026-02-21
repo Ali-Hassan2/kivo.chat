@@ -1,4 +1,6 @@
+import bcrypt from 'bcrypt'
 import mongoose, { Document, Schema, Types } from 'mongoose'
+import { IIdentityProfiles } from './identity-profiles'
 
 export interface IUser extends Document {
   username: string
@@ -7,12 +9,15 @@ export interface IUser extends Document {
   verficationCode: string
   verficationExpiry: Date
   isVerifiedUser: boolean
+  isAcceptingMessages: boolean
+  isShowingIdentity: boolean
   fullName?: string
   bio?: string
   isAnon: boolean
   friends: Types.ObjectId[]
   requests: Types.ObjectId[]
   blocks: Types.ObjectId[]
+  activeFakeProfileId: Types.ObjectId | IIdentityProfiles
   pfp?: {
     url: string
     public_id: string
@@ -23,6 +28,7 @@ export interface IUser extends Document {
   }
   createdAt?: Date
   updatedAt?: Date
+  comparePassword(candidatePassword: string): Promise<boolean>
 }
 
 const UserSchema: Schema<IUser> = new Schema(
@@ -35,10 +41,11 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     email: {
       type: String,
-      unique: true,
-      trim: true,
+      // unique: true,
+      // trim: true,
       required: [true, 'Email is required.'],
-      match: [/^\\S+@\\S+\\.\\S+$/, 'Please use a valid email address.'],
+      lowercase: true,
+      // match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.'],
     },
     password: {
       type: String,
@@ -58,6 +65,10 @@ const UserSchema: Schema<IUser> = new Schema(
       type: Boolean,
       default: false,
     },
+    activeFakeProfileId: {
+      type: Types.ObjectId,
+      ref: 'Identity',
+    },
     fullName: {
       type: String,
     },
@@ -66,25 +77,34 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     isAnon: {
       type: Boolean,
+      default: false,
+    },
+    isAcceptingMessages: {
+      type: Boolean,
+      default: true,
+    },
+    isShowingIdentity: {
+      type: Boolean,
+      default: true,
     },
     friends: [
       {
         type: Types.ObjectId,
-        ref: 'UserModel',
+        ref: 'User',
         default: [],
       },
     ],
     requests: [
       {
         type: Types.ObjectId,
-        ref: 'UserModel',
+        ref: 'User',
         default: [],
       },
     ],
     blocks: [
       {
         type: Types.ObjectId,
-        ref: 'UserModel',
+        ref: 'User',
         default: [],
       },
     ],
@@ -108,8 +128,23 @@ const UserSchema: Schema<IUser> = new Schema(
   { timestamps: true },
 )
 
+// delete mongoose.models.User
 const UserModel =
   (mongoose.models.User as mongoose.Model<IUser>) ||
   mongoose.model<IUser>('User', UserSchema)
 
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next()
+  }
+  const salt = await bcrypt.genSalt(10)
+  this.password = await bcrypt.hash(this.password, salt)
+  next()
+})
+
+UserSchema.methods.comparePassword = async function (
+  candidatePassword: string,
+) {
+  return bcrypt.compare(candidatePassword, this.password)
+}
 export { UserModel, UserSchema }

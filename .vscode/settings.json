@@ -1,0 +1,17 @@
+{
+  "workbench.colorTheme": "cursor-dark",
+  "workbench.colorCustomizations": {
+    "editor.background": "#171616",
+    "editorGutter.background": "#171616",
+    "sideBar.background": "#171616",
+    "activityBar.background": "#171616",
+    "statusBar.background": "#171616",
+    "panel.background": "#171616",
+    "editorCursor.foreground": "#c2bcbc",
+    "editorLineNumber.foreground": "#888888",
+    "editorLineNumber.activeForeground": "#FFFFFF",
+    "editor.selectionBackground": "#333333",
+    "editor.selectionHighlightBackground": "#444444",
+    "editorCursor.background": "#ffffff"
+  }
+}

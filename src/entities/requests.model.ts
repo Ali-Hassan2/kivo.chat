@@ -1,10 +1,11 @@
 import mongoose, { Document, Schema, Types } from 'mongoose'
+import { REQUEST_STATUS } from '@/constants'
 import { IUser } from './user.model'
 
 export interface IRequest extends Document {
   from: Types.ObjectId | IUser
-  createdAt: Date
-  updatedAt: Date
+  to: Types.ObjectId | IUser
+  status: string
 }
 
 const RequestSchema: Schema<IRequest> = new Schema(
@@ -12,7 +13,17 @@ const RequestSchema: Schema<IRequest> = new Schema(
     from: {
       type: Types.ObjectId,
       ref: 'User',
-      default: [],
+      required: true,
+    },
+    to: {
+      type: Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: Object.values(REQUEST_STATUS),
+      default: REQUEST_STATUS.PENDING,
     },
   },
   { timestamps: true },

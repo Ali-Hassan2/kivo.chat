@@ -1,0 +1,35 @@
+name: TypeScript Check
+
+on:
+  pull_request:
+    branches: [dev]
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Ensure clean build directory
+        run: |
+          echo "Removing any leftover .next from previous runs"
+          rm -rf .next || true
+
+      - name: Restore Next.js cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-cache-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: next-cache-
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Type Check
+        run: yarn tsc --noEmit
