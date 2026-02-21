@@ -26,8 +26,8 @@ const Conversation = () => {
       }
       getAllMessagesFromConversationsHook={getAllMessagesFromConversationsHook}
       userDataFromOverallNetwork={userDataFromOverallNetwork}
-    isGettingUserMetaData={isGettingUserMetaData}
-    getUserMetaDataHook={getUserMetaDataHook}
+      isGettingUserMetaData={isGettingUserMetaData}
+      getUserMetaDataHook={getUserMetaDataHook}
     />
   )
 }

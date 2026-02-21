@@ -15,12 +15,14 @@ const getUserWithUsernameReceiverId = async ({
 }: GETUSERWITHUSERNAMERECEIVERIDPROPS): Promise<UserWithFriendsCount> => {
   try {
     const response = await axios.get(
-      `${API_ENDPOINTS.getUserByUsernameAndReceiverIdFriendsCount}?receiverId=${receiverId}&username=${username},`,
+      `${API_ENDPOINTS.getUserByUsernameAndReceiverIdFriendsCount}?receiverId=${receiverId}&username=${username}`,
       { signal },
     )
+    console.log('The username is:', username)
+    console.log('the receiverId', receiverId)
     return response.data
   } catch (error: unknown) {
-    const axiosError = error as AxiosError<ApiResponse>
+    const axiosError = error as AxiosError<UserWithFriendsCount>
     if (axiosError.code === 'ERR_CANCELLED') {
       return {
         success: false,

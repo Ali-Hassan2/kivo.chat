@@ -74,6 +74,8 @@ class GETUSERWITHPARAMS {
         )
         .lean()
 
+      console.log('The username from BE is:', username)
+      console.log('The receiverId from BE is:', receiverId)
       const result = await UserModel.aggregate([
         {
           $match: {
