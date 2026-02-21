@@ -1,6 +1,6 @@
 import React from 'react'
 import { ConversationBoard } from '@/elements'
-import { useGetAllMessagesFromConversations } from '@/hooks'
+import { useGetAllMessagesFromConversations, useGetUserMetadata } from '@/hooks'
 
 const Conversation = () => {
   const {
@@ -9,6 +9,12 @@ const Conversation = () => {
     errorMessageForGettingMessagesFromConverastions,
     getAllMessagesFromConversationsHook,
   } = useGetAllMessagesFromConversations()
+
+  const {
+    userDataFromOverallNetwork,
+    isGettingUserMetaData,
+    getUserMetaDataHook,
+  } = useGetUserMetadata()
   return (
     <ConversationBoard
       MessagesDataFromConversations={MessagesDataFromConversations}
@@ -19,6 +25,9 @@ const Conversation = () => {
         errorMessageForGettingMessagesFromConverastions
       }
       getAllMessagesFromConversationsHook={getAllMessagesFromConversationsHook}
+      userDataFromOverallNetwork={userDataFromOverallNetwork}
+      isGettingUserMetaData={isGettingUserMetaData}
+      getUserMetaDataHook={getUserMetaDataHook}
     />
   )
 }

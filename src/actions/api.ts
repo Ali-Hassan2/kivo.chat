@@ -34,6 +34,8 @@ const API_ENDPOINTS = {
     '/api/messages/load/conversations',
   getAllMessagesFromConversations:
     '/api/messages/load/messages-in-conversations',
+  getUserByUsernameAndReceiverIdFriendsCount:
+    '/api/release/get-user-with-username',
 }
 
 export { API_ENDPOINTS }

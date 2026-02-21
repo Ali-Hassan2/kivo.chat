@@ -149,9 +149,28 @@ interface MessagesFromConversations {
   message: string
   data?: MessagesData[]
 }
+
+export interface UserDataFriendsCount {
+  _id: string
+  username: string
+  email: string
+  fullName: string
+  bio: string
+  isVerifiedUser: boolean
+  isShowingIdentity: boolean
+  friendsCount: number
+}
+interface UserWithFriendsCount {
+  success: boolean
+  message: string
+  data?: {
+    user: UserDataFriendsCount[]
+  }
+}
 export type {
   ModeResponsForOverallNetwork,
   ProfileGettingResponse,
   ContactsFromConversations,
   MessagesFromConversations,
+  UserWithFriendsCount,
 }
