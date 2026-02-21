@@ -8,7 +8,7 @@ interface ConversationSkeletonWrapperProps {
 
 const ConversationSkeletonWrapper = ({
   loading,
-  items = 8,
+  items = 6,
 }: ConversationSkeletonWrapperProps) => {
   return (
     <SkeletonWrapper loading={loading}>
@@ -23,7 +23,7 @@ const ConversationSkeletonWrapper = ({
               }`}
             >
               <Box
-                className={`h-22 w-[60%] rounded-2xl ${'rounded-lg'} animate-pulse bg-gray-300`}
+                className={`h-30 w-[60%] rounded-2xl ${'rounded-lg'} animate-pulse bg-gray-300`}
               />
             </Box>
           )

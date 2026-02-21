@@ -7,7 +7,7 @@ import { AllFriends, BlockIcon, ChatIcon, DocumentIcon } from '@/components'
 import { HomeBoxes } from '@/constants/objects-to-iterate'
 import { receiverIdSchema } from '@/guards'
 import { MessagesData } from '@/types'
-import { QueryParams } from '@/utils'
+import { QueryParams, useAuthRedirection } from '@/utils'
 import { cn } from '@/utils/cn'
 import { ConversationSkeletonWrapper } from './skeleton.wrapper'
 
@@ -33,6 +33,8 @@ const ConversationBoard = ({
     }
   }, [receiverId])
 
+  const user = useAuthRedirection()
+  const uid = user?._id
   return (
     <div className="flex flex-col">
       {MessagesDataFromConversations.length > 0 ? (
@@ -42,7 +44,27 @@ const ConversationBoard = ({
           />
         ) : (
           MessagesDataFromConversations.map((message, index) => {
-            return <Box key={index}>{message.content}</Box>
+            return (
+              <Box
+                className={cn(
+                  'w-full p-2',
+                  message.sender === uid
+                    ? 'flex items-center justify-end'
+                    : 'flex items-center justify-start',
+                )}
+              >
+                <Box
+                  className={cn(
+                    'rounded-lg p-4',
+                    message.sender === uid
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100',
+                  )}
+                >
+                  {message.content}
+                </Box>
+              </Box>
+            )
           })
         )
       ) : (
