@@ -150,7 +150,7 @@ interface MessagesFromConversations {
   data?: MessagesData[]
 }
 
-export interface UserData {
+export interface UserDataFriendsCount {
   _id: string
   username: string
   email: string
@@ -164,7 +164,7 @@ interface UserWithFriendsCount {
   success: boolean
   message: string
   data?: {
-    user: UserData[]
+    user: UserDataFriendsCount[]
   }
 }
 export type {
