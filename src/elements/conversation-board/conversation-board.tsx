@@ -5,8 +5,8 @@ import { Box, Text } from '@radix-ui/themes'
 import * as z from 'zod'
 import { AllFriends, BlockIcon, ChatIcon, DocumentIcon } from '@/components'
 import { HomeBoxes } from '@/constants/objects-to-iterate'
-import { receiverIdSchema } from '@/guards'
-import { MessagesData } from '@/types'
+import { getUserSchema, receiverIdSchema } from '@/guards'
+import { MessagesData, UserDataFriendsCount } from '@/types'
 import { QueryParams, useAuthRedirection } from '@/utils'
 import { cn } from '@/utils/cn'
 import { ConversationSkeletonWrapper } from './skeleton.wrapper'
@@ -18,6 +18,9 @@ interface ConversationBoardProps {
   getAllMessagesFromConversationsHook: (
     data: z.infer<typeof receiverIdSchema>,
   ) => void
+  userDataFromOverallNetwork: UserDataFriendsCount | null
+  isGettingUserMetaData: boolean
+  getUserMetaDataHook: (data: z.infer<typeof getUserSchema>) => void
 }
 
 const ConversationBoard = ({
@@ -38,10 +41,10 @@ const ConversationBoard = ({
   const uid = user?._id
 
   return (
-    <div className="flex h-[90vh] flex-col">
+    <Box className="flex h-[90vh] flex-col">
       {MessagesDataFromConversations.length > 0 ? (
         <>
-          <div className="flex flex-1 flex-col justify-end overflow-y-auto px-2">
+          <Box className="flex flex-1 flex-col justify-end overflow-y-auto px-2">
             {isGettingMessagesDataFromConversations ? (
               <ConversationSkeletonWrapper
                 loading={isGettingMessagesDataFromConversations}
@@ -72,9 +75,9 @@ const ConversationBoard = ({
                 )
               })
             )}
-          </div>
+          </Box>
           {/* TODO: Have to add Input using hookform */}
-          <div className="border-t p-4"></div>
+          <Box className="border-t p-4"></Box>
         </>
       ) : (
         <Box className="flex h-full w-full flex-col items-center justify-center">
@@ -99,7 +102,7 @@ const ConversationBoard = ({
           </Box>
         </Box>
       )}
-    </div>
+    </Box>
   )
 }
 
