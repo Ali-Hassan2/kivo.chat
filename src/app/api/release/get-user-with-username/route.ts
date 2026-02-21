@@ -111,7 +111,6 @@ class GETUSERWITHPARAMS {
       )
     } catch (error) {
       console.error(error)
-
       return GETUSERWITHPARAMS.respond(false, 'Server error', null, 500)
     }
   }
