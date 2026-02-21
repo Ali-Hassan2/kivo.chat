@@ -63,7 +63,7 @@ const ConversationBoard = ({
   }, [receiverId, username])
   const user = useAuthRedirection()
   const uid = user?._id
-  console.log("------------isGettingUserMetaData",isGettingUserMetaData)
+  console.log('------------isGettingUserMetaData', isGettingUserMetaData)
   return (
     <Box className="flex h-[90vh] flex-col">
       {MessagesDataFromConversations.length > 0 ? (
