@@ -86,7 +86,9 @@ const ContactBoard = () => {
               className="flex cursor-pointer gap-3 rounded-md border-b p-2 hover:bg-gray-100"
               key={contact._id}
               onClick={() =>
-                navigateTo(`/personal-dashboard?receiverId=${contact._id}`)
+                navigateTo(
+                  `/personal-dashboard?receiverId=${contact._id}&username=${contact.username}`,
+                )
               }
             >
               <Box>

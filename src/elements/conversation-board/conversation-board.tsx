@@ -27,6 +27,7 @@ const ConversationBoard = ({
   getAllMessagesFromConversationsHook,
 }: ConversationBoardProps) => {
   const receiverId = QueryParams('receiverId')
+
   useEffect(() => {
     if (receiverId) {
       getAllMessagesFromConversationsHook(receiverId)
@@ -35,41 +36,49 @@ const ConversationBoard = ({
 
   const user = useAuthRedirection()
   const uid = user?._id
+
   return (
-    <div className="flex flex-col">
+    <div className="flex h-[90vh] flex-col">
       {MessagesDataFromConversations.length > 0 ? (
-        isGettingMessagesDataFromConversations ? (
-          <ConversationSkeletonWrapper
-            loading={isGettingMessagesDataFromConversations}
-          />
-        ) : (
-          MessagesDataFromConversations.map((message, index) => {
-            return (
-              <Box
-                className={cn(
-                  'w-full p-2',
-                  message.sender === uid
-                    ? 'flex items-center justify-end'
-                    : 'flex items-center justify-start',
-                )}
-              >
-                <Box
-                  className={cn(
-                    'rounded-lg p-4',
-                    message.sender === uid
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100',
-                  )}
-                >
-                  {message.content}
-                </Box>
-              </Box>
-            )
-          })
-        )
+        <>
+          <div className="flex flex-1 flex-col justify-end overflow-y-auto px-2">
+            {isGettingMessagesDataFromConversations ? (
+              <ConversationSkeletonWrapper
+                loading={isGettingMessagesDataFromConversations}
+              />
+            ) : (
+              MessagesDataFromConversations.map((message, index) => {
+                return (
+                  <Box
+                    key={index}
+                    className={cn(
+                      'w-full p-2',
+                      message.sender === uid
+                        ? 'flex items-center justify-end'
+                        : 'flex items-center justify-start',
+                    )}
+                  >
+                    <Box
+                      className={cn(
+                        'max-w-[70%] rounded-lg p-4',
+                        message.sender === uid
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-100',
+                      )}
+                    >
+                      {message.content}
+                    </Box>
+                  </Box>
+                )
+              })
+            )}
+          </div>
+          {/* TODO: Have to add Input using hookform */}
+          <div className="border-t p-4"></div>
+        </>
       ) : (
-        <Box className="flex h-[90vh] w-full flex-col items-center justify-center">
-          <Box className="flex h-100 w-100 items-center justify-center rounded-full bg-orange-200">
+        <Box className="flex h-full w-full flex-col items-center justify-center">
+          <Box className="flex h-24 w-24 items-center justify-center rounded-full bg-orange-200">
             <ChatIcon />
           </Box>
           <Box className={cn('flex gap-4 pt-8')}>
