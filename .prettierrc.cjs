@@ -1,30 +1,27 @@
-/** @typedef {import("@ianvs/prettier-plugin-sort-imports").PluginConfig} SortImportsConfig */
-/** @typedef {import("prettier").Config} PrettierConfig */
-/** @typedef {{ tailwindConfig: string }} TailwindConfig */
-
-/** @type { PrettierConfig | SortImportsConfig | TailwindConfig } */
+/** @type {import("prettier").Config} */
 const config = {
-  arrowParens: 'always',
+  arrowParens: "always",
   printWidth: 80,
   singleQuote: true,
-  jsxSingleQuote: false,
   semi: false,
-  trailingComma: 'all',
+  trailingComma: "all",
   tabWidth: 2,
+
   plugins: [
-    '@ianvs/prettier-plugin-sort-imports',
-    'prettier-plugin-tailwindcss',
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss",
   ],
+
   importOrder: [
-    '^(react/(.*)$)|^(react$)|^(react-native(.*)$)',
-    '^(next/(.*)$)|^(next$)',
-    '<THIRD_PARTY_MODULES>',
-    '^@/(.*)$',
-    '^[./]',
+    "^(react/(.*)$)|^(react$)|^(react-native(.*)$)",
+    "^(next/(.*)$)|^(next$)",
+    "<THIRD_PARTY_MODULES>",
+    "^@/(.*)$",
+    "^[./]",
   ],
-  importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
-  importOrderTypeScriptVersion: '5.0.4',
-  tailwindConfig: './tooling/tailwind-config',
+
+  importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
+  tailwindConfig: "./tooling/tailwind-config",
 }
 
 module.exports = config
